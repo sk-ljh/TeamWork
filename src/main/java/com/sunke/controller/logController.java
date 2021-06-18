@@ -1,15 +1,15 @@
-package com.youhao.controller;
+package com.sunke.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/user")
-public class UserInfoController {
+@RequestMapping("/user1")
+public class logController {
 
-	@RequestMapping("/index")
+	@RequestMapping("/index1")
 	public String index() {
-		System.out.println("userdsdada index...");
+		System.out.println("user index...");
 		return "index";
 	}
 }

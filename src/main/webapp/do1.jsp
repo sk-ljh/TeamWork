@@ -6,6 +6,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="/TeamWork/user/index.do">index.do...</a>
+	<a href="/TeamWork/user1/index1.do">index.do...</a>
 </body>
 </html>
