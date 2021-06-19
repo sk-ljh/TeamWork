@@ -14,6 +14,7 @@ public class Order_history {
 	public Order_history() {
 		super();
 	}
+	
 
 	public Order_history(int table_number, float total_price, String begin_time, String end_time, int payment_state,
 			int order_id, int user_id, int order_delete) {

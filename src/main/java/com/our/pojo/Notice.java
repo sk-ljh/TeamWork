@@ -10,6 +10,7 @@ public class Notice {
 	public Notice() {
 		super();
 	}
+	
 	public Notice(int notice_id, int user_id, String notice_person, String notice_date, String notice_message) {
 		super();
 		this.notice_id = notice_id;

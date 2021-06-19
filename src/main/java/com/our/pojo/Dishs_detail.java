@@ -11,6 +11,7 @@ public class Dishs_detail {
 	public Dishs_detail() {
 		super();
 	}
+	
 	public Dishs_detail(int dishs_detail_id, int dishs_id, String supplier, String introduce_detail, String size,
 			String taste) {
 		super();

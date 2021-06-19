@@ -26,6 +26,7 @@ public class Dishs {
 		this.recommend = recommend;
 	}
 	
+	
 	public int getDishs_delete() {
 		return dishs_delete;
 	}
