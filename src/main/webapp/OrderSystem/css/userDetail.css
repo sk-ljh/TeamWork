@@ -1,0 +1,42 @@
+body{
+    width:100%;
+    height: 500px;
+}
+img{
+    border-radius:50%;
+}
+.userDetailMainBody{
+    padding: 60px 30px 0px 30px;
+    height:500px;
+    top:150px;
+    border-left: solid thin rgb(175, 175, 175);
+    border-right: solid thin rgb(175, 175, 175);
+}
+.userDetailMainBody:hover{
+    background-color:rgb(248, 248, 248);
+}
+span,ul{
+    color:rgb(99, 99, 99);
+}
+.username{
+    display: block;
+    position: relative;
+    top:10px;
+    left:6%;
+}
+.userDetailMainBody>ul{
+    width:75%;
+    position: relative;
+    top:-220px;
+    left:40%;
+}
+.userDetailMainBody>ul>li{
+    margin-top: 20px;
+}
+button{
+    display: block;
+    position: relative;
+    top:-160px;
+    left:4%;
+    width:15%;
+}

@@ -1,0 +1,96 @@
+.waiter_nav{
+    text-align: center;
+}
+fieldset{
+    text-align: center;
+}
+h2{
+    color:white;
+    text-align: center;
+    position: relative;
+    height:150px;
+    line-height: 150px;
+    font-size: 40px !important;
+    letter-spacing: 1em;
+}
+h3{
+    color:white;
+    text-align: left;
+    position: relative;
+    top:20px;
+}
+.loginMainBody{
+    height:600px;
+    width:40%;
+    position: absolute;
+    left: 50%;
+    top:80px;
+    transform: translateX(-50%);
+    background-color: rgb(253, 244, 213);
+    border-radius: 2em;
+}
+.alterUserInfMainbody,.adminHomepagemainBody,.alterDishInfMainbody,.dishDetailMainBody,.operateFormMainBody,
+.dishAdminListMainBody,.releaseNoticeMainBody,.userDetailMainBody,.waiterHomepageMainBody,.orderFormListMainBody,
+.orderDetailMainBody,.cartMainBody,.chefHomepageMainBody,.userListMainBody,.alterSelfInfMainBody{
+    position: relative;
+    top:120px;
+    width:60%;
+    left:50%;
+    transform: translateX(-50%);
+}
+.adminHomepagemainBody{
+    width:92%;
+}
+.orderDetailMainBody td,.cartMainBody td{
+    font-size:0.9em !important;
+}
+.formWrapper{
+    width:45%;
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+}
+.loginForm{
+    top:50px;
+    left:55%;
+    width:80%;
+}
+.loginForm .layui-form-item{
+    margin-top:30px;
+}
+.loginForm button{
+    position: relative;
+    width:50%;
+    height:60px;
+    line-height: 60px;
+    left:20%;
+    top:20px;
+}
+button{
+    background: linear-gradient(to left, #fcc40e 10%,#f76503 100%);
+    border-radius: 2em !important;
+}
+.layui-nav button{
+    position: relative;
+    left:-5%;
+    top:-5px;
+    background: linear-gradient(to left, #ff7c25 10%,#ff5101 100%);
+}
+#canvas{
+    position: relative;
+    left:110%;
+    top:-40px;
+    background-color: rgb(143, 143, 143);
+}
+#btn{
+    border-radius: 2em !important;
+    width:90%;
+    height:40px !important;
+    font-size:1.2em
+}
+.toBcooked{
+    background: linear-gradient(to left, #186dec 10%,#8a31f0 100%);
+}
+.cooking{
+    background:linear-gradient(to right,rgb(253, 79, 79) 10%,rgb(255, 115, 0) 100%);
+}

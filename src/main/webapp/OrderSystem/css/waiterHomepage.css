@@ -1,0 +1,52 @@
+.waiterHomepageMainBody{
+    width:80%;
+    margin-top: 20px;
+}
+.minus,.plus{
+    width:15%;
+    position:relative;
+}
+.minus{
+    left:-22%;
+    top:33px;
+}
+.plus{
+    left:22%;
+    top:-35px;
+}
+.title{
+    background-color: #ff9148 !important;
+}
+.dish:hover{
+    background-color: #ffe89d !important;
+}
+table tr{
+    height:50px;
+    background-color: #FAFAFA
+}
+th,td{
+    text-align: center !important;
+}
+td,th{
+    font-size:0.8em !important;
+}
+td input{
+    width:20% !important;
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+}
+#pages{
+    position: relative;
+    top:300px;
+    left:-25%;
+}
+.btns{
+    position: relative;
+    top:240px;
+    left:-10%;
+}
+.btns>:last-child{
+    position: relative;
+    left:3%;
+}

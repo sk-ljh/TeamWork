@@ -1,0 +1,53 @@
+body{
+    width:100%;
+    height: 680px;
+}
+.dishDetailMainBody{
+    padding: 60px 30px 0px 30px;
+    height:500px;
+    top:150px;
+    border-left: solid thin rgb(175, 175, 175);
+    border-right: solid thin rgb(175, 175, 175);
+}
+.dishDetailMainBody:hover{
+    background-color:rgb(248, 248, 248);
+}
+span,ul{
+    color:rgb(99, 99, 99);
+}
+.dishDetailMainBody>ul{
+    width:75%;
+    position: relative;
+    top:-225px;
+    left:28.5%;
+}
+.dishDetailMainBody>ul>li{
+    margin-top: 8px;
+}
+.price>span{
+    color:red;
+    font-weight: 550;
+    font-size:1.5em;
+}
+.detail{
+    position: relative;
+    top:-160px;
+    display:block;
+    font-size: 0.8em;
+    padding: 10px 30px;
+    border: rgb(136, 136, 136) 2px solid;
+    border-radius: 2em;
+    line-height: 20px;
+}
+.detail>span{
+    font-weight: 550;
+    font-size:1.3em;
+    color:rgb(82, 80, 80);
+}
+button{
+    display: block;
+    position: relative;
+    top:-400px;
+    left:30%;
+    width:15%;
+}

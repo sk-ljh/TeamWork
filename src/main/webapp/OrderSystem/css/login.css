@@ -1,0 +1,28 @@
+fieldset{
+    text-align: center;
+}
+body{
+    background:linear-gradient(to left, #fcc40e 10%,#f76503 100%);
+    position: relative;
+}
+.loginMainBody{
+    height:600px;
+    width:40%;
+    position: absolute;
+    left: 50%;
+    top:80px;
+    transform: translateX(-50%);
+    background-color: rgb(253, 244, 213);
+    border-radius: 2em;
+}
+.formWrapper{
+    width:80%;
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+}
+#canvas{
+    position: relative;
+    left:50%;
+    background-color: rgb(92, 91, 91);
+}

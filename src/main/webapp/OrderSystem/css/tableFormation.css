@@ -1,0 +1,47 @@
+.operateFormMainBody,.dishAdminListMainBody,.orderFormListMainBody{
+    width:75%;
+}
+.operateFormMainBody .title,.dishAdminListMainBody .title,.orderFormListMainBody .title,.cartMainBody .title,.chefHomepageMainBody .title,.userListMainBody .title{
+    background-color: #ff9148 !important;
+}
+.operateFormMainBody .orderForm:hover,.dishAdminListMainBody .dishForm:hover,.orderFormListMainBody .orderForm:hover,
+.cartMainBody .cartRecord:hover,.chefHomepageMainBody .cook:hover,.userListMainBody .user:hover{
+    background-color: #ffe89d !important;
+}
+table tr{
+    height:50px;
+    background-color: #FAFAFA
+}
+table th{
+    font-size: 0.8em !important;
+    text-align: center !important;
+    color:rgb(243, 242, 242) !important;
+}
+table td{
+    font-size: 0.9em !important;
+    text-align: center !important;
+    color:rgb(82, 80, 80) !important;
+}
+table td button{
+    height:30px !important;
+    line-height:30px !important;
+    text-align: center !important;
+    font-size:0.8em;
+    width:40%;
+    margin-right:10px;
+}
+.operateFormMainBody #pages{
+    position: relative;
+    top:330px;
+}
+.dishAdminListMainBody #pages{
+    position: relative;
+    top:300px;
+}
+.userListMainBody #pages{
+    position: relative;
+    top:330px;
+}
+.fa:hover{
+    transform: scale(1.2,1.2);
+}
