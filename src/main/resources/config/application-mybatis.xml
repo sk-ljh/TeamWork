@@ -21,14 +21,14 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="mapperLocations"
-			value="classpath:com/chinasofti/ssm01/dao/*.xml"></property>
+			value="classpath:com/our/dao/*.xml"></property>
 		<property name="typeAliasesPackage"
-			value="com.chinasofti.ssm01.entity"></property>
+			value="com.our.pojo"></property>
 	</bean>
 
 	<!-- 扫描包 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.my.dao"></property>
+		<property name="basePackage" value="com.libo.dao"></property>
 		<property name="sqlSessionFactoryBeanName"
 			value="sqlSessionFactory"></property>
 	</bean>
