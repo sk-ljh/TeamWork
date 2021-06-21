@@ -19,8 +19,7 @@
 	</mvc:annotation-driven>
 
 	<!-- 配置SpringMVC -->
-	<context:component-scan
-		base-package="com.*.controller" use-default-filters="false">
+	<context:component-scan base-package="com.*.controller" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
