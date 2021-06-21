@@ -11,5 +11,4 @@ public interface User_detailsMajunDAO {
 	// 修改个人用户详细信息
 	int updateUser_details(Map map);
 
-	int confirmUser_details(Map map);
 }

@@ -29,21 +29,9 @@ public class User_detailDAOTest {
 		System.out.println(getUser);
 	}
 
-	// 确认个人用户信息
-	@Test
-	public void confirmUser() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("user_name", "name");
-		map.put("password", "passrd");
-		int res = user_detailsMajunDAO.confirmUser_details(map);
-//		if (res == 1)
-//			validUser = true;
-		System.out.println("confirm" + res);
-	}
-
 	// 修改个人用户详细信息
 	@Test
-	public void UpdateUser() {
+	public void updateUser() {
 		// confirmUser==true
 		if (true) {
 			Map<String, Object> map = new HashMap<String, Object>();

@@ -24,8 +24,8 @@ public class DishsDAOTest {
 
 	// 查询菜品
 	@Test
-	public void ListDishs() {
-		List<Dishs> ListDishs = dishsMajunDAO.ListDishs();
+	public void listDishs() {
+		List<Dishs> ListDishs = dishsMajunDAO.listDishs();
 		for (Dishs dish : ListDishs) {
 			System.out.println(dish);
 		}
@@ -33,14 +33,14 @@ public class DishsDAOTest {
 
 	// 修改菜品
 	@Test
-	public void UpdateDishs() {
+	public void updateDishs() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("dishs_id", 99);
 		map.put("dishs_name", "海天盛筵");
 		map.put("dishs_icon", "www.999.999.www");
 		map.put("price", 999);
 		map.put("introduction", "好hao吃");
-		int res = dishsMajunDAO.UpdateDishs(map);
+		int res = dishsMajunDAO.updateDishs(map);
 		System.out.println(res);
 	}
 }

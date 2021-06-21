@@ -8,13 +8,13 @@
 		property="fileUrl"/> </resultMap> -->
 
 	<!-- 菜品详细查询 -->
-	<select id="ListDishs_detail"
+	<select id="listDishs_detail"
 		resultType="com.our.pojo.Dishs_detail">
 		select * from dishs_detail
 	</select>
 
 	<!-- 菜品详细修改 -->
-	<update id="UpdateDishs_detail" parameterType="map">
+	<update id="updateDishs_detail" parameterType="map">
 		update Dishs_detail set
 		introduce_detail = #{introduce_detail}
 		where dishs_id=#{dishs_id};

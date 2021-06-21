@@ -15,8 +15,4 @@
 	<update id="updateUser_details" parameterType="map">
 		update user_details set icon =  #{icon} where name = #{name}
 	</update>
-	<!-- 确认用户,同用户信息修改 -->
-	<select id="confirmUser_details" parameterType="map" resultType="int">
-		select count(*) from user where user_name = #{user_name} and password = #{password}
-	</select>
 </mapper>

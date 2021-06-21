@@ -1,7 +1,6 @@
-package com.majun.dao;
+package com.majun.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -10,35 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.our.pojo.Dishs_detail;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/application-*.xml")
-public class Dishs_detailDAOTest {
+public class DishsServiceTest {
 
-	/**
-	 * 自动装配待测试接口DAO
-	 */
 	@Autowired
-	private Dishs_detailMajunDAO dishs_detailMajunDAO;
+	private DishsMajunService dishsMajunService;
 
-	// 查询菜品详情
 	@Test
-	public void listDishs_detail() {
-		List<Dishs_detail> listDishs = dishs_detailMajunDAO.listDishs_detail();
-		for (Dishs_detail dish : listDishs) {
-			System.out.println(dish);
-		}
+	public void listDishs() {
+		System.out.println(dishsMajunService.listDishs());
 	}
 
-	// 修改菜品详情
 	@Test
 	public void updateDishs() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("dishs_id", 99);
-		map.put("introduce_detail", "海盛筵盛筵天海天盛筵盛筵");
-		int res = dishs_detailMajunDAO.updateDishs_detail(map);
+		map.put("dishs_name", "海天盛筵");
+		map.put("dishs_icon", "www.999.888999.www");
+		map.put("price", 777999);
+		map.put("introduction", "好hao吃");
+		int res = dishsMajunService.updateDishs(map);
 		System.out.println(res);
 	}
-
 }

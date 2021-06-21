@@ -8,12 +8,12 @@
 		property="fileUrl"/> </resultMap> -->
 
 	<!-- 菜品查询 -->
-	<select id="ListDishs" resultType="com.our.pojo.Dishs">
+	<select id="listDishs" resultType="com.our.pojo.Dishs">
 		select * from dishs
 	</select>
 
 	<!-- 菜品修改 -->
-	<update id="UpdateDishs" parameterType="map">
+	<update id="updateDishs" parameterType="map">
 		update dishs set
 		dishs_name = #{dishs_name}, dishs_icon = #{dishs_icon},
 		price =
