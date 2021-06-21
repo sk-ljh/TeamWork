@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.youhao.dao.UserAndDetailsYhDao">
+	<!-- 配置查询结果集和DO对象的映射关系 -->
+	<!-- <resultMap type="DepartmentInfoDO" id="departmentmap">
+		<id column="department_id" property="departmentId"/>结果集中查询的department_id字段会被封装到DepartmentInfoDO对象的departmentId属性
+		<result column="department_name" property="departmentName"/>
+	</resultMap> -->
+	
+	
+	<!-- 1、查询user表的所有信息 -->
+	<select id="getUserList"  resultType="com.our.pojo.User">
+		select * from user
+	</select>
+	
+	<!-- 2、查询user_details表的所有信息 -->
+	<select id="getUserDetailsList"  resultType="com.our.pojo.User_details">
+		select * from user_details
+	</select>
+	
+	<!-- 3、更新用户详情表中的icon和role -->
+	<update id="UpdateUserDetails" parameterType="int">
+		update user_details set icon=#{icon} set role=#{role} where user_details_id=#{udid}
+	</update>
+	
+	<!-- 4、更新用户表中的密码 -->
+	<update id="UpdateUserPwd" parameterType="HashMap">
+		update user set password=#{pwd} where user_id=#{user_id}
+	</update>
+	
+	
+	
+	
+	
+</mapper>
