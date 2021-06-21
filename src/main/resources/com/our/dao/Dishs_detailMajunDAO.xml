@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.majun.dao.Dishs_detailMajunDAO">
+
+	<!-- 配置查询结果集和DO对象的映射关系 -->
+	<!-- <resultMap type="FileInfoDO" id="filemap"> <id column="file_id" property="fileId"/> 
+		<result column="file_name" property="fileName"/> <result column="file_url" 
+		property="fileUrl"/> </resultMap> -->
+
+	<!-- 菜品详细查询 -->
+	<select id="ListDishs_detail"
+		resultType="com.our.pojo.Dishs_detail">
+		select * from dishs_detail
+	</select>
+
+	<!-- 菜品详细修改 -->
+	<update id="UpdateDishs_detail" parameterType="map">
+		update Dishs_detail set
+		introduce_detail = #{introduce_detail}
+		where dishs_id=#{dishs_id};
+	</update>
+
+
+
+
+</mapper>

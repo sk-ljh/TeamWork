@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.majun.dao.User_detailsMajunDAO">
+	<!-- 配置查询结果集和DO对象的映射关系 -->
+	<!-- <resultMap type="DepartmentInfoDO" id="departmentmap"> <id column="department_id" 
+		property="departmentId"/>结果集中查询的department_id字段会被封装到DepartmentInfoDO对象的departmentId属性 
+		<result column="department_name" property="departmentName"/> </resultMap> -->
+
+	<!-- 查询用户详细 -->
+	<select id="getUser_details" resultType="com.our.pojo.User_details">
+		select * from user_details where name = #{name}
+	</select>
+
+	<!-- 修改用户详细信息 -->
+	<update id="updateUser_details" parameterType="map">
+		update user_details set icon =  #{icon} where name = #{name}
+	</update>
+	<!-- 确认用户,同用户信息修改 -->
+	<select id="confirmUser_details" parameterType="map" resultType="int">
+		select count(*) from user where user_name = #{user_name} and password = #{password}
+	</select>
+</mapper>
