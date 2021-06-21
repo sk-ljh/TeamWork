@@ -6,16 +6,17 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<% String path = request.getContextPath();%>
 <link rel="stylesheet"
-	href="../font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/tableFormation.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+	href="<%=path %>/OrderSystem/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/tableFormation.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 <title>cart</title>
 </head>
 
@@ -97,7 +98,7 @@
 			</div>
 		</form>
 	</div>
-	<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
 		// 公告
 		layui.use('layer', function () { //独立版的layer无需执行这一句

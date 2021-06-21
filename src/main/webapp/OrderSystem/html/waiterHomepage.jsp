@@ -6,14 +6,15 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/waiterHomepage.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/waiterHomepage.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 <title>waiterHomepage</title>
 </head>
 
@@ -71,7 +72,7 @@
 				<tbody>
 					<tr class="dish">
 						<td>鱼香肉丝</td>
-						<td><img src="../img/1.jpg" class="layui-nav-img"
+						<td><img src="<%=path %>/OrderSystem/img/1.jpg" class="layui-nav-img"
 							style="height: 100px; width: 150px"></td>
 						<td>超级下饭的鱼香肉丝</td>
 						<td>
@@ -107,7 +108,7 @@
 	</div>
 
 	<div id="pages" style="text-align: right; width: 60%"></div>
-	<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 
 	<script language="javascript">
 		// 公告

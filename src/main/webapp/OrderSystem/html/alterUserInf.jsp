@@ -9,10 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/InfManage.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/InfManage.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
 	href="../layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
@@ -59,7 +60,7 @@
 				<button type="button" class="layui-btn" id="test1">上传图片</button>
 				<button type="button" class="layui-btn">确认修改</button>
 				<div class="layui-upload-list">
-					<img src="../img/head1.jpg" class="layui-upload-img" id="demo1"
+					<img src="<%=path %>/OrderSystem/img/head1.jpg" class="layui-upload-img" id="demo1"
 						style="width: 200px; height: 200px">
 				</div>
 				<div class="bar" style="width: 95px;">
@@ -118,7 +119,7 @@
 			</div>
 		</div>
 
-		<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 		<script>
       layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能

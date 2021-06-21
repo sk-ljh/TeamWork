@@ -20,56 +20,15 @@
 
 	<!-- 配置SpringMVC -->
 	<context:component-scan
-		base-package="com.youhao" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-	
-		<context:component-scan
-		base-package="com.sunke" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-
-<context:component-scan
-		base-package="com.libo" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-<context:component-scan
-		base-package="com.majun" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-
-
-<context:component-scan
-		base-package="com.wenlong" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-<context:component-scan
-		base-package="com.yangyurui" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-	
-	
-	<context:component-scan
-		base-package="com.lishuwen" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
+		base-package="com.*.controller" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
 
 	<!-- JSP视图 -->
 	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/"></property><!-- WEB-INF/ -->
+		<property name="prefix" value="/OrderSystem/html/"></property><!-- WEB-INF/ -->
 		<property name="suffix" value=".jsp"></property><!-- .jsp -->
 	</bean>
 	<!-- 上传文件的处理器 -->

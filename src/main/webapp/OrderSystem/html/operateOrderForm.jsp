@@ -4,14 +4,15 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/tableFormation.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/tableFormation.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 <title>修改订单</title>
 </head>
 
@@ -89,7 +90,7 @@
 		</div>
 		<div id="pages" style="text-align: center;"></div>
 	</div>
-	<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
         layui.use(['laypage', 'layer'], function () {
             var laypage = layui.laypage,

@@ -5,14 +5,15 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/InfManage.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/InfManage.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 <title>菜品信息更改</title>
 </head>
 <body>
@@ -55,7 +56,7 @@
 				<button type="button" class="layui-btn" id="test1">上传图片</button>
 				<button type="button" class="layui-btn">确认修改</button>
 				<div class="layui-upload-list">
-					<img src="../img/茄汁培根意面.jpg" class="layui-upload-img" id="demo1"
+					<img src="<%=path %>/OrderSystem/img/茄汁培根意面.jpg" class="layui-upload-img" id="demo1"
 						style="width: 200px; height: 200px">
 				</div>
 				<div class="bar" style="width: 95px;">
@@ -130,7 +131,7 @@
 				</div>
 			</form>
 		</div>
-		<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 		<script>
         layui.use('element', function(){
             var element = layui.element; //导航的hover效果、二级菜单等功能
