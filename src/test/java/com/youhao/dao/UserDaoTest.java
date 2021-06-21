@@ -18,7 +18,7 @@ public class UserDaoTest {
 	 */
 	@Autowired
 	private UserYouhaoDao userYouhaoDao;
-//	@Test
+	@Test
 	public void getUserList(){
 		
 		List<User> userList = userYouhaoDao.getUserList();
