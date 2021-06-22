@@ -31,7 +31,7 @@
 	<!-- JSP视图 -->
 	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/"></property><!-- WEB-INF/ -->
+		<property name="prefix" value="/OrderSystem/html/"></property><!-- WEB-INF/ -->
 		<property name="suffix" value=".jsp"></property><!-- .jsp -->
 	</bean>
 	<!-- 上传文件的处理器 -->
