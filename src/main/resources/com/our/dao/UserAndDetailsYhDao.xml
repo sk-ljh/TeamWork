@@ -7,7 +7,6 @@
 		<result column="department_name" property="departmentName"/>
 	</resultMap> -->
 	
-	
 	<!-- 1、查询user表的所有信息 -->
 	<select id="getUserList"  resultType="com.our.pojo.User">
 		select * from user
@@ -18,15 +17,42 @@
 		select * from user_details
 	</select>
 	
-	<!-- 3、更新用户详情表中的icon和role -->
-	<update id="UpdateUserDetails" parameterType="int">
-		update user_details set icon=#{icon} set role=#{role} where user_details_id=#{udid}
+	<!-- 3、根据user_id查询某一用户详细信息 -->
+	<select id="getUserDetails" parameterType="int" resultType="com.our.pojo.User_details">
+		select * from user_details where user_id = #{user_id}
+	</select>
+	
+	<!-- 4、更新用户详情表中的icon和role -->
+	<update id="updateUserDetails" parameterType="HashMap">
+		update user_details set icon=#{icon},role=#{role} where user_details_id=#{udid}
 	</update>
 	
-	<!-- 4、更新用户表中的密码 -->
-	<update id="UpdateUserPwd" parameterType="HashMap">
+	<!-- 5、更新用户表中的密码 -->
+	<update id="updateUserPwd" parameterType="HashMap">
 		update user set password=#{pwd} where user_id=#{user_id}
 	</update>
+	
+	<!-- 6、通过user_id假删除用户 -->
+	<update id="deleteUserByid" parameterType="HashMap">
+		update user set user_delete = #{user_delete} where user_id = #{user_id}
+	</update>
+	
+	<!-- 7、在user表中查找user_id列的最大值 -->
+	<select id="getMaxUserId" resultType="int">
+		select max(user.user_id) from user;
+	</select>
+	
+	<!-- 8、在user表中插入一条记录 -->
+	<insert id="insertUser" parameterType="HashMap"> 
+		insert into user (user_delete,user_id,user_name,password) values(#{user_delete},#{user_id},#{user_name},#{password})
+	</insert>
+	
+	<!-- 9、在user_details表中插入一条数据 -->
+	<insert id="insertUserDetails" parameterType="HashMap">
+		insert into user_details (user_details_id,user_id,name,icon,role) values(#{user_details},#{user_id},#{name},#{icon},#{role})
+	</insert>
+	
+	
 	
 	
 	
