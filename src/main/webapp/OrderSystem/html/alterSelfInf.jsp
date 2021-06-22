@@ -5,14 +5,15 @@
 <head>
 <meta charset="utf-8">
 <title>个人信息修改</title>
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/InfManage.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/InfManage.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 </head>
 
 <body>
@@ -31,7 +32,7 @@
 				<button type="button" class="layui-btn" id="test1">上传图片</button>
 				<button type="button" class="layui-btn">确认修改</button>
 				<div class="layui-upload-list">
-					<img src="../img/head1.jpg" class="layui-upload-img" id="demo1"
+					<img src="<%=path %>/OrderSystem/img/head1.jpg" class="layui-upload-img" id="demo1"
 						style="width: 200px; height: 200px">
 				</div>
 				<div class="bar" style="width: 95px;">
@@ -107,7 +108,7 @@
 			</form>
 		</div>
 	</div>
-	<script src="../js/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
 		var newPwd=document.querySelector("#newPwd");
 		var pwd=document.querySelector("#pwd");
