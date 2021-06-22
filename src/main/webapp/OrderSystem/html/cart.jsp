@@ -1,32 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+	pageEncoding="utf-8" import="com.our.pojo.*"%>
 <html lang="en">
 
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<% String path = request.getContextPath();%>
 <link rel="stylesheet"
-	href="../font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/tableFormation.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+	href="<%=path %>/OrderSystem/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/tableFormation.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 <title>cart</title>
 </head>
 
 <body>
+	<%
+		User user;
+		String user_name="null";
+		if(session.getAttribute("loginUser")!=null)
+		{
+			 user=(User)session.getAttribute("loginUser");
+			 user_name=user.getUser_name();
+		}
+	%>
 	<ul class="layui-nav">
-		<h3>XXX用户，您已登录。</h3>
-		<li class="layui-nav-item"><a href="waiterHomepage.jsp">首页</a></li>
-		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
+		<h3>用户<%=user_name %>，您已登录。</h3>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/waiterHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a>
 		</li>
 		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
-		<li class="layui-nav-item"><a href="orderFormList.jsp">查看订单</a></li>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/orderFormList.jsp">查看订单</a></li>
 		<li id="layerDemo" style="margin-bottom: 0; text-align: center;">
 			<button data-method="notice" class="layui-btn">查看公告</button>
 		</li>
@@ -91,13 +101,13 @@
 			<div class="layui-form-item" style="text-align: right;">
 				<button type="submit" class="layui-btn" lay-submit=""
 					lay-filter="demo1">提交至后厨</button>
-				<a href="waiterHomepage.jsp"><button type="button"
+				<a href="<%=path %>/OrderSystem/html/waiterHomepage.jsp"><button type="button"
 						class="layui-btn"
 						style="background: linear-gradient(to left, #ff7c25 10%, #ff5101 100%); margin-left: 30px;">返回主页</button></a>
 			</div>
 		</form>
 	</div>
-	<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
 		// 公告
 		layui.use('layer', function () { //独立版的layer无需执行这一句

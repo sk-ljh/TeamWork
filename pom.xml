@@ -118,6 +118,11 @@
 		</dependency>
 		<!-- MyBatis相关包 -->
 		<dependency>
+		    <groupId>org.mybatis.generator</groupId>
+		    <artifactId>mybatis-generator-core</artifactId>
+		    <version>1.4.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.3.0</version>
@@ -134,7 +139,12 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.3</version>
 		</dependency>
-
+		<!-- PageHelper分页 -->
+		<dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper</artifactId>
+		    <version>5.2.0</version>
+		</dependency>
 		<!-- 日志相关包 -->
 		<dependency>
 			<groupId>log4j</groupId>

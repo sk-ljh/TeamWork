@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+	pageEncoding="utf-8" import="com.our.pojo.*"%>
 <html lang="en">
 
 <head>
@@ -7,20 +7,30 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>用户详情页面</title>
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/userDetail.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/userDetail.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 
 </head>
 
 <body>
+	<%
+		User user;
+		String user_name="null";
+		if(session.getAttribute("loginUser")!=null)
+		{
+			 user=(User)session.getAttribute("loginUser");
+			 user_name=user.getUser_name();
+		}
+	%>
 	<ul class="layui-nav">
-		<h3>XXX用户，您已登录。</h3>
+		<h3>用户<%=user_name %>，您已登录。</h3>
 		<li class="layui-nav-item"><a href="adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
 		</li>
@@ -48,7 +58,7 @@
 		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
 	</ul>
 	<div class="userDetailMainBody">
-		<img src="../img/head1.jpg" alt="" style="width: 200px; height: 200px">
+		<img src="<%=path %>/OrderSystem/img/head1.jpg" alt="" style="width: 200px; height: 200px">
 		<span class="username">用户名：张三</span>
 		<ul>
 			<li class="userNo">用户编号：001</li>
@@ -59,7 +69,7 @@
 		</ul>
 		<a href="alterUserInf.jsp"><button type="button" class="layui-btn">修改信息</button></a>
 	</div>
-	<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 </body>
 
 </html>

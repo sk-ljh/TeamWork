@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>html>
+	pageEncoding="utf-8" import="com.our.pojo.*"%>
 <html>
 
 <head>
@@ -9,19 +9,29 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/InfManage.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/InfManage.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 </head>
 
 <body>
+	<%
+		User user;
+		String user_name="null";
+		if(session.getAttribute("loginUser")!=null)
+		{
+			 user=(User)session.getAttribute("loginUser");
+			 user_name=user.getUser_name();
+		}
+	%>
 	<ul class="layui-nav">
-		<h3>XXX用户，您已登录。</h3>
+		<h3>用户<%=user_name %>，您已登录。</h3>
 		<li class="layui-nav-item"><a href="adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
 		</li>
@@ -99,9 +109,9 @@
 							<select lay-reqtext="未选择用户角色！" lay-verify="required"
 								name="identity" lay-filter="identity">
 								<option value="" selected=""></option>
-								<option value="0">服务员</option>
-								<option value="1">管理员</option>
+								<option value="1">服务员</option>
 								<option value="2">后厨</option>
+								<option value="3">管理员</option>
 							</select>
 						</div>
 					</div>
@@ -113,7 +123,7 @@
 			</form>
 		</div>
 	</div>
-	<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
     layui.use(['upload', 'element', 'layer'], function () {
       var $ = layui.jquery

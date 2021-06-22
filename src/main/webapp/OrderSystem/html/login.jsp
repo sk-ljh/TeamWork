@@ -9,18 +9,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
-<link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
-<link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/tableFormation.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 </head>
 
 <body>
+	 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	<div class="loginMainBody">
-		<form class="layui-form layui-form-pane" action="">
+		<form class="layui-form layui-form-pane" action="<%=path %>/dologin.do" method="post">
 			<fieldset class="layui-elem-field layui-field-title"
 				style="margin-top: 30px;">
 				<legend>欢迎登录</legend>
@@ -33,9 +34,9 @@
 						<select lay-reqtext="未选择用户角色！" lay-verify="required"
 							name="identity" lay-filter="identity">
 							<option value="" selected=""></option>
-							<option value="0">服务员</option>
-							<option value="1">管理员</option>
+							<option value="1">服务员</option>
 							<option value="2">后厨</option>
+							<option value="3">管理员</option>
 						</select>
 					</div>
 				</div>
@@ -44,7 +45,7 @@
 					<label class="layui-form-label">用户名</label>
 					<div class="layui-input-inline">
 						<input lay-reqtext="请输入用户名！" lay-verify="required" type="text"
-							name="username" autocomplete="off" placeholder="请输入用户名"
+							name="user_name" autocomplete="off" placeholder="请输入用户名"
 							class="layui-input" />
 					</div>
 				</div>
@@ -67,12 +68,12 @@
 					</div>
 				</div>
 				<div class="layui-form-item form-button-item">
-					<button class="layui-btn" lay-submit="" lay-filter="demo2">登录</button>
+					<button class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
 				</div>
 			</div>
 		</form>
 	</div>
-	<script src="../js/layui.js"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
 		var show_num = [];
 		draw(show_num);
@@ -112,12 +113,17 @@
 			});
 
 			//监听提交
-			form.on('submit(demo1)', function (data) {
-				layer.alert(JSON.stringify(data.field), {
-					title: '最终的提交信息'
-				})
-				return false;
-			});
+			form.on('submit(demo2)', function (data) {
+				 $.ajax({
+			            url: "<%=path %>/dologin.do",
+			            type: "POST",
+			            data:data.field,
+			            success: function(data) {
+			             	alert(data);
+			            }
+			        });
+				    return false;
+				  });
 		});
 		// function sublim() {
 		// 	var val = document.getElementById("text").value;
@@ -143,7 +149,7 @@
 			var aCode = sCode.split(",");
 			var aLength = aCode.length; //获取到数组的长度
 
-			for (var i = 0; i <= 5; i++) {
+			for (var i = 0; i <= 3; i++) {
 				var j = Math.floor(Math.random() * aLength); //获取到随机的索引值
 				var deg = Math.random() * 30 * Math.PI / 180; //产生0~30之间的随机弧度
 				var txt = aCode[j]; //得到随机的一个内容

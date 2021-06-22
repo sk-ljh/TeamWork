@@ -28,6 +28,11 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 
 	<!-- 扫描包 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.libo.dao"></property>
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory"></property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.youhao.dao"></property>
 		<property name="sqlSessionFactoryBeanName"
 			value="sqlSessionFactory"></property>

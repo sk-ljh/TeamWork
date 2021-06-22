@@ -1,25 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+	pageEncoding="utf-8" import="com.our.pojo.*"%>
 <html lang="en">
 
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../css/initiate.css">
-<link rel="stylesheet" href="../css/dishDetail.css">
-<link rel="stylesheet" href="../layui/css/layui.css">
-<link rel="stylesheet" href="../layui/css/modules/code.css">
+<% String path = request.getContextPath();%>
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/css/dishDetail.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
+<link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/laydate/default/laydate.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
-	href="../layui/css/modules/layer/default/layer.css">
+	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
 <title>菜品信息更改</title>
 </head>
 
 <body>
+	<%
+		User user;
+		String user_name="null";
+		if(session.getAttribute("loginUser")!=null)
+		{
+			 user=(User)session.getAttribute("loginUser");
+			 user_name=user.getUser_name();
+		}
+	%>
 	<ul class="layui-nav">
-		<h3>XXX用户，您已登录。</h3>
+		<h3>用户<%=user_name %>，您已登录。</h3>
 		<li class="layui-nav-item"><a href="adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
 		</li>
@@ -47,7 +57,7 @@
 		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
 	</ul>
 	<div class="dishDetailMainBody">
-		<img src="../img/茄汁培根意面.jpg" alt=""
+		<img src="<%=path %>/OrderSystem/img/茄汁培根意面.jpg" alt=""
 			style="width: 200px; height: 200px">
 		<ul>
 			<li class="theDish">菜品名称：茄汁培根意面</li>
@@ -66,7 +76,7 @@
 		</span> <a href="alterDishInf.jsp"><button type="button"
 				class="layui-btn">修改信息</button></a>
 	</div>
-	<script src="../layui/layui.js" charset="utf-8"></script>
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
         layui.use('element', function(){
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
