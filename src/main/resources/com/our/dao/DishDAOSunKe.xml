@@ -5,3 +5,9 @@
 		resultType="com.our.pojo.Dishs">
 		select * from dishs
 	</select>
+	<select id="reCate" resultType="java.lang.String">
+		SELECT dishs_cate FROM dishs
+       GROUP BY dishs_cate 
+	</select>
+	 
+	</mapper>
