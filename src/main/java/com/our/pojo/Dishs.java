@@ -81,5 +81,5 @@ public class Dishs {
 				+ ", dishs_cate=" + dishs_cate + ", dishs_icon=" + dishs_icon + ", price=" + price + ", introduction="
 				+ introduction + ", recommend=" + recommend + "]";
 	}
-	
+
 }

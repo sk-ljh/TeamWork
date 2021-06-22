@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.our.pojo.Dishs;
 
+
 public interface DishsYangyuruiDAO {
 	//查询全部菜品
 	List<Dishs> listDishs();

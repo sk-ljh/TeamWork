@@ -12,8 +12,8 @@
 	<!-- <a href="/TeamWork/user/index.do">index.do...</a> -->
 	<%
 		List<User_details> userDetailsList = (List<User_details>)session.getAttribute("userDetailsList");
-		
-		for(User_details userDetails:userDetailsList){
+			
+			for(User_details userDetails:userDetailsList){
 	%>
 		<div>
 			<%=userDetails %>

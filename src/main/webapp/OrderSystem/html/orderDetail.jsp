@@ -20,12 +20,12 @@
 <body>
 	<%
 		User user;
-		String user_name="null";
-		if(session.getAttribute("loginUser")!=null)
-		{
-			 user=(User)session.getAttribute("loginUser");
-			 user_name=user.getUser_name();
-		}
+			String user_name="null";
+			if(session.getAttribute("loginUser")!=null)
+			{
+		 user=(User)session.getAttribute("loginUser");
+		 user_name=user.getUser_name();
+			}
 	%>
 	<ul class="layui-nav">
 		<h3>用户<%=user_name %>，您已登录。</h3>

@@ -23,13 +23,14 @@ public class UserLiboController {
 	}
 	
 	@RequestMapping("/dologin")
-	public String Login(User user,HttpSession session,HttpServletRequest request){           
+	public String Login(User user,HttpSession session,HttpServletRequest request){
+		System.out.println("haojg");
 		User loginUser = userLiboService.getUser(user);
 		if(loginUser != null){
 			session.setAttribute("loginUser", loginUser);
 			User_details details=userLiboService.getUserDetails(loginUser.getUser_id());
 			if(details.getRole()==1)
-				return "waiterHomepage";
+				return "waiterHomePage";
 			else if(details.getRole()==2)
 				return "chefHomepage";
 			else if(details.getRole()==3)

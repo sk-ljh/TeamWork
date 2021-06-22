@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.our.pojo.Dishs;
 
+
 public interface DishsMajunDAO {
 
 	// 查询所有菜品
