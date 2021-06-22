@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunke.DAO.DishMapperDAO">
+<select id="ListDishsAll"
+		resultType="com.our.pojo.Dishs">
+		select * from dishs
+	</select>
+	<select id="reCate" resultType="java.lang.String">
+		SELECT dishs_cate FROM dishs
+       GROUP BY dishs_cate 
+	</select>
+	 
+	</mapper>

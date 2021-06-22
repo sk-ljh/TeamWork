@@ -18,52 +18,16 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
+
+
 	<!-- 配置SpringMVC -->
-	<context:component-scan
-		base-package="com.youhao" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-	
-		<context:component-scan
-		base-package="com.sunke" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-
-<context:component-scan
-		base-package="com.libo" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-<context:component-scan
-		base-package="com.majun" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-
-
-<context:component-scan
-		base-package="com.wenlong" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-<context:component-scan
-		base-package="com.yangyurui" use-default-filters="false">
+		 <context:component-scan
+		base-package="com.*.controller" use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
 	
-	<context:component-scan
-		base-package="com.lishuwen" use-default-filters="false">
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
 	
 
 	<!-- JSP视图 -->
