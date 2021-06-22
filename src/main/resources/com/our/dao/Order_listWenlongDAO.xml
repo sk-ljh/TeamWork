@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wenlong.dao.Order_listWenlongDAO">
+
+	<!-- 配置查询结果集和DO对象的映射关系 -->
+	<!-- <resultMap type="FileInfoDO" id="filemap"> <id column="file_id" property="fileId"/> 
+		<result column="file_name" property="fileName"/> <result column="file_url" 
+		property="fileUrl"/> </resultMap> -->
+
+	<!-- 订单查询 -->
+	<select id="listOrder_list" resultType="com.our.pojo.Order_list">
+		select * from order_list
+	</select>
+	
+	<!-- 单笔订单查询 -->
+	<select id="getOrder_list" resultType="com.our.pojo.Order_list" parameterType="int">
+		select * from order_list where order_list_id = #{order_list_id}
+	</select>
+	
+	<!-- 订单删除 -->
+	<delete id="deleteOrder_list" parameterType="int">
+		delete from order_list where order_list_id = #{order_list_id}
+	</delete>
+
+</mapper>
