@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yangyurui.dao.DishsYangyuruiDAO">
+	<!--查询全部菜品-->
+	<select id="listDishs" resultType="com.our.pojo.Dishs">
+		select * from dishs
+	</select>
+	
+	<!-- 根据关键字查询菜品 -->
+	<select id="listDishsByKey" parameterType="String" resultType="com.our.pojo.Dishs">
+		select dishs_delete,dishs.dishs_id,dishs_name,dishs_cate,dishs_icon,price,introduction,recommend
+		 from dishs join dishs_detail on dishs.dishs_id=dishs_detail.dishs_id
+		 where dishs_name like #{key} or dishs_cate like #{key} or introduction like #{key}
+		 	or introduce_detail like #{key} or taste like #{key}
+	</select>
+	
+	<!-- 根据菜类查询菜品 -->
+	<select id="listDishsByCategory" parameterType="String" resultType="com.our.pojo.Dishs">
+		select * from dishs where dishs_cate=#{category}
+	</select>
+	
+	<!-- 增加新菜品 -->
+	<insert id="insertDishs" parameterType="com.our.pojo.Dishs">
+		insert into dishs 
+		values(#{dishs_delete},#{dishs_id},#{dishs_name},#{dishs_cate},#{dishs_icon},#{price},#{introduction},#{recommend})
+	</insert>
+	
+	<!-- 下架菜品 -->
+	<update id="removeDishs" parameterType="int">
+		update dishs set dishs_delete=1 where dishs_id=#{dish_id}
+	</update>
+	
+	<!-- 重新上架菜品 -->
+	<update id="restoreDishs" parameterType="int">
+		update dishs set dishs_delete=0 where dishs_id=#{dish_id}
+	</update>
+</mapper>
