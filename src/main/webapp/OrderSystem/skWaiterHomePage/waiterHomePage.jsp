@@ -226,9 +226,6 @@
     
 </body>
 
-
-
-
 	<script type="text/javascript">
 			var cate=new Vue({
 				el:"#cate",
