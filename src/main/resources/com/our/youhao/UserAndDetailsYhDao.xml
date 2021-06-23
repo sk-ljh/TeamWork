@@ -49,13 +49,12 @@
 	
 	<!-- 9、在user_details表中插入一条数据 -->
 	<insert id="insertUserDetails" parameterType="HashMap">
-		insert into user_details (user_details_id,user_id,name,icon,role) values(#{user_details},#{user_id},#{name},#{icon},#{role})
+		insert into user_details (user_details_id,user_id,name,icon,role) values(#{user_details_id},#{user_id},#{name},#{icon},#{role})
 	</insert>
-	
-	
-	
-	
-	
-	
-	
+
+	<!-- 10、通过user_name查找用户的删除状态 -->
+	<select id="getUserByName" parameterType="String" resultType="com.our.pojo.User">
+		select * from user where user_name=#{userName}
+	</select>
+
 </mapper>

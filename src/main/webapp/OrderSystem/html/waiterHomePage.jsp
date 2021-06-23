@@ -5,7 +5,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Live2D</title>
-    <% String path = request.getContextPath();%>
+    <%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	session.setAttribute("basePath", basePath);
+	%>
     <link rel="stylesheet" type="text/css" href="<%=path %>/OrderSystem/skWaiterHomePage/assets/waifu.css"/>
  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -24,6 +29,7 @@
 	 </noscript>
 </head>
 <body>
+<div id="cate">
 	<div class="menuHolder">
 		<div class="menuWindow">
 			<ul class="p1">
@@ -195,22 +201,63 @@
 		<div class="dish_body_head">
 			<h2 class="dish_body_h2">菜品一览</h2>
 		</div>
-		<div class="dish_body">
+		<div class="dish_body" >
+			<div class="dish_body_one">
 			<img src="<%=path %>/OrderSystem/skWaiterHomePage/images/cate.webp">
-			<div class="category" id="cate" >
-				
-				<div class="cate_item"  v-for="item in catedata" :key="item">
-					{{item}}
+			<div class="category">
+				<div class="cate_item"  v-for="item in catedata" :key="item" @click="getOneTypeDish(item)">
+					 {{item}}
 				</div>
 			</div>
-			
-			<div class="dish_body_item">
-				
 			</div>
-			
+			<div class="dish_body_items">
+				<div class="dish_body_item" v-for="item2 in dishlis" :key="item2.dishs_id">
+					<div class="dish_body_item_i">
+						<img :src="item2.dishs_icon"/>  
+					</div>
+					<div class="dish_body_item_mes">
+						<div class="dish_body_item_mes_top">
+						<span class="dishname">
+							{{item2.dishs_name}}
+						</span>
+						<span class="shortintro">
+							简介：{{item2.introduction}}
+						</span>
+						<span class="price">
+							￥：{{item2.price}}
+						</span>
+						</div>
+						<div class="dish_body_item_over">
+							<div class="index_intro">
+								详细介绍
+							</div>
+							<div class="eat_now">
+								就选你了
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="my_fenye">
+			   <el-pagination hide-on-single-page
+			        @size-change="handleSizechage"
+			        @current-change="handleCurrentChange"
+			        :current-page="queryinfo.pageNum"
+			        :page-sizes="[1,2,5,30]"
+			        :page-size="queryinfo.pageSize"
+			        layyout="total,sizes,prev,pager,next,jumper"
+			        :total="total"
+					
+			        background>
+			        </el-pagination>
+					</div>
+			</div>
 		</div>
 	</div>
- 
+	<div class="footer">
+		
+	</div>
 	<div class="waifu" id="waifu">
         <div class="waifu-tips" style="opacity: 1;"></div>
         <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
@@ -224,30 +271,65 @@
             <span class="fui-cross"></span>
         </div>
     </div>
-    
+    </div>
 </body>
-
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script type="text/javascript">
-			var cate=new Vue({
-				el:"#cate",
-				data:{
-					catedata:'',
-				},
-				methods:{
-					getdate:function(){
-						
-					axios.get("http://localhost:8090/TeamWork/getCate.do").then(function(data){			
-							cate.catedata=data.data.cate
-							console.log(cate.catedata)
-						});
-					}
-				}
-			})
-			window.onload=function(){
-				cate.getdate()
-			}
-			 
+	var cate=new Vue({
+		el:"#cate",
+		data:{
+			catedata:'',
+			queryinfo:{
+			            query:"",//查询的信息
+			            pageNum:1,//当前页
+			            pageSize:3,//每页最大数
+			        },
+			dishlis:[],
+			total:0,
+			putpage:'',
 			
+		},
+		methods:{
+			getdate:function(){
+			
+			axios.get("${basePath }getCate.do").then(function(data){			
+					cate.catedata=data.data.cate
+				});
+			},
+			
+			
+			getOneTypeDish:function(item){
+				this.queryinfo.query=item
+				console.log(this.queryinfo)
+				axios.post("${basePath }getOneTypeDish.do",this.queryinfo).then(function(data){
+					  cate.dishlis=data.data.data
+					  cate.total=data.data.numbers
+						console.log(data.data.data)
+					});
+			},
+			 handleSizechage:function(newSize){
+			        cate.queryinfo.pageSize=newSize
+			        cate.getOneTypeDish()
+			    },
+			    //上下一页的触发动作
+			    //最大数
+			    handleCurrentChange:function(newPage){
+					console.log(newPage)
+			        cate.queryinfo.pageNum=newPage
+			        cate.getOneTypeDish(cate.queryinfo.query)
+					 cate.queryinfo.pageNum=1
+			        },
+			    }
+			    //关闭对话框
+			
+			
+		
+	})
+	window.onload=function(){
+		cate.getdate()
+	}
+	 
 		
 		
 		
@@ -273,9 +355,128 @@
 	</script>
 	
 	<style type="text/css">
+	.dish_body{
+			display: flex;
+			flex-direction: column;
+			margin-left: 10%;
+			margin-right: 10%;
+		}
+	.footer{
+			width: 100%;
+			height: 300px;
+			background-color: #00F7DE;
+		}
+		.my_fenye{
+		    width: 400px;
+		    margin: 0 auto ;
+			margin-bottom: 50px;
+		}
+		.shortintro{
+			display: block;
+			height: 15px;
+			max-width: 360px;
+			text-overflow: ellipsis;
+			white-space:nowrap;
+			color: rgba(0,0,0,0.6);
+		}
+		.dishname{
+			text-align: center;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			font-size: 30px;
+			font-family: skfont;
+		}
+		.price{
+			font-family: skfont2;
+			color: red;
+			font-size: 16px;
+		}
+		.dish_body_item_mes_top{
+			display: flex;
+			flex-direction: column;
+			
+		}
+		.dish_body_item_i{
+			width: 360px;
+			min-width: 260px;
+			height: 250px;
+		}
+		.dish_body_item_i img{
+			width: 100%;
+			height: 100%;
+		}
+		.dish_body_item_mes{
+			height: 100px;
+			width: 100%;
+			
+			overflow: hidden;
+			position: relative;
+			
+		}
+		.dish_body_item_over{
+			height: 100px;
+			width: 100%;
+			background-color: #0000FF;
+			position: absolute;
+			top:100px;
+			left: 0px;
+			z-index: 999;
+			transition: 1s;
+			display: flex;
+		}
+		.index_intro,.eat_now{
+			flex:1;
+			background-color: white;
+			transition: 0.6s;
+			text-align: center;
+			line-height: 100px;
+			font-size: 20px;
+			font-family: skfont2;
+		}
+		.index_intro:hover{
+			background-color: #00FF00;
+			color:white ;
+		}
+		.eat_now:hover{
+			background-color: #FFC300;
+			color:white ;
+		}
+		.dish_body_item_mes:hover .dish_body_item_over{
+			transform: translateY(-100px);
+		}
+		.dish_body_items{
+			width: 90%;
+			min-width: 1300px;
+			background-color: white;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			margin-left: 10%;
+			margin-bottom: 50px;
+		}
+		.dish_body_item{
+			position：relative。
+			height:350px;
+			display: flex;
+			flex-direction: column;
+			  box-shadow: -11px 11px 1px rgba(0, 0, 0, 0.3);
+			margin-bottom: 10px;
+			flex-grow: 0;
+			
+		}
 		@font-face {
 			font-family:skfont2;
 			src: url(<%=path %>/OrderSystem/skWaiterHomePage/font/sk.ttf);
+		}
+		.dish_body_one{
+			display: flex;
+			margin-top: 30px;
+			background-color: white;
+		}
+		.dish_body_one{
+			display: flex;
+			margin-top: 30px;
+			background-color: white;
 		}
 		.dish_body{
 			display: flex;
@@ -316,11 +517,13 @@
 			
 		}
 		.dishs_dish2{
-			height: 100vh;
-			width: 100vw;
+			
+			
 			background-color: white;
 			background-size: cover;
 			background-repeat: no-repeat;
+			box-sizing: content-box;
+			padding-bottom: 100px;
 			
 		}
 		.dish_body_h2{

@@ -18,6 +18,7 @@
 	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
 	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 
 <body>
@@ -32,38 +33,38 @@
 	%>
 	<ul class="layui-nav">
 		<h3>用户<%=user_name %>，您已登录。</h3>
-		<li class="layui-nav-item"><a href="adminHomepage.jsp">首页</a></li>
-		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a>
 		</li>
 		<li class="layui-nav-item  layui-this"><a href="javascript:;">菜品管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertDish.jsp">添加菜品</a>
+					<a href="<%=path %>/OrderSystem/html/insertDish.jsp">添加菜品</a>
 				</dd>
 				<dd>
-					<a href="dishAdminList.jsp">更改菜品信息</a>
+					<a href="<%=path %>/Dish/listDishsAll.do">更改菜品信息</a>
 				</dd>
 			</dl></li>
 		<li class="layui-nav-item"><a href="javascript:;">用户管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertUser.jsp">添加用户</a>
+					<a href="<%=path %>/OrderSystem/html/insertUser.jsp">添加用户</a>
 				</dd>
 				<dd>
-					<a href="userList.jsp">更改用户信息</a>
+					<a href="<%=path %>/OrderSystem/html/userList.jsp">更改用户信息</a>
 				</dd>
 			</dl></li>
-		<li class="layui-nav-item"><a href="operateOrderForm.jsp">订单管理</a></li>
-		<li class="layui-nav-item"><a href="releaseNotice.jsp">发布公告</a></li>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/operateOrderForm.jsp">订单管理</a></li>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
-		<form class="search layui-form" action=""
+		<form class="search layui-form" action="<%=path %>/Dish/listDishsByKey.do"
 			style="position: relative; left: 62%">
 			<input lay-verify="required" lay-reqtext="请输入关键字！" type="text"
 				name="dishKey"
-				style="border-radius: 1.5em; height: 31px; width: 35%;"
+				style="border-radius: 1.5em; height: 32px; width: 35%;"
 				autocomplete="off" placeholder="输入关键字查询菜品" class="layui-input" />
 			<button class="layui-btn" type="submit" lay-submit=""
-				style="height: 28px; line-height: 28px; position: relative; left: 30.3%; top: -29.5px;">搜索</button>
+				style="height: 28px; line-height: 28px; position: relative; left: 31.3%; top: -29.6px;">搜索</button>
 		</form>
 	</ul>
 	<div class="dishAdminListMainBody">
@@ -72,48 +73,69 @@
 			<legend>菜品管理列表</legend>
 		</fieldset>
 		<div class="layui-form">
-			<table class="layui-table">
-				<colgroup>
-					<col width="150">
-					<col width="150">
-					<col width="200">
-					<col>
-				</colgroup>
-				<thead>
-					<tr class="title">
-						<th>编号</th>
-						<th>名称</th>
-						<th>简介</th>
-						<th>是否推荐</th>
-						<th>单价（元）</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="dishForm">
-						<td>010</td>
-						<td><a href="dishDetail.jsp">鱼香肉丝</a></td>
-						<td>一道咸鲜酸甜兼备的著名川菜。</td>
-						<td>是</td>
-						<td>15</td>
-						<td><a href="alterDishInf.jsp"><button type="button"
-									class="layui-btn layui-btn-warm">修改</button></a>
-							<button type="button" class="layui-btn layui-btn-warm"
-								onclick="return deleteOrder()">删除</button></td>
-					</tr>
-					<tr class="dishForm">
-						<td>002</td>
-						<td><a href="dishDetail.jsp">蒜苔回锅肉</a></td>
-						<td>是以熟带皮五花肉，青蒜苔，为原料制作的一道菜品。</td>
-						<td>否</td>
-						<td>15</td>
-						<td><a href="alterDishInf.jsp"><button type="button"
-									class="layui-btn layui-btn-warm">修改</button></a>
-							<button type="button" class="layui-btn layui-btn-warm"
-								onclick="return deleteOrder()">删除</button></td>
-					</tr>
-				</tbody>
-			</table>
+				<c:if test="${dishs==null}">
+					<jsp:forward page="test/AdminList.do"/>
+				</c:if>
+				<c:if test="${dishs[0]==null}">
+					<div class="book"><p>未找到目标！</p></div>
+				</c:if>
+				<c:if test="${dishs[0]!=null}">
+				<table class="layui-table">
+					<colgroup>
+						<col width="150">
+						<col width="150">
+						<col width="200">
+						<col>
+					</colgroup>
+					<thead>
+						<tr class="title">
+							<th>编号</th>
+							<th>菜品</th>
+							<th>简介</th>
+							<th>是否推荐</th>
+							<th>单价（元）</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+					<c:forEach var="dish" items="${dishs}">
+						<tr class="dishForm site-demo-flow" id="lazy_flow">
+							<td>${dish.dishs_id}</td>
+							<td>
+								<c:if test="${dish.dishs_delete==1}">
+									<a href="<%=path %>/OrderSystem/html/dishDetail.jsp">
+										<div title="${dish.dishs_name}（点击查看菜品详情）" class="removed" style="font-size:1.5em;color:white;position:absolute;top:50%;transform:translateY(-54%);width:250px;height:250px;background-color: rgba(145, 145, 145,0.7);;text-align:center;line-height:250px;">
+											已&nbsp&nbsp下&nbsp&nbsp架
+										</div>
+									</a>
+								</c:if>
+								<a href="<%=path %>/OrderSystem/html/dishDetail.jsp">
+									<img title="${dish.dishs_name}（点击查看菜品详情）" src="${dish.dishs_icon}" style="max-width:300px;width: 250px; height: 250px">
+								</a>
+								<a title="查看菜品详情" href="<%=path %>/OrderSystem/html/dishDetail.jsp">${dish.dishs_name}</a>
+							</td>
+							<td>${dish.introduction}</td>
+							<td>
+								<c:if test="${dish.recommend==1}">
+									是
+								</c:if>
+								<c:if test="${dish.recommend==0}">
+									否
+								</c:if>
+							</td>
+							<td>￥${dish.price}</td>
+							<td><a href="alterDishInf.jsp"><button title="修改菜品信息" type="button" class="layui-btn layui-btn-warm">修改</button></a>
+								<c:if test="${dish.dishs_delete==0}">
+									<button title="下架此菜品" type="button" class="layui-btn layui-btn-warm">下架</button></td>
+								</c:if>
+								<c:if test="${dish.dishs_delete==1}">
+									<button title="重新上架此菜品" type="button" style="font-size:0.6em !important" class="layui-btn layui-btn-warm">重新上架</button></td>
+								</c:if>
+						</tr>
+					</c:forEach>
+					</tbody>
+				</table>
+				</c:if>
 		</div>
 		<div id="pages" style="text-align: center;"></div>
 	</div>
@@ -146,6 +168,16 @@
                 next: '<em>→</em>'
             });
         });
+        layui.use('flow', function(){
+			  var flow = layui.flow;	  
+			  //图片懒加载
+			  flow.lazyimg({
+			    elem: '#lazy_flow>td>a>img'
+			    ,scrollElem: '#lazy_flow'
+			  });
+			  
+			});
+        
     </script>
 </body>
 

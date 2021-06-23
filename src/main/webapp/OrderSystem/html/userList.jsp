@@ -1,5 +1,6 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8" import="com.our.pojo.*"%>
+	pageEncoding="utf-8" import="com.our.pojo.*,java.util.*"%>
 <html lang="en">
 
 <head>
@@ -45,10 +46,10 @@
 		<li class="layui-nav-item layui-this"><a href="javascript:;">用户管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertUser.jsp">添加用户</a>
+					<a href="<%=path %>/OrderSystem/html/insertUser.jsp">添加用户</a>
 				</dd>
 				<dd>
-					<a href="userList.jsp">更改用户信息</a>
+					<a href="<%=path %>/user/getUserList.do">更改用户信息</a>
 				</dd>
 			</dl></li>
 
@@ -65,6 +66,7 @@
 				style="height: 28px; line-height: 28px; position: relative; left: 30.3%; top: -29.5px;">搜索</button>
 		</form>
 	</ul>
+	
 	<div class="userListMainBody">
 		<fieldset class="layui-elem-field layui-field-title"
 			style="margin-top: 50px;">
@@ -83,15 +85,26 @@
 				</tr>
 			</thead>
 			<tbody>
+				<%
+					List<User_details> userDetailsList=  (List<User_details>)session.getAttribute("userDetailsList");
+					for(User_details userDetails:userDetailsList){
+						if(userDetails.getRole()!=3){
+				%>
 				<tr class="user">
-					<td>001</td>
-					<td>张三</td>
-					<td>男</td>
-					<td>服务员</td>
-					<td>15111123389</td>
+					<td><%=userDetails.getUser_id() %></td>
+					<td><%=userDetails.getName() %></td>
+					<td><%=userDetails.getSex() %></td>
+					<%
+						HashMap<Integer,String> hm = new HashMap<Integer,String>();
+						hm.put(1, "服务员");
+						hm.put(2, "后厨");
+						hm.put(3, "管理员");
+					%>
+					<td><%=hm.get(userDetails.getRole())%></td>
+					<td><%=userDetails.getPhone() %></td>
 					<td>
 						<div>
-							<a href="alterUserInf.jsp"><button type="button"
+							<a href="<%=path %>/OrderSystem/html/alterUserInf.jsp"><button type="button"
 									class="layui-btn" style="height: 40px !important">修改信息</button></a>
 							<button data-method="confirm" id="deleteUser" type="button"
 								class="layui-btn" style="height: 40px !important">删除用户</button>
@@ -101,11 +114,17 @@
 								class="layui-btn"
 								style="background: linear-gradient(to right, rgb(253, 79, 79) 10%, rgb(255, 115, 0) 100%); height: 40px !important; width: 80% !important">查看用户详情</button></a></td>
 				</tr>
+				<%
+						}
+					}
+				%>
 			</tbody>
 		</table>
 
 		<div id="pages" style="text-align: center;"></div>
 	</div>
+
+	
 	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
 		layui.use('element', function () {

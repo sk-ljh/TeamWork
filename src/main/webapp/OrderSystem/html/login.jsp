@@ -32,7 +32,7 @@
 					<label class="layui-form-label">用户角色</label>
 					<div class="layui-input-inline">
 						<select lay-reqtext="未选择用户角色！" lay-verify="required"
-							name="identity" lay-filter="identity">
+							name="user_id" lay-filter="identity">
 							<option value="" selected=""></option>
 							<option value="1">服务员</option>
 							<option value="2">后厨</option>

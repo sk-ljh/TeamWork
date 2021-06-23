@@ -1,15 +1,15 @@
-package com.majun.service;
+package com.majun.dao;
 
 import java.util.List;
 import java.util.Map;
 
 import com.our.pojo.Dishs_detail;
 
-public interface Dishs_detailMajunService {
+public interface DishsdetailMajunDao {
 
 	// 查询所有菜品详情
-	List<Dishs_detail> listDishs_detail();
+	List<Dishs_detail> listDishsdetail();
 
 	// 修改菜品详情
-	int updateDishs_detail(Map map);
+	int updateDishsdetail(Map map);
 }

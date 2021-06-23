@@ -6,7 +6,7 @@ import java.util.Map;
 import com.our.pojo.Dishs;
 
 
-public interface DishsMajunDAO {
+public interface DishsMajunDao {
 
 	// 查询所有菜品
 	List<Dishs> listDishs();

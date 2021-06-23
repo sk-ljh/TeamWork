@@ -60,7 +60,7 @@
 	</ul>
 	<div class="alterUserInfMainbody">
 		<div class="alterInf">
-			<form class="layui-form layui-form-pane" action="">
+			<form class="layui-form layui-form-pane" action="<%=path %>/user/insertUser.do">
 				<fieldset class="layui-elem-field layui-field-title"
 					style="margin-top: 30px;">
 					<legend>上传用户头像图片</legend>

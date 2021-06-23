@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wenlong.dao.Order_historyWenlongDAO">
+<mapper namespace="com.wenlong.dao.OrderHistoryWenlongDao">
 
 	<!-- 配置查询结果集和DO对象的映射关系 -->
 	<!-- <resultMap type="FileInfoDO" id="filemap"> <id column="file_id" property="fileId"/> 
@@ -8,12 +8,12 @@
 		property="fileUrl"/> </resultMap> -->
 
 	<!-- 历史订单查询 -->
-	<select id="listOrder_history" resultType="com.our.pojo.Order_history">
+	<select id="listOrderHistory" resultType="com.our.pojo.Order_history">
 		select * from order_history
 	</select>
 	
 	<!-- 添加历史订单 -->
-	<insert id="insertOrder_history" parameterType="com.our.pojo.Order_history">
+	<insert id="insertOrderHistory" parameterType="com.our.pojo.Order_history">
 		insert into order_history values(#{table_number},
 										 #{total_price},
 										 #{begin_time},

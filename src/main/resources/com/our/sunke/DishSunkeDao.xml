@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunke.dao.DishSunkeDao">
+	<select id="reCate" resultType="java.lang.String">
+		SELECT dishs_cate FROM dishs
+		GROUP BY dishs_cate
+	</select>
+	
+	<select id="getDishCount" resultType="java.lang.Integer">
+       select count(*) from dishs where dishs_cate=#{dishCate}
+    </select>
+    <select id="listDishsAll" resultType="com.our.pojo.Dishs">
+    select * from dishs where dishs_cate=#{cateName}
+       LIMIT #{pageStart},#{pageSize}
+    </select>
+</mapper>

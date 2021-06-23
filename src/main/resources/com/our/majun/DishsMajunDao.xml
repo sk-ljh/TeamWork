@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.majun.dao.DishsMajunDAO">
+<mapper namespace="com.majun.dao.DishsMajunDao">
 
 	<!-- 配置查询结果集和DO对象的映射关系 -->
 	<!-- <resultMap type="FileInfoDO" id="filemap"> <id column="file_id" property="fileId"/> 

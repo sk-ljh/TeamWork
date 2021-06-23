@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.our.pojo.User;
 
-public interface UserMajunDAO {
+public interface UserMajunDao {
 	// 查询个人用户信息
 	User getUser(String user_name);
 

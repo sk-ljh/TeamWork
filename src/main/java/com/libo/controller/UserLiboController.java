@@ -21,20 +21,29 @@ public class UserLiboController {
 	public String login(){
 		return "login";
 	}
-	
+	//用户登录
 	@RequestMapping("/dologin")
 	public String Login(User user,HttpSession session,HttpServletRequest request){
-		System.out.println("haojg");
+		System.out.println(user);
+		int role=user.getUser_id();
 		User loginUser = userLiboService.getUser(user);
 		if(loginUser != null){
-			session.setAttribute("loginUser", loginUser);
 			User_details details=userLiboService.getUserDetails(loginUser.getUser_id());
-			if(details.getRole()==1)
-				return "waiterHomePage";
-			else if(details.getRole()==2)
-				return "chefHomepage";
-			else if(details.getRole()==3)
-				return "adminHomepage";
+			if(role==details.getRole())
+			{	
+				//存储用户信息表
+				session.setAttribute("loginUser", loginUser);
+				//存储用户详细信息表
+				session.setAttribute("Userdetails", details);
+				if(details.getRole()==1)
+					return "waiterHomePage";
+				else if(details.getRole()==2)
+					return "chefHomepage";
+				else if(details.getRole()==3)
+					return "adminHomepage";
+				else
+					return "login";
+			}
 			else
 				return "login";
 		}

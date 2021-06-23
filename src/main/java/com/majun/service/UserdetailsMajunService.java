@@ -4,11 +4,11 @@ import java.util.Map;
 
 import com.our.pojo.User_details;
 
-public interface User_detailsMajunService {
+public interface UserdetailsMajunService {
 	// 查询用户详情
-	User_details getUser_details(String name);
+	User_details getUserdetails(String name);
 
 	// 更新用户详情
-	public int updateUser_details(Map map);
+	public int updateUserdetails(Map map);
 
 }

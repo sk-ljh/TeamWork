@@ -5,7 +5,10 @@ import java.util.List;
 import com.our.pojo.Dishs;
 
 
-public interface DishsYangyuruiDAO {
+public interface DishsYangyuruiDao {
+	//查询当前菜品数量
+	int getCurrentDishNumber();
+	
 	//查询全部菜品
 	List<Dishs> listDishs();
 	
