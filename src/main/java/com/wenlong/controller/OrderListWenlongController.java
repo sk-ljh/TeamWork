@@ -72,7 +72,7 @@ public class OrderListWenlongController {
 		List<Dishs> dishsList=dishsWenlongService.listDishs();
 		for(int i=59; i<109; i++) {
 			Random random = new Random();
-			int dishs_id=random.nextInt(dishsList.size()-1)+1;
+			int dishs_id=random.nextInt(dishsList.size())+1;
 			Dishs dishs=dishsList.get(dishs_id);
 			String dishs_name=dishs.getDishs_name();
 			int number=random.nextInt(10)+1;

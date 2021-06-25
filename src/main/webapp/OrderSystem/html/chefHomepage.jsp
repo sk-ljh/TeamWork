@@ -107,8 +107,6 @@
 						//删除行
 						tbody.removeChild(tr);
 						layer.msg('成功结束该条烹饪记录！', {icon: 1});
-						
-						
 					}
 					else {
 						btns[i].classList.remove("toBcooked");

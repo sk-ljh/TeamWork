@@ -28,7 +28,7 @@
 	</update>
 	
 	<insert id="insertOrderList" parameterType="com.our.pojo.Order_list">
-		insert into order_list values(#{order_list},
+		insert into order_list values(#{dishs_id},
 									  #{dishs_name},
 									  #{number},
 									  #{price},
