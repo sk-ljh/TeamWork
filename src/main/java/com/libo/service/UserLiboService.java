@@ -6,4 +6,5 @@ import com.our.pojo.User_details;
 public interface UserLiboService {
 	public User getUser(User user);
 	public User_details getUserDetails(int user_id);
+	public User getUserFromName(String user_name);
 }

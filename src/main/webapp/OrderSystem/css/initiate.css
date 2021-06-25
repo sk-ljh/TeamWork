@@ -1,6 +1,9 @@
 .waiter_nav{
     text-align: center;
 }
+body{
+	width:100%;
+}
 fieldset{
     text-align: center;
 }
@@ -38,9 +41,7 @@ h3{
     left:50%;
     transform: translateX(-50%);
 }
-.adminHomepagemainBody{
-    width:92%;
-}
+
 .orderDetailMainBody td,.cartMainBody td{
     font-size:0.9em !important;
 }
@@ -80,13 +81,13 @@ button{
     position: relative;
     left:110%;
     top:-40px;
-    background-color: rgb(143, 143, 143);
+    background-color: beige;
 }
 #btn{
     border-radius: 2em !important;
-    width:50%;
+    width:60%;
     height:40px !important;
-    font-size:1.2em
+    font-size:0.9em;
 }
 .toBcooked{
     background: linear-gradient(to left, #186dec 10%,#8a31f0 100%);
@@ -94,3 +95,4 @@ button{
 .cooking{
     background:linear-gradient(to right,rgb(253, 79, 79) 10%,rgb(255, 115, 0) 100%);
 }
+

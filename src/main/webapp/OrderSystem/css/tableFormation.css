@@ -8,6 +8,15 @@
 .cartMainBody .cartRecord:hover,.chefHomepageMainBody .cook:hover,.userListMainBody .user:hover{
     background-color: #ffe89d !important;
 }
+.dishAdminListMainBody .dishForm:hover img,.operateFormMainBody .orderForm:hover img,.orderFormListMainBody .orderForm:hover img,
+.cartMainBody .cartRecord:hover img,.chefHomepageMainBody .cook:hover img,.userListMainBody .user:hover img
+{
+	-webkit-filter: brightness(110%); 
+	filter: brightness(110%);
+}
+.dishAdminListMainBody .dishForm:hover .removed{
+	background-color:rgba(145, 145, 145,0.5) !important;
+}
 table tr{
     height:50px;
     background-color: #FAFAFA
@@ -27,7 +36,6 @@ table td button{
     line-height:30px !important;
     text-align: center !important;
     font-size:0.8em;
-    width:20%;
     margin-right:10px;
 }
 .operateFormMainBody #pages{
@@ -36,12 +44,79 @@ table td button{
 }
 .dishAdminListMainBody #pages{
     position: relative;
-    top:300px;
+    top:50px;
 }
 .userListMainBody #pages{
     position: relative;
     top:330px;
 }
+td img{
+	-webkit-filter: brightness(90%); 
+	filter: brightness(90%);
+}
 .fa:hover{
-    transform: scale(1.2,1.2);
+    font-weight:600;
+}
+.dishCategories{
+	position:fixed;
+	top:55%;
+	transform:translateY(-50%);
+	left:-7%;
+	z-index:999;
+}
+.dishCategories ul{
+    background:linear-gradient(to bottom, #fcc40e 10%,#f76503 100%);
+    padding:20px 30px 20px 30px;
+	border-top-right-radius:2em;
+	border-bottom-right-radius:2em;
+}
+
+.dishCategories li{
+	padding-bottom:8px;
+	padding-top:8px;
+	width:100%;
+}
+.dishCategories a{
+	color:rgba(255, 255, 255, 0.9);
+	font-size:1.5em;
+}
+.dishCategories ul>li:hover{
+	border-bottom:2px solid #5FB878; 
+}
+.dishCategories ul>li:hover a{
+	color:white;
+	font-weight:550;
+}
+.dishCategories ul .selected{
+	color:white;
+	font-weight:550;
+	border-bottom:2px solid #5FB878; 
+}
+.dishCategories>a>div{
+	background:linear-gradient(to bottom, #fcc40e 10%,#f76503 100%);
+	position:absolute;
+	left:100%;
+	color:white;
+	height:80px;
+	text-align:center;
+	width:50%;
+	top:50%;
+	transform:translateY(-50%);
+}
+.dishCategories>a>div>i{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+}
+.moveR{
+	transition:0.8s;
+	transform:translate(92%,-50%);
+}
+.moveL{
+	transition:0.8s;
+	transform:translate(0%,-50%);
+}
+.toRestore{
+	background:linear-gradient(to right,rgb(253, 79, 79) 10%,rgb(255, 115, 0) 100%);
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.our.pojo.Dishs;
+import com.our.pojo.Order_history;
+import com.sunke.entity.OrderHistory_List;
 import com.sunke.entity.QueryInfo;
 import com.sunke.service.*;
 import com.sunke.service.impl.DishSunkeServiceImpl;
@@ -26,7 +28,6 @@ public class DishSunkeController {
 	@CrossOrigin
 	@ResponseBody
 	public Object getOneTypeDish(@RequestBody QueryInfo qinfo) {
-		System.out.println(qinfo.toString());
 		Map<String, Object> map= dishSunkeService.getOneTypeDish(qinfo);
 		return map;
 	}
@@ -42,5 +43,20 @@ public class DishSunkeController {
 		return map;
 	}
 	
+	@RequestMapping("/getTableNumber")
+	@CrossOrigin
+	@ResponseBody
+	public Object getTableNumber() {		
+		Map<String, Object> map=dishSunkeService.getTableNum();
+		return map;
+	}
 	
+	@RequestMapping("/Buy")
+	@CrossOrigin
+	@ResponseBody
+	public int  Buy(@RequestBody List<OrderHistory_List> buyBody) {		
+		int newOrderId=dishSunkeService.InsertHistory(buyBody);
+		return newOrderId;
+	}
+
 }

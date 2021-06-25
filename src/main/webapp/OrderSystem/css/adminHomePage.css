@@ -1,0 +1,9 @@
+.adminHomepagemainBody{
+    width:92%;
+}
+.adminHomepagemainBody th,.adminHomepagemainBody td{
+	font-size:0.8em !important;
+}
+.orderForm span{
+	font-size:0.8em;
+}

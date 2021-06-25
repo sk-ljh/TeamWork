@@ -16,39 +16,65 @@ public class UserYouhaoServicelmpl implements UserYouhaoService {
 
 	@Autowired
 	private UserAndDetailsYhDao userADDao;
-	
+
+	/* 1、得到所有没有被假删除的userList */
+	@Override
+	public List<User> getUserList() {
+		return userADDao.getUserList();
+	}
+
+	/* 2、得到用户详情列表 */
 	@Override
 	public List<User_details> getUserDetailsList() {
 		return userADDao.getUserDetailsList();
 	}
+
+	/* 3、根据user_id查询某一用户详细信息 */
+	@Override
+	public User_details getUserDetails(int user_id) {
+		return userADDao.getUserDetails(user_id);
+	}
 	
-	/*7、在user表中查找user_id列的最大值*/
+	/* 4、更新用户详情表中的icon和role */
+	@Override
+	public int updateUserDetails(HashMap<String, Object> hm) {
+		return userADDao.updateUserDetails(hm);
+	}
+
+	/* 5、更新用户表中的密码 */
+	@Override
+	public int updateUserPwd(HashMap<String, Object> hm) {
+		return userADDao.updateUserPwd(hm);
+	}
+
+	/* 6、通过user_id假删除用户 */
+	@Override
+	public int deleteUserByid(int user_id) {
+		return userADDao.deleteUserByid(user_id);
+	}
+
+	/* 7、在user表中查找user_id列的最大值 */
 	@Override
 	public int getMaxUserId() {
 		return userADDao.getMaxUserId();
 	}
-	
-	/*8、向user表中插入一条记录*/
+
+	/* 8、向user表中插入一条记录 */
 	@Override
-	public int insertUser(HashMap<String,Object> hm) {
+	public int insertUser(HashMap<String, Object> hm) {
 		return userADDao.insertUser(hm);
 	}
-	
-	/*9、在user_details表中插入一条数据*/
-	public int insertUserDetails(HashMap<String,Object> hm) {
+
+	/* 9、在user_details表中插入一条数据 */
+	@Override
+	public int insertUserDetails(HashMap<String, Object> hm) {
 		return userADDao.insertUserDetails(hm);
 	}
-	/*10、通过user_name查找用户的删除状态*/
+
+	/* 10、通过user_name查找用户的删除状态 */
+	@Override
 	public User getUserByName(String name) {
 		return userADDao.getUserByName(name);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

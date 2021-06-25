@@ -9,7 +9,7 @@
 	<!-- 查询用户详细 -->
 	<select id="getUserdetails"
 		resultType="com.our.pojo.User_details">
-		select * from user_details where name = #{name}
+		select * from user_details where user_id = #{user_id}
 	</select>
 
 	<!-- 修改用户详细信息 -->
@@ -23,7 +23,7 @@
 				phone = #{phone},
 			</if>
 		</set>
-		where name = #{name}
+		where user_id = #{user_id}
 		<!--update user_details set icon = #{icon},sex = #{sex},phone = #{phone} 
 			where name = #{name} -->
 	</update>

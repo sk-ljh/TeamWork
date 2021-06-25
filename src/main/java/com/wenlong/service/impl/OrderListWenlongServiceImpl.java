@@ -21,17 +21,29 @@ public class OrderListWenlongServiceImpl implements OrderListWenlongService{
 		// TODO Auto-generated method stub
 		return orderListWenlongDao.listOrderList();
 	}
-	
-	@Override
-	public Order_list getOrderList(int order_list_id) {
-		// TODO Auto-generated method stub
-		return orderListWenlongDao.getOrderList(order_list_id);
-	}
 
 	@Override
 	public void deleteOrderList(int order_list_id) {
 		// TODO Auto-generated method stub
 		orderListWenlongDao.deleteOrderList(order_list_id);
+	}
+
+	@Override
+	public void updateOrderList(Order_list order_list) {
+		// TODO Auto-generated method stub
+		orderListWenlongDao.updateOrderList(order_list);
+	}
+
+	@Override
+	public void insertOrderList(Order_list order_list) {
+		// TODO Auto-generated method stub
+		orderListWenlongDao.insertOrderList(order_list);
+	}
+
+	@Override
+	public Order_list getOrderList(int order_list_id) {
+		// TODO Auto-generated method stub
+		return orderListWenlongDao.getOrderList(order_list_id);
 	}
 
 }

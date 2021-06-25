@@ -9,7 +9,12 @@
 
 	<!-- 历史订单查询 -->
 	<select id="listOrderHistory" resultType="com.our.pojo.Order_history">
-		select * from order_history
+		select * from order_history where order_delete=0
+	</select>
+	
+	<!-- 查询桌号 -->
+	<select id="getTableNumber" resultType="int" parameterType="int">
+		select table_number from order_history where order_delete=0 and payment_state=0 and order_id=#{order_id}
 	</select>
 	
 	<!-- 添加历史订单 -->

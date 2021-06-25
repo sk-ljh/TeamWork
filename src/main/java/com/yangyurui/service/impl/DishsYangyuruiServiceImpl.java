@@ -1,6 +1,7 @@
 package com.yangyurui.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,24 +40,34 @@ public class DishsYangyuruiServiceImpl implements DishsYangyuruiService{
 		return dishDao.listDishsByCategory(category);
 	}
 	
+	//按id查询菜品
+	@Override
+	public Dishs getDishByDishId(int dishId) {
+		return dishDao.getDishByDishId(dishId).get(0);
+	}
+	
 	//增加新菜品
 	@Override
 	public void insertDishs(String name,String category,String icon,float price,String introduction,int recom) {
 		int res=dishDao.insertDishs(new Dishs(0,dishDao.getCurrentDishNumber()+1,name,category,icon,price,introduction,recom));
-		System.out.println(res);
 	}
 	
 	//下架菜品
 	@Override
 	public void removeDishs(int dish_id) {
 		int res=dishDao.removeDishs(dish_id);
-		System.out.println(res);
 	}
 	
 	//重新上架某菜品
 	@Override
 	public void restoreDishs(int dish_id) {
 		int res=dishDao.restoreDishs(dish_id);
-		System.out.println(res);
+	}
+	
+	// 修改菜品
+	@Override
+	public int updateDishs(Map map) {
+		// TODO 自动生成的方法存根
+		return dishDao.updateDishs(map);
 	}
 }

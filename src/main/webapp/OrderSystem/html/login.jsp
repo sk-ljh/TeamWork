@@ -9,7 +9,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<% String path = request.getContextPath();%>
+ <%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	session.setAttribute("basePath", basePath);
+	%>
 <link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
 <link rel="stylesheet" href="<%=path %>/OrderSystem/css/tableFormation.css">
 <link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
@@ -44,9 +49,10 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">用户名</label>
 					<div class="layui-input-inline">
-						<input lay-reqtext="请输入用户名！" lay-verify="required" type="text"
+						<input id="check-username" lay-reqtext="请输入用户名！" lay-verify="required" type="text"
 							name="user_name" autocomplete="off" placeholder="请输入用户名"
 							class="layui-input" />
+						<span class="help-block"></span>
 					</div>
 				</div>
 				<div class="layui-form-item">
@@ -73,6 +79,29 @@
 			</div>
 		</form>
 	</div>
+	<style typle="text/css">
+		body{
+		    margin:0;
+		    padding: 0;
+		    background-image: url("${basePath }OrderSystem/img/login_background.jpeg");
+		    background-repeat:no-repeat;
+		    background-attachment:fixed;
+		    background-size:100% 100%; 
+		}
+		#check-username{
+			margin-bottom:10px;
+		}
+		.help-block{
+			color:red;
+			font-family: 华文行楷;
+			FILTER: shadow(color=#af2dco);
+			LINE-HEIGHT: 100%;
+			color:rgb(93,215,200);
+			font-size:18px;
+			
+		}
+		
+	</style>
 	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
 		var show_num = [];
@@ -113,18 +142,77 @@
 			});
 
 			//监听提交
-			form.on('submit(demo2)', function (data) {
+			form.on('submit(demo1)', function (data) {
+				console.log(data.field);
 				 $.ajax({
-			            url: "<%=path %>/dologin.do",
+			            url: "${basePath }dologin.do",
 			            type: "POST",
-			            data:data.field,
+			            data:JSON.stringify(data.field),
+				        dataType: "json",
+				        contentType:"application/json",
 			            success: function(data) {
-			             	alert(data);
+			             	console.log(data);
+			             	if(data.role!=null)
+			             	{
+			             		if(data.role===1)
+			             			window.location.href="${basePath }OrderSystem/html/waiterHomePage.jsp";
+			             		else if(data.role===2)
+			             			window.location.href="${basePath }OrderSystem/html/chefHomepage.jsp";
+			             		else if(data.role==3)
+			             			window.location.href="${basePath }OrderSystem/html/adminHomepage.jsp";
+			             	}
+			             	else
+			             	{
+			             		alert(data.Message);
+			             	}
 			            }
 			        });
 				    return false;
 				  });
 		});
+		
+		function show_validate_msg(ele,status,msg){
+			$(ele).parent().removeClass("has-success has-error");
+			$(ele).next("span").text("");
+			if("success"==status)
+			{
+				$(ele).parent().addClass("has-success");
+				$(ele).next("span").text(msg);
+			}
+			else
+			{
+				$(ele).parent().addClass("has-error");
+				$(ele).next("span").text(msg);
+			}
+		}
+		
+		$("#check-username").change(function(){
+				var username=this.value;
+				console.log(username);
+				var a={'user_name': username};
+			//校验用户名是否存在
+				$.ajax({
+				    url: "${basePath }checkuser.do",
+				    data:JSON.stringify(a) ,
+				    type: "POST",
+				    dataType: "json",
+				    contentType:"application/json",
+				    success: function(data) {
+				       if(data.Message=="用户不存在")
+				    	{
+				    	   show_validate_msg("#check-username","error","用户不存在");
+				    		console.log("用户不存在")   
+				    	}
+				       else
+				    	{
+				    	   show_validate_msg("#check-username","success","用户存在");
+				    	   	console.log("用户存在")
+				    	}
+				       
+				    }
+			});
+
+		})
 		// function sublim() {
 		// 	var val = document.getElementById("text").value;
 		// 	var num = show_num.join("");
@@ -151,7 +239,7 @@
 
 			for (var i = 0; i <= 3; i++) {
 				var j = Math.floor(Math.random() * aLength); //获取到随机的索引值
-				var deg = Math.random() * 30 * Math.PI / 180; //产生0~30之间的随机弧度
+				var deg = Math.random() * 30 * Math.PI / 180; //产生0~30
 				var txt = aCode[j]; //得到随机的一个内容
 				show_num[i] = txt;
 				var x = 10 + i * 20; //文字在canvas上的x坐标

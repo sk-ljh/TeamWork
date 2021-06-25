@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yangyurui.dao.Dishs_detailYangyuruiDAO">
+<mapper namespace="com.yangyurui.dao.DishsDetailYangyuruiDao">
+
+	<!--查询菜品详情数量-->
+	<select id="getCurrentDishDetailNumber" resultType="int">
+		select count(*) from dishs_detail
+	</select>
+
 	<!--查询菜品详情-->
 	<select id="getDishDetail" parameterType="int" resultType="com.our.pojo.Dishs_detail">
 		select * from dishs_detail where dishs_id=#{dish_id}
 	</select>
+	
 	<!-- 增加新菜品详情 -->
-	<insert id="insertDishs_detail" parameterType="com.our.pojo.Dishs_detail">
+	<insert id="insertDishsDetail" parameterType="com.our.pojo.Dishs_detail">
 		insert into dishs_detail 
 		values(#{dishs_detail_id},#{dishs_id},#{supplier},#{introduce_detail},#{size},#{taste})
 	</insert>
+	
+	<!-- 菜品详细修改 -->
+	<update id="updateDishsdetail" parameterType="map">
+		update Dishs_detail set
+		introduce_detail = #{introduce_detail}
+		where dishs_id=#{dishs_id};
+	</update>
 </mapper>

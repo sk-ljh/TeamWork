@@ -9,10 +9,16 @@ public interface OrderListWenlongService {
 			//查询订单详情
 			List<Order_list> listOrderList();
 			
-			//单笔订单查询
+			//查询单笔订单详情
 			Order_list getOrderList(int order_list_id);
 			
 			//删除订单
 			void deleteOrderList(int order_list_id);
+			
+			//更新订单状态
+			void updateOrderList(Order_list order_list);
+			
+			//添加订单
+			void insertOrderList(Order_list order_list);
 			
 }

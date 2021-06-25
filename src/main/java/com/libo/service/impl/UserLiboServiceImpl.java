@@ -22,5 +22,9 @@ public class UserLiboServiceImpl implements UserLiboService{
 	public User_details getUserDetails(int user_id) {
 		return userDetailsLibo.getUser_details(user_id);
 	}
+	@Override
+	public User getUserFromName(String user_name) {
+		return userLiboDao.getUserFromName(user_name);
+	}
 	
 }

@@ -13,4 +13,26 @@
     select * from dishs where dishs_cate=#{cateName}
        LIMIT #{pageStart},#{pageSize}
     </select>
+    <select id="rePlace" resultType="java.lang.String">
+    SELECT table_cate FROM table_s
+      group by table_cate
+    </select>
+    <select id="reNum" resultType="java.lang.Integer">
+      SELECT table_number FROM table_s
+      where table_cate=#{placeName}
+    </select>
+     <select id="reStatus" resultType="com.sunke.entity.TableStatus">
+      SELECT table_status,table_number FROM table_s
+    </select>
+    <select id="getMaxId" resultType="java.lang.Integer">
+    SELECT max(order_id) FROM order_history
+    </select>
+   <insert id="insertHistory">
+       INSERT INTO order_history (`table_number`, `total_price`, `begin_time`, `payment_state`, `order_id`, `user_id`, `order_delete`)
+        VALUES (#{body.table_number}, #{body.total_price}, #{body.begin_time}, #{body.payment_state}, #{body.order_id}, #{body.user_id}, #{body.order_delete});
+    </insert>
+     <insert id="insertDishList">
+      INSERT INTO `order_list` (`dishs_id`, `dishs_name`, `number`, `price`, `cook_state`, `order_id`) 
+      VALUES (#{body.dishs_id}, #{body.dishs_name}, #{body.number}, #{body.price}, #{body.cook_state}, #{body.order_id});
+    </insert>
 </mapper>

@@ -9,7 +9,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<% String path = request.getContextPath();%>
+ <%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	String pathPort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/";
+	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", pathPort);
+	%>
 <link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
 <link rel="stylesheet" href="<%=path %>/OrderSystem/css/InfManage.css">
 <link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
@@ -31,31 +39,36 @@
 			}
 	%>
 	<ul class="layui-nav">
-		<h3>用户<%=user_name %>，您已登录。</h3>
-		<li class="layui-nav-item"><a href="adminHomepage.jsp">首页</a></li>
-		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
-		</li>
+		<h3>
+			用户<%=user_name%>，您已登录。
+		</h3>
+		<li class="layui-nav-item layui-this"><a
+			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertDish.jsp">添加菜品</a>
+					<a href="<%=path%>/OrderSystem/html/insertDish.jsp">添加菜品</a>
 				</dd>
 				<dd>
-					<a href="dishAdminList.jsp">更改菜品信息</a>
+					<a href="<%=path%>/Dish/listDishsAll.do">更改菜品信息</a>
 				</dd>
 			</dl></li>
-		<li class="layui-nav-item layui-this"><a href="javascript:;">用户管理</a>
+		<li class="layui-nav-item"><a href="javascript:;">用户管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertUser.jsp">添加用户</a>
+					<a href="<%=path%>/OrderSystem/html/insertUser.jsp">添加用户</a>
 				</dd>
 				<dd>
-					<a href="userList.jsp">更改用户信息</a>
+					<a href="<%=path%>/user/getUserList.do">更改用户信息</a>
 				</dd>
 			</dl></li>
 
-		<li class="layui-nav-item"><a href="operateOrderForm.jsp">订单管理</a></li>
-		<li class="layui-nav-item"><a href="releaseNotice.jsp">发布公告</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
 	</ul>
 	<div class="alterUserInfMainbody">
@@ -65,6 +78,7 @@
 					style="margin-top: 30px;">
 					<legend>上传用户头像图片</legend>
 				</fieldset>
+				
 				<div class="layui-upload-drag" id="test10">
 					<i class="layui-icon"></i>
 					<p>点击上传，或将文件拖拽到此处</p>
@@ -73,6 +87,8 @@
 						<img src="" alt="上传成功后渲染" style="width: 200px; height: 200px">
 					</div>
 				</div>
+				
+				
 				<a name="list-progress"> </a>
 				<fieldset class="layui-elem-field layui-field-title"
 					style="margin-top: 30px;">
@@ -133,12 +149,13 @@
       //拖拽上传
       upload.render({
         elem: '#test10'
-        , url: 'https://httpbin.org/post' //改成您自己的上传接口
+        , url: '${basePath }file/doupload.do' //改成您自己的上传接口
         , accept: 'file' //普通文件
         , exts: 'jpg|png|gif|tiff|jpeg' //只允许上传压缩文件
+        , field:'mulFile'
         , done: function (res) {
           layer.msg('上传成功');
-          layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.files.file);
+          layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src',res.iconUrl);
           console.log(res)
         }
       });

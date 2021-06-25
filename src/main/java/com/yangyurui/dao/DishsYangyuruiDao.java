@@ -1,6 +1,7 @@
 package com.yangyurui.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.our.pojo.Dishs;
 
@@ -18,6 +19,9 @@ public interface DishsYangyuruiDao {
 	//根据菜类查询菜品
 	List<Dishs> listDishsByCategory(String category);
 	
+	//按id查询菜品
+	List<Dishs> getDishByDishId(int dishId);
+	
 	//增加新菜品
 	int insertDishs(Dishs dish);
 	
@@ -26,4 +30,7 @@ public interface DishsYangyuruiDao {
 	
 	//重新上架菜品
 	int restoreDishs(int dish_id);
+
+	// 修改菜品
+	int updateDishs(Map map);
 }

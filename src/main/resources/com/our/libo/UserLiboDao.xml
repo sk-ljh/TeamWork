@@ -4,7 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.libo.dao.UserLiboDao">
   <select id="getUser" parameterType="com.our.pojo.User" resultType="com.our.pojo.User">
-    select * from User where user_name=#{user_name} and password=#{password} and user_delete=0
+    select * from User
+    <where>
+     user_name=#{user_name} 
+     <if test="password!=null and password!=''">
+      	and password=#{password}
+     </if>
+     and user_delete=0
+     </where>
   </select>
- 
+ 	
+ 	<select	id="getUserFromName" parameterType="String" resultType="com.our.pojo.User">	
+ 		select * from User where user_name=#{user_name} and user_delete=0
+ 	</select>
 </mapper>

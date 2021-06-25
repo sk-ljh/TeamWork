@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yangyurui.dao.DishsYangyuruiDao">
+	<!--查询全部菜品数量-->
+	<select id="getCurrentDishNumber" resultType="int">
+		select count(*) from dishs
+	</select>
+
 	<!--查询全部菜品-->
 	<select id="listDishs" resultType="com.our.pojo.Dishs">
 		select * from dishs
@@ -13,7 +18,10 @@
 		 where dishs_name like #{key} or dishs_cate like #{key} or introduction like #{key}
 		 	or introduce_detail like #{key} or taste like #{key}
 	</select>
-	
+	<!-- 按id查询菜品 -->
+	<select id="getDishByDishId" parameterType="int" resultType="com.our.pojo.Dishs">
+		select * from dishs where dishs_id=#{dishId}
+	</select>
 	<!-- 根据菜类查询菜品 -->
 	<select id="listDishsByCategory" parameterType="String" resultType="com.our.pojo.Dishs">
 		select * from dishs where dishs_cate=#{category}
@@ -34,4 +42,28 @@
 	<update id="restoreDishs" parameterType="int">
 		update dishs set dishs_delete=0 where dishs_id=#{dish_id}
 	</update>
+	
+	<!-- 菜品修改 -->
+	<update id="updateDishs" parameterType="map">
+		update dishs
+		<set>
+			<if test="dishs_name !=null and dishs_name !='' ">
+				dishs_name = #{dishs_name},
+			</if>
+			<if test="dishs_cate !=null and dishs_cate != '' ">
+				dishs_cate = #{dishs_cate},
+			</if>
+			<if test="dishs_icon !=null and dishs_icon !='' ">
+				dishs_icon = #{dishs_icon},
+			</if>
+			<if test="price !=null and price != -1 ">
+				price = #{price},
+			</if>
+			<if test="introduction !=null and introduction !='' ">
+				introduction = #{introduction}
+			</if>
+		</set>
+		where dishs_id = #{dishs_id};
+	</update>
+	
 </mapper>

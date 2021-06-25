@@ -1,5 +1,6 @@
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	import="com.our.pojo.*" pageEncoding="utf-8"%>
+	import="com.our.pojo.*" import="java.util.Map" pageEncoding="utf-8"%>
 <html>
 
 <head>
@@ -21,17 +22,23 @@
 </head>
 
 <body>
+
 	<%
-		User user;
-			String user_name="null";
+		User_details user_details;
+			String name="null";
 			if(session.getAttribute("loginUser")!=null)
 			{
-		 user=(User)session.getAttribute("loginUser");
-		 user_name=user.getUser_name();
+		 	user_details=(User_details)session.getAttribute("Userdetails");
+		 	name=user_details.getName();
 			}
+			boolean is_update=true;
+			if(session.getAttribute("is_update")!=null)
+				is_update=(boolean)session.getAttribute("is_update");
+			if(is_update==true)
+				response.sendRedirect(path + "/chefHomepage.do");
 	%>
 	<ul class="layui-nav">
-		<h3>用户<%=user_name %>，您已登录。</h3>
+		<li><h3>用户<%=name %>，您已登录。</h3></li>
 		<li class="layui-nav-item layui-this"><a href="<%=path %>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a>
 		</li>
@@ -59,27 +66,27 @@
 				</tr>
 			</thead>
 			<tbody style="font-size: 20px;">
+				<% 
+					@SuppressWarnings("unchecked")
+					List<Order_list> order_list = (List<Order_list>)session.getAttribute("order_list");
+					@SuppressWarnings("unchecked")
+					Map<Integer, Integer> map=(Map<Integer, Integer>)session.getAttribute("table_number_map");
+					if(order_list!=null&&map!=null)
+						for(Order_list order:order_list){
+				%>
 				<tr class="cook">
-					<td>麻婆豆腐</td>
-					<td>01</td>
-					<td>1</td>
-					<td><a href="javascript:;"><button title="点击以结束烹饪"
-								type="button" class="cooking layui-btn btn" id="btn">正在烹饪</button></a></td>
+					<td><%=order.getDishs_name() %></td>
+					<td><%=map.get(order.getOrder_id()) %></td>
+					<td><%=order.getNumber() %></td>
+				<% if(order.getCook_state()==1){ %>
+					<td><a href="<%=path %>/updateOrder.do?order_list_id=<%=order.getOrder_list_id()%>"><button title="点击切换状态"
+								type="button" class="toBcooked layui-btn layui-icon layui-icon-time" id="btn">准备烹饪</button></a></td>
+				<% }else if(order.getCook_state()==2){ %>
+					<td><a href="<%=path %>/deleteOrder.do?order_list_id=<%=order.getOrder_list_id()%>"><button title="点击以结束烹饪"
+								type="button" class="cooking layui-btn layui-icon layui-icon-fire" id="btn">正在烹饪</button></a></td>
+					<% } %>
 				</tr>
-				<tr class="cook">
-					<td>红烧狮子头</td>
-					<td>03</td>
-					<td>1</td>
-					<td><a href="javascript:;"><button title="点击切换状态"
-								type="button" class="toBcooked layui-btn btn" id="btn">准备烹饪</button></a></td>
-				</tr>
-				<tr class="cook">
-					<td>夫妻肺片</td>
-					<td>03</td>
-					<td>1</td>
-					<td><a href="javascript:;"><button title="点击切换状态"
-								type="button" class="toBcooked layui-btn" id="btn">准备烹饪</button></a></td>
-				</tr>
+				<% } %>
 			</tbody>
 		</table>
 
@@ -87,6 +94,7 @@
 
 	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
+<%-- 		window.location.href="<%=path%>/chefHomepage.do"; --%>
 		layui.use(['layer'], function () {
 			var btns = document.querySelectorAll("#btn");
 			for (let i = 0; i < btns.length; i++) {
@@ -99,6 +107,8 @@
 						//删除行
 						tbody.removeChild(tr);
 						layer.msg('成功结束该条烹饪记录！', {icon: 1});
+						
+						
 					}
 					else {
 						btns[i].classList.remove("toBcooked");

@@ -1,3 +1,4 @@
+<%@page import="java.awt.Window"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" import="com.our.pojo.*"%>
 <html>
@@ -76,8 +77,9 @@ String path = request.getContextPath();
 				<div class="layui-form-item" style="position: relative; top: -50px">
 					<label class="layui-form-label">旧密码</label>
 					<div class="layui-input-inline">
-						<input id="pwd" type="password" name="oldPwd" autocomplete="off"
-							placeholder="必须*" class="layui-input" />
+						<input id="pwd" type="password" name="oldPwd"
+							lay-verify="required" autocomplete="off" placeholder="必须*"
+							class="layui-input" />
 					</div>
 				</div>
 				<div class="layui-form-item" style="position: relative; top: -45px">
@@ -98,22 +100,25 @@ String path = request.getContextPath();
 							<label class="layui-form-label">联系电话</label>
 							<div class="layui-input-inline">
 								<input type="tel" name="phone" autocomplete="off"
-									placeholder="待定" class="layui-input" />
+									placeholder=<%=((User_details) session.getAttribute("Userdetails")).getPhone()%>
+									class="layui-input" />
 							</div>
 						</div>
 					</div>
 					<div class="layui-form-item form-button-item">
 						<button
-							style="height: 50px !important;; line-height: 50px !important; position: relative; top: 45px; left: 30%"
+							style="height: 50px !important; width: 200px !important; line-height: 50px !important; position: relative; top: 45px; left: 30%"
 							class="layui-btn" lay-submit="" lay-filter="demo2">修改</button>
-						<a href="javascript:;">
-							<button
-								style="height: 50px !important;; line-height: 50px !important; position: relative; top: 45px; left: 35%; background: linear-gradient(to right, rgb(253, 79, 79) 10%, rgb(255, 115, 0) 100%);"
-								class="layui-btn" lay-submit="" lay-filter="demo2">返回主页</button>
-						</a>
 					</div>
 			</form>
 		</div>
+	</div>
+	<div class="layui-form-item form-button-item">
+		<a href="<%=path%>/alterSelfInfJump.do">
+			<button
+				style="height: 50px !important; width: 200px !important; line-height: 50px !important; position: relative; top: -110px; left: 50%; background: linear-gradient(to right, rgb(253, 79, 79) 10%, rgb(255, 115, 0) 100%);"
+				class="layui-btn" lay-filter="demo2">返回主页</button>
+		</a>
 	</div>
 	<script src="<%=path%>/OrderSystem/js/layui.js"></script>
 	<script>
@@ -207,6 +212,7 @@ String path = request.getContextPath();
 										return '两次输入的新密码不一致！'
 								}
 							});
+
 						});
 	</script>
 

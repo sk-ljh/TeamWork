@@ -8,20 +8,16 @@
 
 	<!-- 查询用户 -->
 	<select id="getUser" resultType="com.our.pojo.User">
-		select * from user where
-		user_name = #{user_name}
+		select * from user
+		where user_id
+		= #{user_id}
 	</select>
 
 	<!-- 修改用户信息 -->
 	<update id="updateUser" parameterType="map">
 		update user set
-		password = #{password}
-		where user_name = #{user_name}
-	</update>
-	<!-- 确认用户 -->
-	<select id="confirmUser" parameterType="map" resultType="int">
-		select
-		count(*) from user where user_name = #{user_name} and password =
+		password =
 		#{password}
-	</select>
+		where user_id = #{user_id}
+	</update>
 </mapper>

@@ -15,6 +15,7 @@
 	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
 	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <title>菜品信息更改</title>
 </head>
 
@@ -30,62 +31,113 @@
 	%>
 	<ul class="layui-nav">
 		<h3>用户<%=user_name %>，您已登录。</h3>
-		<li class="layui-nav-item"><a href="adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
 		</li>
 		<li class="layui-nav-item  layui-this"><a href="javascript:;">菜品管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertDish.jsp">添加菜品</a>
+					<a href="<%=path %>/OrderSystem/html/insertDish.jsp">添加菜品</a>
 				</dd>
 				<dd>
-					<a href="dishAdminList.jsp">更改菜品信息</a>
+					<a href="<%=path %>/Dish/listDishsAll.do">更改菜品信息</a>
 				</dd>
 			</dl></li>
 		<li class="layui-nav-item"><a href="javascript:;">用户管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertUser.jsp">添加用户</a>
+					<a href="<%=path %>/OrderSystem/html/insertUser.jsp">添加用户</a>
 				</dd>
 				<dd>
-					<a href="userList.jsp">更改用户信息</a>
+					<a href="<%=path%>/user/getUserList.do">更改用户信息</a>
 				</dd>
 			</dl></li>
 
-		<li class="layui-nav-item"><a href="operateOrderForm.jsp">订单管理</a></li>
-		<li class="layui-nav-item"><a href="releaseNotice.jsp">发布公告</a></li>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/operateOrderForm.jsp">订单管理</a></li>
+		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
 	</ul>
 	<div class="dishDetailMainBody">
-		<img src="<%=path %>/OrderSystem/img/茄汁培根意面.jpg" alt=""
-			style="width: 200px; height: 200px">
-		<ul>
-			<li class="theDish">菜品名称：茄汁培根意面</li>
-			<li class="dishNo">菜品编号：001</li>
-			<li class="price">价格：<span>22.5</span>&nbsp&nbsp元 / 份
-			</li>
-			<li class="quality">规格：200g</li>
-			<li class="CookingTime">烹饪时间：10~15分钟</li>
-			<li class="flavor">口味：酸咸</li>
-			<li class="brief">简介：酸咸适度，让人回味无穷，是家庭中非常有价值的美食。</li>
-		</ul>
-		<span class="detail"> <span>详细介绍：</span><br> 茄汁培根意面，小番茄
-			豌豆、酱油 番茄酱 白糖，茄汁培根意面是以意粉、培根为主材的制作的菜品。<br> 菜名: 茄汁培根意面<br>
-			菜品口味:酸咸<br> 主要工艺:炒<br> 所需时间:十分钟<br> 制作难度:简单<br>
-			所用厨具:炒锅 煮锅
-		</span> <a href="alterDishInf.jsp"><button type="button"
-				class="layui-btn">修改信息</button></a>
+        <img src="${selectedDish.dishs_icon}" alt="" style="width:250px;height:250px">
+		<table class="layui-table" lay-even="" >
+			<thead>
+				<tr>
+					<th style="width: 100px;">菜品名称</th>
+					<td>${selectedDish.dishs_name}</td>
+				</tr>
+				<tr>
+					<th>菜品编号</th>
+					<td>${selectedDish.dishs_id}</td>
+				</tr>
+				<tr>
+					<th>菜品类别</th>
+					<td>${selectedDish.dishs_cate}</td>
+				</tr>
+				<tr>
+					<th>价格</th>
+					<td>￥${selectedDish.price}&nbsp/&nbsp份</td>
+				</tr>
+				<tr>
+					<th>是否推荐</th>
+					<td>
+						<c:if test="${selectedDish.recommend==1}">
+							<img src="<%=path %>/OrderSystem/img/true.png">
+						</c:if>
+						<c:if test="${selectedDish.recommend==0}">
+							<img src="<%=path %>/OrderSystem/img/false.png">
+						</c:if>
+					</td>
+				</tr>
+				<tr>
+					<th>规格</th>
+					<td>${selectedDishDetail.size}</td>
+				</tr>
+				<tr>
+					<th>口味</th>
+					<td>${selectedDishDetail.taste}</td>
+				</tr>
+				<tr>
+					<th>简介</th>
+					<td>${selectedDish.introduction}</td>
+				</tr>
+				<tr>
+					<th>上架状态</th>
+					<td>
+						<c:if test="${selectedDish.dishs_delete==1}">
+							<img src="<%=path %>/OrderSystem/img/warn.png">
+							&nbsp（已下架）
+						</c:if>
+						<c:if test="${selectedDish.dishs_delete==0}">
+							<img src="<%=path %>/OrderSystem/img/true.png">
+							&nbsp（上架中）
+						</c:if>
+					</td>
+				</tr>
+				<tr>
+					<th>供应商</th>
+					<td>${selectedDishDetail.supplier}</td>
+				</tr>
+			</thead>
+		</table>
+		<div class="division"></div>   
+      	<div class="layui-card">
+	        <div class="layui-card-header">菜品详细介绍</div>
+	        <div class="layui-card-body">
+	          	${selectedDishDetail.introduce_detail}
+	        </div>
+      	</div>
+		<a href="<%=path %>/dishDetail/showDishInf.do?alter=true&dishId=${selectedDish.dishs_id}"><button type="button" class="layui-btn alterInf">修改信息</button></a>
 	</div>
 	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
         layui.use('element', function(){
-        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-        
-        //监听导航点击
-        element.on('nav(demo)', function(elem){
-            //console.log(elem)
-            layer.msg(elem.text());
-        });
+	        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+	        
+	        //监听导航点击
+	        element.on('nav(demo)', function(elem){
+	            //console.log(elem)
+	            layer.msg(elem.text());
+	        });
         });
     </script>
 </body>

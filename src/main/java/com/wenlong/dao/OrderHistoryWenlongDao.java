@@ -12,4 +12,7 @@ public interface OrderHistoryWenlongDao {
 	//添加历史订单
 	void insertOrderHistory(Order_history order_history);
 	
+	//查询订单桌号
+	int getTableNumber(int order_id);
+	
 }

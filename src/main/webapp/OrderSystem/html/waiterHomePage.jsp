@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Live2D</title>
-    <%
+     <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
@@ -27,89 +28,49 @@
 	 <noscript>
 	 	<link rel="stylesheet" type="text/css" href="<%=path %>/OrderSystem/skWaiterHomePage/css/noscript.css" />
 	 </noscript>
+		
 </head>
 <body>
 <div id="cate">
-	<div class="menuHolder">
+	<div class="menuHolder" style="z-index:999;">
 		<div class="menuWindow">
 			<ul class="p1">
-				<li class="s1"><a href="#" style="font-size: 18px;">点餐</a>
+				<li class="s1" id="test"><a href="#" style="font-size: 18px;color: rgb(0,0,0);">点餐</a>
 					<ul class="p2">
-						<li class="s2"><a href="#"><span>就餐区一</span></a>
-							<ul class="p3 a3">
-								<li><a href="#">1号桌</a></li>
-								<li><a href="#">2号桌</a></li>
-								<li><a href="#">3号桌</a></li>
-							</ul>	
-						</li>
-						<li class="s2"><a href="#"><span>就餐区二</span></a>
-							<ul class="p3 a3">
-								<li><a href="#">4号桌</a></li>
-								<li><a href="#">5号桌</a></li>
-								<li><a href="#">6号桌</a></li>
-							</ul>
-						</li>
-						<li class="s2"><a href="#"><span>就餐区三</span></a>
+						<li class="s2"  v-for="(item,key,index) in table" :key="key" ><a href="#"><span>{{key}}</span></a>
 							<ul class="p3 a6">
-								<li><a href="#">7号桌</a></li>
-								<li><a href="#">8号桌</a></li>
-								<li><a href="#">9号桌</a></li>
-								<li><a href="#">10号桌</a></li>
-								<li><a href="#">11号桌</a></li>
-								<li><a href="#">12号桌</a></li>
-							</ul>
-						</li>
-						<li class="s2"><a href="#"><span>就餐区四</span></a>
-							<ul class="p3 a3">
-								<li><a href="#">13号桌</a></li>
-								<li><a href="#">14号桌</a></li>
-								<li><a href="#">15号桌</a></li>
-							</ul>
-						</li>
-						<li class="s2"><a href="#"><span>就餐区五</span></a>
-							<ul class="p3 a3">
-								<li><a href="#">16号桌</a></li>
-								<li><a href="#">17号桌</a></li>
-								<li><a href="#">18号桌</a></li>
-							</ul>
-						</li>
-						<li class="s2 b6"><a href="#"><span>就餐区六</span></a>
-							<ul class="p3 a5">
-								<li><a href="#">19号桌</a></li>
-								<li><a href="#">20号桌</a></li>
-								<li><a href="#">21号桌</a></li>
-								<li><a href="#">22号桌</a></li>
-								<li><a href="#">23号桌</a></li>
-							</ul>
-						</li>
+								<li v-for="item2 in item" :key="item2"><a href="#jumpdish" @click="diancan(item2)">{{item2}}号桌</a></li>
+							</ul>	
+					   </li>
 					</ul>
 				</li>
 			</ul>
 		</div>
 	</div>
-<div class="skdaohang">
+	<div class="myheadersk"> 
+       <div class="skdaohang">	
 <ul class="layui-nav" lay-bar="disabled">
 	<li class="layui-nav-item">
-	  <a href="">菜品<span class="layui-badge"></span></a>
+	  <a href="">菜品<span class="layui-badge sk"></span></a>
 	</li>
   <li class="layui-nav-item">
-    <a href="">查看订单<span class="layui-badge">9</span></a>
+    <a href="">查看订单<span class="layui-badge sk">9</span></a>
   </li>
   <li class="layui-nav-item">
-    <a href="">查看公告<span class="layui-badge-dot"></span></a>
+    <a href="">查看公告<span class="layui-badge-dot sk"></span></a>
   </li>
   <li class="layui-nav-item">
     <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
     <dl class="layui-nav-child">
-      <dd><a href="javascript:;">修改信息</a></dd>
+      <dd><a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">修改信息</a></dd>
       <dd><a href="javascript:;">安全管理</a></dd>
       <dd><a href="javascript:;">退出</a></dd>
     </dl>
   </li>
 </ul>
 </div>
+  </div>
 	<div class="head-bg">
-		
 	</div>
 	<div class="welcome" id="welcome">
 		<h1 class="Welcome_w">欢迎点餐</h1>
@@ -192,14 +153,12 @@
 				<a href="">详情></a>
 			</div>
 			<img class="best_food_img" src="<%=path %>/OrderSystem/skWaiterHomePage/images/besttwo.jpg" >
-			
-			
 		</div>
-		
 	</div>
 	<div class="dishs_dish2">
 		<div class="dish_body_head">
-			<h2 class="dish_body_h2">菜品一览</h2>
+			<a href="#" name="jumpdish"></a>
+			<h2 class="dish_body_h2" >菜品一览</h2>
 		</div>
 		<div class="dish_body" >
 			<div class="dish_body_one">
@@ -208,6 +167,7 @@
 				<div class="cate_item"  v-for="item in catedata" :key="item" @click="getOneTypeDish(item)">
 					 {{item}}
 				</div>
+				
 			</div>
 			</div>
 			<div class="dish_body_items">
@@ -231,7 +191,7 @@
 							<div class="index_intro">
 								详细介绍
 							</div>
-							<div class="eat_now">
+							<div class="eat_now" @click="addcar(item2)">
 								就选你了
 							</div>
 						</div>
@@ -255,12 +215,50 @@
 			</div>
 		</div>
 	</div>
-	<div class="footer">
-		
+</div>
+<div id="app">
+	<div class="bot_btn">
+		<el-button class="botton_btn" @click="showcar"  style="min-width:120px;height:10vh;width: 10vw;font-family: skfont;font-weight: 800;font-size: 20px;" plain circle  size="medium">
+				 已点菜品
+		</el-button>
 	</div>
-	<div class="waifu" id="waifu">
+		<div class="down">
+			<el-drawer style="text-align: center; font-size: 25px; font-family: skfont;"
+			  title="已点菜品栏"
+			  :visible.sync="drawer"
+			  :direction="direction"
+			  >
+			  <span>
+				  
+				  
+			  <div class="allthings_show">
+				  <div class="one_show" v-for="item in showThing" :key="item">
+					  <div class="one_name">{{item.dishs_name}}</div>
+					  <div class="one_price">单价:<span style="color:red;margin-right: 20px;">¥{{item.price}}</span>份数:<span style="color:red">{{item.number}}份</span></div>
+					  <div class="one_add" @click="changecar"><el-input-number style="margin-right: 10px;" size="small" v-model="item.number" :min=0 :max=100></el-input-number><el-button size="small" style="margin-left:10px" @click="deletecar(item)" type="primary" icon="el-icon-delete"></el-button></div>
+					  
+				  </div>
+				  <div class="buy">
+					  <div class="payformoney" >总价:¥{{allmoney}}</div>
+					  <div class="paybutton">
+						  <el-button type="info" round @click="clearcar">清空菜品</el-button>
+						  <span @click="buythething"><el-button type="danger"  round>立即下单</el-button></span></div>
+				  </div>
+			  </div>  
+				  
+			  </span>
+			</el-drawer>
+		</div>
+</div>
+<div class="line">
+</div>
+   <div class="footer">
+		这是footer
+	</div>
+<div class="waifu" id="waifu">
         <div class="waifu-tips" style="opacity: 1;"></div>
-        <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+        <canvas id="live2d" width="280" height="250" class="live2d">
+		</canvas>
         <div class="waifu-tool">
             <span class="fui-home"></span>
             <span class="fui-chat"></span>
@@ -271,72 +269,212 @@
             <span class="fui-cross"></span>
         </div>
     </div>
-    </div>
+
 </body>
 <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 	<script type="text/javascript">
-	var cate=new Vue({
-		el:"#cate",
-		data:{
-			catedata:'',
-			queryinfo:{
-			            query:"",//查询的信息
-			            pageNum:1,//当前页
-			            pageSize:3,//每页最大数
-			        },
-			dishlis:[],
-			total:0,
-			putpage:'',
-			
-		},
-		methods:{
-			getdate:function(){
-			
-			axios.get("${basePath }getCate.do").then(function(data){			
-					cate.catedata=data.data.cate
-				});
+		var shoppingcar=new Vue({
+			el:'#app',
+			data:{
+				drawer: false,
+				direction: 'rtl',
+				count: 0,
+				showThing:[],
+				allmoney:0,
+				yuangong:20,
 			},
+			methods:{
+				      buythething(){
+						    var table=localStorage.getItem("user")
+							shoppingcar.showThing[0].total=shoppingcar.allmoney
+							shoppingcar.showThing[0].tableNumber=table
+				             axios.post('${basePath}Buy.do',shoppingcar.showThing).then(res=>{
+				                 console.log("发送了购买请求")
+								 shoppingcar.clearcar()
+								 console.log(res.data)
+								})
+								.catch((error)=>{
+				  						console.log(error)  //  错误处理 相当于error
+				          })
+				        },
+				showcar(){
+				           var getnewu=window.JSON.parse(localStorage.getItem("user"))
+				            var tablenumber=getnewu
+							shoppingcar.allmoney=0
+				           if (localStorage.getItem("shoppingthings")!=null){
+				               var getvalue=localStorage.getItem("shoppingthings")
+				                shoppingcar.showThing=window.JSON.parse(getvalue)
+				               for (let i=0;i<this.showThing.length;i++){
+				                    shoppingcar.allmoney+= shoppingcar.showThing[i].price* shoppingcar.showThing[i].number
+				               }
+							   shoppingcar.drawer=true
+				           }
+				           else{
+							   shoppingcar.drawer=true
+				           }
+						   if(shoppingcar.allmoney==0){
+							    alert("没有东西！！！！")
+						   }
+				       },
+				 deletecar(item){
+				           for (let i=0;i<shoppingcar.showThing.length;i++){
+				                    if(shoppingcar.showThing[i].dishs_id==item.dishs_id){
+				                        shoppingcar.showThing.splice(i,1)
+				                        shoppingcar.changecar()
+				                        break
+				                    }
+				                }  
+				                
+				        },
+				clearcar(){
+								this.showThing=[]
+								localStorage.removeItem("shoppingthings")
+								shoppingcar.allmoney=0
+				},
+				changecar(){
+							var newchange=window.JSON.stringify(shoppingcar.showThing)
+							localStorage.removeItem("shoppingthings")
+							localStorage.setItem("shoppingthings",newchange)
+							shoppingcar.allmoney=0
+							for (let i=0;i<this.showThing.length;i++){
+								 shoppingcar.allmoney+= shoppingcar.showThing[i].price* shoppingcar.showThing[i].number
+					}
+				}
+				
+			}
 			
+		})
+	
+			var cate=new Vue({
+				el:"#cate",
+				data:{
+					catedata:'',
+					queryinfo:{
+					            query:"",//查询的信息
+					            pageNum:1,//当前页
+					            pageSize:3,//每页最大数
+					        },
+					dishlis:[],
+					total:0,
+					putpage:'',
+					showThing:[],
+					allmoney:0,
+					table:{},
+					tablestatus:[],
+					drawer: false,
+					direction: 'rtl',
+					userid:2,
+				},
+				methods:{
+					getdate:function(){
+					
+					axios.get("${basePath}getCate.do").then(function(data){			
+							cate.catedata=data.data.cate
+						});
+					},
+					
+					
+					getOneTypeDish:function(item){
+						this.queryinfo.query=item
+						console.log(this.queryinfo)
+						axios.post("${basePath}getOneTypeDish.do",this.queryinfo).then(function(data){
+							  cate.dishlis=data.data.data
+							  cate.total=data.data.numbers
+								console.log(data.data.data)
+							});
+					},
+					diancan:function(site){
+						for(item of cate.tablestatus){
+							if(site==item.table_number){
+								if(item.table_status==1){
+									alert("该桌位已经有人，请更换！")
+									return
+								}
+							}
+						}
+					      localStorage.setItem("user",site)
+						  alert("选桌成功，请继续点餐！")
+					   },
+					 handleSizechage:function(newSize){
+					        cate.queryinfo.pageSize=newSize
+					        cate.getOneTypeDish()
+					    },
+					    //上下一页的触发动作
+					    //最大数
+					    handleCurrentChange:function(newPage){
+							console.log(newPage)
+					        cate.queryinfo.pageNum=newPage
+					        cate.getOneTypeDish(cate.queryinfo.query)
+							 cate.queryinfo.pageNum=1
+					        },
+					   
+					    //关闭对话框
+					 addcar:function(item4){
+						    
+						  if (localStorage.getItem("user")!=null){
+							 
+							  
+							  
+							    var needAdd={dishs_id:item4.dishs_id,dishs_name:item4.dishs_name,number:1,price:item4.price,cook_state:1,order_id:'',total:'',user_id:cate.userid,tableNumber:''}
+							      if (localStorage.getItem("shoppingthings")!=null){
+							           var getvalue=localStorage.getItem("shoppingthings")
+							           var getitem=window.JSON.parse(getvalue)
+							           var flag=0
+							  		
+							           for (var it of getitem){
+							              if (it.dishs_id==needAdd.dishs_id){
+							                it.number+=needAdd.number
+							                  flag=1
+							                  break
+							              }
+							           }
+							           if (flag==0){
+							             getitem.splice(0,0,needAdd)
+							           }
+							           var newget=window.JSON.stringify(getitem);
+							           localStorage.setItem("shoppingthings",newget)
+							  								   console.log(newget)
+							        }
+							        else{
+							         var All=[]
+							             All.splice(0,0,needAdd)
+							             var newget1=window.JSON.stringify(All); 
+							               localStorage.setItem("shoppingthings",newget1)  
+							  									   console.log(newget1)
+							        }
+						  }
+						  else{
+							  alert("请选择桌号！")
+							  return 
+						  }
+
+								
+					      }	
+						
+				 },
+					
+				
+			})
 			
-			getOneTypeDish:function(item){
-				this.queryinfo.query=item
-				console.log(this.queryinfo)
-				axios.post("${basePath }getOneTypeDish.do",this.queryinfo).then(function(data){
-					  cate.dishlis=data.data.data
-					  cate.total=data.data.numbers
-						console.log(data.data.data)
+			<!--6.23    还外加了锚点-->
+			window.onload=function(){
+				localStorage.clear()
+				cate.getdate()
+				 
+				axios.post("${basePath}getTableNumber.do").then(function(data){
+					  cate.table=data.data.data	
+					  console.log(data.data.data)
+					 cate.tablestatus=data.data.state
 					});
-			},
-			 handleSizechage:function(newSize){
-			        cate.queryinfo.pageSize=newSize
-			        cate.getOneTypeDish()
-			    },
-			    //上下一页的触发动作
-			    //最大数
-			    handleCurrentChange:function(newPage){
-					console.log(newPage)
-			        cate.queryinfo.pageNum=newPage
-			        cate.getOneTypeDish(cate.queryinfo.query)
-					 cate.queryinfo.pageNum=1
-			        },
-			    }
-			    //关闭对话框
-			
-			
-		
-	})
-	window.onload=function(){
-		cate.getdate()
-	}
-	 
-		
-		
+				
+			}
+			 
 		
 	</script>
+	
 
-
-<script src="<%=path %>/OrderSystem/skWaiterHomePage/assets/live2d.js"></script>
+  <script src="<%=path %>/OrderSystem/skWaiterHomePage/assets/live2d.js"></script>
     <script src="<%=path %>/OrderSystem/skWaiterHomePage/assets/waifu-tips.js"></script>
     <script type="text/javascript">initModel()</script>
 	<script src="<%=path %>/OrderSystem/skWaiterHomePage/layui/layui.js"></script>
@@ -355,13 +493,51 @@
 	</script>
 	
 	<style type="text/css">
-	.dish_body{
-			display: flex;
-			flex-direction: column;
-			margin-left: 10%;
-			margin-right: 10%;
+	#cate{
+	position:relative;
+	}
+		.allthings_show{
+			width: 100%;
+			height: 100%;
+			background: url(<%=path %>/OrderSystem/skWaiterHomePage/images/cartbg.webp);
 		}
-	.footer{
+		.payformoney{
+			color: red;
+			font-size: 20px;
+			font-family: skfont2;
+		}
+		.allthings_show{
+			position:relative;
+		}
+		.paybutton{
+			text-align: center;
+			
+		}
+		.line{
+			height: 30px;
+			background-color:  #FFC300;
+		}
+		.bot_btn{
+			float: right;
+			margin-right: 50px;
+			
+		}
+		#app{
+			position: relative;
+			overflow: hidden;
+			background-color: white;
+		}
+		
+		.active{
+			background-color:red;
+		}
+		
+		.dish_body{
+			
+			
+			
+		}
+		.footer{
 			width: 100%;
 			height: 300px;
 			background-color: #00F7DE;
@@ -369,7 +545,7 @@
 		.my_fenye{
 		    width: 400px;
 		    margin: 0 auto ;
-			margin-bottom: 50px;
+			margin-bottom: 10px;
 		}
 		.shortintro{
 			display: block;
@@ -464,58 +640,62 @@
 			flex-grow: 0;
 			
 		}
+		
+		.dish_body_one{
+			display: flex;
+			margin-top: 30px;
+			background-color: white;
+			margin-bottom: 50px;
+		}
+		.dish_body_one>img{
+			height: 50vh;
+			width: 30vw;
+			min-width: 300px;
+			min-height: 300px;
+			
+		}
+		
 		@font-face {
 			font-family:skfont2;
 			src: url(<%=path %>/OrderSystem/skWaiterHomePage/font/sk.ttf);
 		}
-		.dish_body_one{
-			display: flex;
-			margin-top: 30px;
+		.cate{
 			background-color: white;
-		}
-		.dish_body_one{
-			display: flex;
-			margin-top: 30px;
-			background-color: white;
-		}
-		.dish_body{
-			display: flex;
-			margin-top: 30px;
 		}
 		.cate_item{
 			text-shadow: #000000;
-			
 				background-color: rgba(255,255,255,0.1);
+				display: inline-block;
 				text-align: center;
-				max-width: 372px;
-				min-width: 200px;
+				width: 8vw;
+				height: 8vh;
+				min-width: 110px;
 				display: block;
-				border-radius: 6%;
+				border-radius: 3%;
 				box-shadow: 0 2px 12px 0 ;
-				height: 105px;
-				line-height: 105px;
+				line-height: 8vh;
 				font-family: skfont2;
 				font-size: 20px;
 				font-weight: 800px;
 				margin-right: 10% ;
+				margin-bottom: 10px;
 		}
 		.cate_item:hover{
 			color: red;
 		}
 		.category{
-			margin-left: 10%;
-			
-			width: 80%;
-			min-width: 1100px;
-			height: 350px;
+			margin-top: 50px;
+			margin-left: 10px;
+			margin-right: 10px;
+			width: 62vw;
 			background-color:white;
-			
-			flex-wrap: wrap;
 			display: flex;
+			flex-wrap: wrap;
 			flex-direction: row;
-			justify-content:flex-start;
+			justify-content:space-around;
 			
 		}
+		
 		.dishs_dish2{
 			
 			
@@ -542,22 +722,21 @@
 			align-items: center;
 		}
 		.best_food_item img{
-			width: 46%;
-			min-width: 600px;
-			height: 430px;
+			width: 40vw;
+			min-width: 400px;
+			height: 50vh;
 			padding: 10px;
 			
 		}
 		.best_food_item>div{
 			width: 50%;
-			min-width: 600px;
+			min-width: 400px;
 			border-bottom: solid 2px #FFC300;
 		}
 		
 		.best_food_item{
 			display: flex;
 			width: 85%;
-			
 			margin: 0 auto;
 			
 			background-color: white;
@@ -595,8 +774,9 @@
 		}
 		.placehead{
 			text-align: center;
-			margin-top: 80px;
-			margin-bottom: 80px;
+			padding-top: 30px;
+			padding-bottom: 30px;
+			
 		}
 		.example-image-link{
 			position: relative;
@@ -623,6 +803,7 @@
 			align-items: center;
 			flex-wrap: wrap;
 			margin: 0 auto;
+			margin-top: 100px;
 		}
 		
 		.example-image{
@@ -631,7 +812,7 @@
 			height: 21vh;
 		}
 		.dishs_dish{
-			height: 80vh;
+			height: 100vh;
 			width: 100vw;
 			background-image: url(<%=path %>/OrderSystem/skWaiterHomePage/images/placebg.jpg);
 			background-attachment: fixed;
@@ -645,25 +826,33 @@
 			
 		}
 		.skdaohang .layui-nav .layui-nav-item a{
-		   font-size: 20px;
-		   color: rgb(255,255,255);
+		   font-size: 23px;
+		   color: rgb(106,219,207);
 		   font-weight: 900;
+		   font-family: skfont2;
 		}
 		.skdaohang .layui-nav .layui-nav-item .layui-nav-child a{
 			color: #000000;
 			font-weight: 600;
 		}
-		.layui-nav-item:hover{
-			color: red;
+		.layui-nav-item{
+			
 		}
 		
 		.layui-nav{
-			
-			background:rgba(25,12, 255, 0);
+			min-width: 900px;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			width: 100%;
+			height: 104px;
+			background:rgba(0,0, 0, 0.4);
 			position:fixed;
 			top:0;
 			right: 0;
 			overflow:visible;
+			z-index: 900;
+			
 		}
 		#myheader{
 			background-color: rgb(0,0,0,1);
@@ -752,7 +941,7 @@
 		}
 		.dishs_lunbo{
 			background-color: white;
-			height: 700px;
+			height: 70vh;
 			width: 100vw;
 			display: flex;
 			justify-content: center;
@@ -766,10 +955,9 @@
 			justify-content: center;
 			align-items: center;
 			position: fixed;
-			left:45%;
-			top: 50%;
-			
-			z-index: -1;
+			left:38%;
+			top: 47%;
+			z-index: -2;
 	
 		}
 		.Welcome_w,.Welcome_t{
@@ -781,7 +969,7 @@
 			
 		}
 		.Welcome_w{
-			font-size: 6rem;
+			font-size: 8rem;
 			animation: 5s rotate ease-in-out infinite;
 		}
 		.Welcome_t{

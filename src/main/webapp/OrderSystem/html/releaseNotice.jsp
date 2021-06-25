@@ -28,31 +28,36 @@
 			}
 	%>
 	<ul class="layui-nav">
-		<h3>用户<%=user_name %>，您已登录。</h3>
-		<li class="layui-nav-item"><a href="adminHomepage.jsp">首页</a></li>
-		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
-		</li>
+		<h3>
+			用户<%=user_name%>，您已登录。
+		</h3>
+		<li class="layui-nav-item layui-this"><a
+			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertDish.jsp">添加菜品</a>
+					<a href="<%=path%>/OrderSystem/html/insertDish.jsp">添加菜品</a>
 				</dd>
 				<dd>
-					<a href="dishAdminList.jsp">更改菜品信息</a>
+					<a href="<%=path%>/Dish/listDishsAll.do">更改菜品信息</a>
 				</dd>
 			</dl></li>
 		<li class="layui-nav-item"><a href="javascript:;">用户管理</a>
 			<dl class="layui-nav-child">
 				<dd>
-					<a href="insertUser.jsp">添加用户</a>
+					<a href="<%=path%>/OrderSystem/html/insertUser.jsp">添加用户</a>
 				</dd>
 				<dd>
-					<a href="userList.jsp">更改用户信息</a>
+					<a href="<%=path%>/user/getUserList.do">更改用户信息</a>
 				</dd>
 			</dl></li>
 
-		<li class="layui-nav-item"><a href="operateOrderForm.jsp">订单管理</a></li>
-		<li class="layui-nav-item layui-this"><a href="releaseNotice.jsp">发布公告</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
 	</ul>
 	<div class="releaseNoticeMainBody" style="height: 400px">
