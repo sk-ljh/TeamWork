@@ -10,8 +10,14 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <%
-String path = request.getContextPath();
-%>
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	String basePort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/file/";
+	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", basePort);
+	%>
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/initiate.css">
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/adminHomePage.css">
 <link rel="stylesheet" href="<%=path%>/OrderSystem/layui/css/layui.css">
@@ -34,11 +40,21 @@ String path = request.getContextPath();
 		}
 	%>
 	<ul class="layui-nav">
+		<%
+			User_details userDetail;
+			userDetail=(User_details)session.getAttribute("Userdetails");
+			
+		%>
+		<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">
+			<img src="${basePort }${Userdetails.icon}" style="width:50px;height:50px;border-radius:2em;float:left;position:relative;top:10px;">
+		</a>
 		<h3>
-			用户<%=user_name%>，您已登录。
+			&nbsp&nbsp&nbsp&nbsp&nbsp用户&nbsp&nbsp
+			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=user_name%></a>
+			&nbsp&nbsp，您已登录。
 		</h3>
 		<li class="layui-nav-item layui-this"><a
-			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+			href="<%=path %>/adminHome/getParts.do">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
@@ -68,220 +84,133 @@ String path = request.getContextPath();
 	</ul>
 
 	<div class="layui-bg-gray adminHomepagemainBody" style="padding: 30px;">
-		<%--暂时不连数据库，将数据写死--%>
 		<div class="layui-row layui-col-space12">
 			<div class="layui-col-md3">
 				<div class="layui-card">
-					<div class="layui-card-header dishes">用户&nbsp&nbsp&nbsp<a style="color:blue" href="javascript:;">（查看更多）</a></div>
+					<div class="layui-card-header dishes">
+						用户&nbsp&nbsp&nbsp<a style="color:blue" href="<%=path%>/user/getUserList.do">（查看更多）</a>
+					</div>
 					<div class="layui-card-body">
-						<table class="layui-table user" lay-skin="line">
-						  <colgroup>
-						    <col width="100">
-						    <col width="200">
-						    <col width="100">
-						    <col width="200">
-						  </colgroup>
-						  <thead>
-						    <tr>
-						      <th>编号</th>
-						      <th>姓名</th>
-						      <th>性别</th>
-						      <th>用户角色</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-						    <tr>
-						      <td>1</td>
-						      <td>张三</td>
-						      <td>男</td>
-						      <td>服务员</td>
-						    </tr>
-						    <tr>
-						      <td>1</td>
-						      <td>张三</td>
-						      <td>男</td>
-						      <td>服务员</td>
-						    </tr>
-						    <tr>
-						      <td>1</td>
-						      <td>张三</td>
-						      <td>男</td>
-						      <td>服务员</td>
-						    </tr>
-						  </tbody>
+						<table class="layui-table users" lay-skin="line">
+							 <colgroup>
+							   <col width="100">
+							   <col width="200">
+							   <col width="100">
+							   <col width="200">
+							 </colgroup>
+							 <thead>
+							   <tr>
+							     <th>编号</th>
+							     <th>姓名</th>
+							     <th>性别</th>
+							     <th>用户角色</th>
+							   </tr> 
+							 </thead>
+							 <tbody>
+							    <c:forEach var="user" items="${userDetails_Pa}">
+									<tr>
+									   <td>${user.user_id}</td>
+									   <td>${user.name}</td>
+									   <td>${user.sex}</td>
+									   <td>
+									    <c:if test="${user.role==1}">
+									    	服务员
+									    </c:if>
+									    <c:if test="${user.role==2}">
+									    	后厨
+									    </c:if>
+									    <c:if test="${user.role==3}">
+									    	管理员
+									    </c:if>
+									   </td>
+									</tr>
+							    </c:forEach>
+							 </tbody>
 						</table>  
 					</div> 
 				</div>
 			</div>
 			<div class="layui-col-md4">
 				<div class="layui-card">
-					<div class="layui-card-header orderForms">新的订单处理请求&nbsp&nbsp&nbsp<a style="color:blue" href="javascript:;">（查看更多）</a></div>
+					<div class="layui-card-header">
+						新的订单处理请求&nbsp&nbsp&nbsp<a style="color:blue" href="<%=path%>/listOrderHistory.do">（查看更多）</a>
+					</div>
 					<div class="layui-card-body">
-						<div class="orderForm">
-							<span>单号：001&nbsp&nbsp&nbsp&nbsp下单时间：12:33&nbsp&nbsp&nbsp&nbsp桌号：1
-							&nbsp&nbsp&nbsp&nbsp总计：48.5 元</span>
-						</div>
+						<table class="layui-table user" lay-skin="line">
+								 <colgroup>
+								   <col width="80">
+								   <col width="80">
+								   <col width="150">
+								   <col width="80">
+								 </colgroup>
+								 <thead>
+								   <tr>
+								     <th>单号</th>
+								     <th>桌号</th>
+								     <th>下单时间</th>
+								     <th>总计</th>
+								   </tr> 
+								 </thead>
+								 <tbody>
+								  	<c:forEach var="order" items="${orderHistories_Pa}">
+									   <tr>
+									     <td>${order.order_id}</td>
+									     <td>${order.table_number}</td>
+									     <td>${order.begin_time}</td>
+									     <td>￥${order.total_price}</td>
+									   </tr>
+									</c:forEach>
+								 </tbody>
+						</table> 
 					</div>
 				</div>
 			</div>
 			<div class="layui-col-md5">
 				<div class="layui-card">
-					<div class="layui-card-header dishes">菜品&nbsp&nbsp&nbsp<a style="color:blue" href="javascript:;">（查看更多）</a></div>
+					<div class="layui-card-header dishes">
+						菜品&nbsp&nbsp&nbsp<a style="color:blue" href="<%=path%>/Dish/listDishsAll.do">（查看更多）</a>
+					</div>
 					<div class="layui-card-body">
 						<table class="layui-table user" lay-skin="line">
-						  <colgroup>
-						    <col width="80">
-						    <col width="200">
-						    <col width="150">
-						    <col width="80">
-						    <col width="100">
-						  </colgroup>
-						  <thead>
-						    <tr>
-						      <th>编号</th>
-						      <th>菜品名</th>
-						      <th>菜类</th>
-						      <th>价格</th>
-							  <th>上架中</th>
-						    </tr> 
-						  </thead>
-						  <tbody>
-						    <tr>
-						      <td>1</td>
-						      <td>焖羊肉锅</td>
-						      <td>美味闷锅</td>
-						      <td>￥59</td>
-						      <td>是</td>
-						    </tr>
-						    <tr>
-						      <td>2</td>
-						      <td>焖牛腩</td>
-						      <td>美味闷锅</td>
-						      <td>￥59</td>
-						      <td>是</td>
-						    </tr>
-						    <tr>
-						      <td>3</td>
-						      <td>焖牛肉锅</td>
-						      <td>美味闷锅</td>
-							  <td>￥59</td>
-						      <td>是</td>
-						    </tr>
-						  </tbody>
+							 <colgroup>
+							   <col width="80">
+							   <col width="200">
+							   <col width="150">
+							   <col width="80">
+							   <col width="100">
+							 </colgroup>
+							 <thead>
+							   <tr>
+							     <th>编号</th>
+							     <th>菜品名</th>
+							     <th>菜类</th>
+							     <th>价格</th>
+								 <th>上架中</th>
+							   </tr> 
+							 </thead>
+							 <tbody>
+							  <c:forEach var="dish" items="${dishs_Pa}">
+								   <tr>
+								     <td>${dish.dishs_id}</td>
+								     <td>${dish.dishs_name}</td>
+								     <td>${dish.dishs_cate}</td>
+								     <td>￥${dish.price}</td>
+								     <td>
+								    	<c:if test="${dish.dishs_delete==0}">
+											<img src="<%=path %>/OrderSystem/img/true.png">
+									    </c:if>
+									    <c:if test="${dish.dishs_delete==1}">
+									    	<img src="<%=path %>/OrderSystem/img/false.png">
+									    </c:if>
+								     </td>
+								   </tr>
+								</c:forEach>
+							 </tbody>
 						</table> 
 					</div>
 				</div>
 			</div>
 		</div>
-		<%--下面是连接数据库，从中获取数据来进行渲染的部分（用户、订单和菜品只显示部分，其中订单部分显示未结账的订单且把最新的放前面）--%>
-		<%--从登录页进入管理员主页时因为会直接跳转至该jsp页面，所以先做判断来从控制器中获取相关数据并返回该页面。后面在其他页面中跳到该主页时，则直接访问控制器获取数据后跳转即可--%>
-		<c:if test="${partOfDishs==null}">
-			<%-- <jsp:forward page="<%=path%>/adminHome/getParts.do"/> --%>
-		</c:if>
-		<%--userDetails、dishs和orderHistories是从控制器中从数据库表里获取到的数据（只取部分）-->
-		<%--
-			<div class="layui-row layui-col-space12">
-				<div class="layui-col-md3">
-					<div class="layui-card">
-						<div class="layui-card-header dishes">用户&nbsp&nbsp&nbsp<a style="color:blue" href="javascript:;">（查看更多）</a></div>
-						<div class="layui-card-body">
-							<table class="layui-table users" lay-skin="line">
-							  <colgroup>
-							    <col width="100">
-							    <col width="200">
-							    <col width="100">
-							    <col width="200">
-							  </colgroup>
-							  <thead>
-							    <tr>
-							      <th>编号</th>
-							      <th>姓名</th>
-							      <th>性别</th>
-							      <th>用户角色</th>
-							    </tr> 
-							  </thead>
-							  <tbody>
-							     <c:forEach var="user" items="${userDetails}">
-									 <tr>
-									    <td>${user.user_id}</td>
-									    <td>${user.name}</td>
-									    <td>${user.sex}</td>
-									    <td>
-									    	<c:if test="${user.role==1}">
-									    		服务员
-									    	</c:if>
-									    	<c:if test="${user.role==2}">
-									    		后厨
-									    	</c:if>
-									    	<c:if test="${user.role==3}">
-									    		管理员
-									    	</c:if>
-									    </td>
-									 </tr>
-							     </c:forEach>
-							  </tbody>
-							</table>  
-						</div> 
-					</div>
-				</div>
-				<div class="layui-col-md4">
-					<div class="layui-card">
-						<div class="layui-card-header orderForms">新的订单处理请求&nbsp&nbsp&nbsp<a style="color:blue" href="javascript:;">（查看更多）</a></div>
-						<div class="layui-card-body">
-							<c:forEach var="order" items="${orderHistories}">
-								<div class="orderForm">
-									<span>单号：${order.order_id}&nbsp&nbsp&nbsp&nbsp下单时间：${order.begin_time}&nbsp&nbsp&nbsp&nbsp
-									桌号：${order.table_number}&nbsp&nbsp&nbsp&nbsp总计：${order.total_price}元</span>
-								</div>
-							</c:forEach>
-						</div>
-					</div>
-				</div>
-				<div class="layui-col-md5">
-					<div class="layui-card">
-						<div class="layui-card-header dishes">菜品&nbsp&nbsp&nbsp<a style="color:blue" href="javascript:;">（查看更多）</a></div>
-						<div class="layui-card-body">
-							<table class="layui-table user" lay-skin="line">
-							  <colgroup>
-							    <col width="80">
-							    <col width="200">
-							    <col width="150">
-							    <col width="80">
-							    <col width="100">
-							  </colgroup>
-							  <thead>
-							    <tr>
-							      <th>编号</th>
-							      <th>菜品名</th>
-							      <th>菜类</th>
-							      <th>价格</th>
-								  <th>上架中</th>
-							    </tr> 
-							  </thead>
-							  <tbody>
-							  	<c:forEach var="dish" items="${dishs}">
-								    <tr>
-								      <td>${dish.dishs_id}</td>
-								      <td>${dish.dishs_name}</td>
-								      <td>${dish.dishs_cate}</td>
-								      <td>￥${dish.price}</td>
-								      <td>
-								    		<c:if test="${dish.dishs_delete==1}">
-									    		是
-									    	</c:if>
-									    	<c:if test="${dih.dishs_delete==0}">
-									    		否
-									    	</c:if>
-								      </td>
-								    </tr>
-								 </c:forEach>
-							  </tbody>
-							</table> 
-						</div>
-					</div>
-				</div>
-			</div>
-		--%>
 	</div>
 
 	<script src="<%=path%>/OrderSystem/js/layui.js"></script>

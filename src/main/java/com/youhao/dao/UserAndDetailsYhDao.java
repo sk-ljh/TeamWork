@@ -37,4 +37,9 @@ public interface UserAndDetailsYhDao {
 	/* 10、通过user_name查找用户的删除状态 */
 	public User getUserByName(String name);
 
+	/* 11、模糊查询 */
+	public List<User_details> getUserDetailslist2(String key);
+	
+	/*12、得到没有被删除的且不是管理员的用户列表*/
+	public List<User_details> getUserDetailslist3();
 }

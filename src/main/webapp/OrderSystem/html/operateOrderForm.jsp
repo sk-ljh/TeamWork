@@ -5,8 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <%
-String path = request.getContextPath();
-%>
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	String basePort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/file/";
+	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", basePort);
+	%>
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/initiate.css">
 <link rel="stylesheet"
 	href="<%=path%>/OrderSystem/css/tableFormation.css">
@@ -31,11 +37,16 @@ String path = request.getContextPath();
 	}
 	%>
 	<ul class="layui-nav">
+		<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">
+			<img src="${basePort }${Userdetails.icon}" style="width:50px;height:50px;border-radius:2em;float:left;position:relative;top:10px;">
+		</a>
 		<h3>
-			用户<%=user_name%>，您已登录。
+			&nbsp&nbsp&nbsp&nbsp&nbsp用户&nbsp&nbsp
+			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=user_name%></a>
+			&nbsp&nbsp，您已登录。
 		</h3>
-		<li class="layui-nav-item layui-this"><a
-			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path %>/adminHome/getParts.do">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
@@ -57,7 +68,7 @@ String path = request.getContextPath();
 				</dd>
 			</dl></li>
 
-		<li class="layui-nav-item"><a
+		<li class="layui-nav-item  layui-this"><a
 			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
@@ -110,11 +121,11 @@ String path = request.getContextPath();
 								{
 							%>
 								<a
-									href="<%=path%>/updateOrderHistory.do?order_id=<%=orderHistory.getOrder_id()%>&payment_state=1">
+									href="<%=path%>/updateOrderHistory.do?order_id=<%=orderHistory.getOrder_id()%>&payment_state=1&currentDish_Page=<%=session.getAttribute("currentDish_Page")%>">
 									<button class="layui-btn freeOfCharge" type="button">免单</button>
 								</a>
 								<a
-									href="<%=path%>/updateOrderHistory.do?order_id=<%=orderHistory.getOrder_id()%>&payment_state=2">
+									href="<%=path%>/updateOrderHistory.do?order_id=<%=orderHistory.getOrder_id()%>&payment_state=2&currentDish_Page=<%=session.getAttribute("currentDish_Page")%>">
 									<button class="layui-btn confirm" type="button">结单</button>
 								</a>
 							<%
@@ -128,7 +139,33 @@ String path = request.getContextPath();
 				</tbody>
 			</table>
 		</div>
+		<c:if test="${DishQueriedNumber>0}">
+			<div id="pages" style="text-align: center;"></div>
+		</c:if>
 	</div>
+	<script src="<%=path%>/OrderSystem/layui/layui.js"></script>
+<script language="javascript">
+layui.use(['laypage', 'layer'], function () {
+    var laypage = layui.laypage,layer = layui.layer;
+    var $ = layui.jquery;
+    laypage.render({
+        elem: 'pages',
+        count: ${DishQueriedNumber},
+        theme: '#FFB800',
+        limit: 4,
+        first: '首页',
+        last: '尾页',
+        curr: ${currentDish_Page},
+        prev: '<em>←</em>',
+        next: '<em>→</em>',
+        jump: function (obj, first) {
+            if (!first) {
+					window.location.href="<%=path %>/listOrderHistory.do?currentDish_Page="+obj.curr;
+            }
+    	}
+    });
+})
+</script>
 </body>
-<script src="<%=path%>/OrderSystem/layui/layui.js"></script>
+
 </html>

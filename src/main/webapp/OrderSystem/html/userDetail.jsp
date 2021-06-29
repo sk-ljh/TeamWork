@@ -9,7 +9,13 @@
 <title>用户详情页面</title>
 <%
 	String path = request.getContextPath();
-%>
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	String basePort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/file/";
+	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", basePort);
+	%>
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/initiate.css">
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/userDetail.css">
 <link rel="stylesheet" href="<%=path%>/OrderSystem/layui/css/layui.css">
@@ -32,11 +38,16 @@
 		}
 	%>
 	<ul class="layui-nav">
+		<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">
+			<img src="${basePort }${Userdetails.icon}" style="width:50px;height:50px;border-radius:2em;float:left;position:relative;top:10px;">
+		</a>
 		<h3>
-			用户<%=user_name%>，您已登录。
+			&nbsp&nbsp&nbsp&nbsp&nbsp用户&nbsp&nbsp
+			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=user_name%></a>
+			&nbsp&nbsp，您已登录。
 		</h3>
-		<li class="layui-nav-item layui-this"><a
-			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path %>/adminHome/getParts.do">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
@@ -48,7 +59,7 @@
 					<a href="<%=path%>/Dish/listDishsAll.do">更改菜品信息</a>
 				</dd>
 			</dl></li>
-		<li class="layui-nav-item"><a href="javascript:;">用户管理</a>
+		<li class="layui-nav-item  layui-this"><a href="javascript:;">用户管理</a>
 			<dl class="layui-nav-child">
 				<dd>
 					<a href="<%=path%>/OrderSystem/html/insertUser.jsp">添加用户</a>
@@ -70,7 +81,7 @@
 	%>
 	
 	<div class="userDetailMainBody">
-		<img src="<%=userDetails.getIcon()%>" alt=""
+		<img src="${basePort }<%=userDetails.getIcon()%>" alt=""
 			style="width: 200px; height: 200px"> <span class="username">用户名：<%=userDetails.getName() %></span>
 		<ul>
 			<li class="userNo">用户编号：<%=userDetails.getUser_id() %></li>

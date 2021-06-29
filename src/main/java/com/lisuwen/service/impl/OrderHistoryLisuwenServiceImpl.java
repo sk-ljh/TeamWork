@@ -27,4 +27,16 @@ public class OrderHistoryLisuwenServiceImpl implements OrderHistoryLisuwenServic
 		return orderHistoryLisuwenDao.updateOrderHistory(map);
 	}
 
+	@Override
+	public int updateTableNum(int id) {
+		// TODO 自动生成的方法存根
+		return orderHistoryLisuwenDao.updateTableNum(id);
+	}
+
+	@Override
+	public int updateCookState(int id) {
+		// TODO 自动生成的方法存根
+		return orderHistoryLisuwenDao.updateCookState(id);
+	}
+
 }

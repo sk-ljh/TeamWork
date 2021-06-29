@@ -16,6 +16,7 @@ import com.our.pojo.Order_history;
 import com.our.pojo.Order_list;
 import com.our.pojo.User;
 import com.sunke.dao.DishSunkeDao;
+import com.sunke.entity.Dish_DishDetail;
 import com.sunke.entity.OrderHistory_List;
 import com.sunke.entity.QueryInfo;
 import com.sunke.entity.TableStatus;
@@ -68,10 +69,12 @@ public class DishSunkeServiceImpl implements DishSunkeService{
 		 String  beginTime = simpleDateFormat.format(date); 
 		System.out.println(beginTime);
 		
-		    //获取一个Date对象
+		dishSunkeDao.updateTableStatus(firstBody.getTableNumber());
+		
+		//获取一个Date对象
 		
 		 String punchTime = simpleDateFormat.format(date); 
-		
+		 
 		
 		int maxId=dishSunkeDao.getMaxId()+1;
 		Order_history orderHis=new Order_history(firstBody.getTableNumber(), firstBody.getPrice(), beginTime, "", 0,
@@ -88,6 +91,29 @@ public class DishSunkeServiceImpl implements DishSunkeService{
 		return maxId;
 		
 	}
+	@Override
+	public String getFinalCall() {
+		// TODO Auto-generated method stub
+		return dishSunkeDao.getFinalCall();
+	}
+	@Override
+	public int getStatus(int number) {
+		// TODO Auto-generated method stub
+		return dishSunkeDao.getStatus(number);
+	}
+	@Override
+	public Dish_DishDetail reMes(int dishId) {
+		// TODO Auto-generated method stub
+		return dishSunkeDao.getAllMes(dishId);
+	}
+	@Override
+	public List<Order_list> reReadyDish() {
+		// TODO Auto-generated method stub
+		return dishSunkeDao.reReadyDish();
+	}
+	
+	
+	
 	
 	
 }

@@ -7,10 +7,10 @@
 	</select>
 	
 	<select id="getDishCount" resultType="java.lang.Integer">
-       select count(*) from dishs where dishs_cate=#{dishCate}
+       select count(*) from dishs where dishs_cate=#{dishCate} and dishs_delete=0
     </select>
     <select id="listDishsAll" resultType="com.our.pojo.Dishs">
-    select * from dishs where dishs_cate=#{cateName}
+    select * from dishs where dishs_cate=#{cateName} and dishs_delete=0
        LIMIT #{pageStart},#{pageSize}
     </select>
     <select id="rePlace" resultType="java.lang.String">
@@ -35,4 +35,21 @@
       INSERT INTO `order_list` (`dishs_id`, `dishs_name`, `number`, `price`, `cook_state`, `order_id`) 
       VALUES (#{body.dishs_id}, #{body.dishs_name}, #{body.number}, #{body.price}, #{body.cook_state}, #{body.order_id});
     </insert>
+    <select id="getFinalCall" resultType="java.lang.String">
+    	SELECT  notice_message FROM notice order by notice_id DESC LIMIT 1
+    </select>
+    <update id="updateTableStatus">
+     update table_s set table_status=1 where table_number=#{number}
+    </update>
+    <select id="getStatus" resultType="java.lang.Integer">
+    	SELECT  table_status FROM table_s where table_number=#{number} 
+    </select>
+    <select id="getAllMes" resultType="com.sunke.entity.Dish_DishDetail">
+    SELECT * FROM dishs join dishs_detail on dishs.dishs_id=dishs_detail.dishs_id
+and dishs.dishs_id=#{id}
+    </select>
+    <select id="reReadyDish" resultType="com.our.pojo.Order_list">
+         SELECT * FROM order_list where cook_state=3
+    </select>
+    
 </mapper>

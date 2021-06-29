@@ -28,15 +28,7 @@
 	<update id="updateUserDetails" parameterType="HashMap">
 		<!-- update user_details
 		set icon=#{icon},role=#{role} where user_details_id=#{udid} -->
-		update user_details
-		<set>
-			<if test="role!=0">
-				role=#{role},
-			</if>
-			<if test="icon !=null and icon != ''">
-				icon=#{icon},
-			</if>
-		</set>
+		update user_details set role=#{role}
 		where user_details_id=#{udid}
 	</update>
 
@@ -77,4 +69,23 @@
 		select * from user where user_name=#{userName}
 	</select>
 
+	<!-- 11、模糊查询 -->
+	<select id="getUserDetailslist2" parameterType="String" resultType="com.our.pojo.User_details">
+		select ud.user_details_id,ud.user_id,ud.name,ud.sex,ud.phone,ud.icon,ud.education,ud.work_date,ud.role
+			from user as u join user_details as ud on u.user_id=ud.user_id
+				where u.user_delete = 0 and ud.role != 3 and (u.user_id like "%"#{key}"%" or u.user_name like "%"#{key}"%" or ud.name like "%"#{key}"%" or ud.sex like "%"#{key}"%" or ud.phone like "%"#{key}"%")
+	</select>
+	<!-- 12、得到没有被删除的且不是管理员的用户列表 -->
+	<select id="getUserDetailslist3" resultType="com.our.pojo.User_details">
+		select ud.user_details_id,ud.user_id,ud.name,ud.sex,ud.phone,ud.icon,ud.education,ud.work_date,ud.role
+			from user as u join user_details as ud on u.user_id=ud.user_id
+				where u.user_delete = 0 and ud.role != 3
+	</select>
+	
+	
+	
+	
+	
+	
+	
 </mapper>

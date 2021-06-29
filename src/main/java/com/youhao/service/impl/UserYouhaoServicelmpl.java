@@ -34,7 +34,7 @@ public class UserYouhaoServicelmpl implements UserYouhaoService {
 	public User_details getUserDetails(int user_id) {
 		return userADDao.getUserDetails(user_id);
 	}
-	
+
 	/* 4、更新用户详情表中的icon和role */
 	@Override
 	public int updateUserDetails(HashMap<String, Object> hm) {
@@ -77,4 +77,20 @@ public class UserYouhaoServicelmpl implements UserYouhaoService {
 		return userADDao.getUserByName(name);
 	}
 
+	/* 11、模糊查询 */
+	@Override
+	public List<User_details> getUserDetailslist2(String key){
+		return userADDao.getUserDetailslist2(key);
+	}
+	
+	/*12、得到没有被删除的且不是管理员的用户列表*/
+	@Override
+	public List<User_details> getUserDetailslist3(){
+		return userADDao.getUserDetailslist3();
+		
+	}
+	
+	
+	
+	
 }

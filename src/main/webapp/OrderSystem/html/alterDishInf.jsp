@@ -6,10 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-session.setAttribute("basePath", basePath);
-%>
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	String basePort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/file/";
+	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", basePort);
+	%>
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/initiate.css">
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/InfManage.css">
 <link rel="stylesheet" href="<%=path%>/OrderSystem/layui/css/layui.css">
@@ -32,14 +36,19 @@ session.setAttribute("basePath", basePath);
 	}
 	%>
 	<ul class="layui-nav">
+		<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">
+			<img src="${basePort }${Userdetails.icon}" style="width:50px;height:50px;border-radius:2em;float:left;position:relative;top:10px;">
+		</a>
 		<h3>
-			用户<%=user_name%>，您已登录。
+			&nbsp&nbsp&nbsp&nbsp&nbsp用户&nbsp&nbsp
+			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=user_name%></a>
+			&nbsp&nbsp，您已登录。
 		</h3>
-		<li class="layui-nav-item layui-this"><a
-			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path %>/adminHome/getParts.do">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
-		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
+		<li class="layui-nav-item layui-this"><a href="javascript:;">菜品管理</a>
 			<dl class="layui-nav-child">
 				<dd>
 					<a href="<%=path%>/OrderSystem/html/insertDish.jsp">添加菜品</a>

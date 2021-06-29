@@ -9,13 +9,26 @@
 	<!-- 查询未结账订单 -->
 	<select id="listOrderHistory"
 		resultType="com.our.pojo.Order_history">
-		select * from order_history order by payment_state ASC,begin_time DESC
+		select * from order_history order by payment_state
+		ASC,begin_time DESC
 	</select>
 
 	<!-- 修改未结账订单 -->
 	<update id="updateOrderHistory" parameterType="map">
-		update order_history set
-		end_time = #{end_time},	payment_state = #{payment_state}
+		update
+		order_history set
+		end_time = #{end_time}, payment_state =
+		#{payment_state}
 		where order_id = #{order_id}
+	</update>
+	<!-- 修改桌号 -->
+	<update id="updateTableNum" parameterType="int">
+		UPDATE table_s ,order_history SET table_s.table_status=0 where
+		order_history.table_number = table_s.table_number and order_id=#{order_id}
+	</update>
+	
+	<!-- 查看烹饪状态 -->
+	<update id="updateCookState" parameterType="int">
+		update order_list set cook_state=3 where order_id=#{order_id} and cook_state!=3
 	</update>
 </mapper>

@@ -8,9 +8,15 @@
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<%
+	<%
 	String path = request.getContextPath();
-%>
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	String basePort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/file/";
+	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", basePort);
+	%>
 		<link rel="stylesheet" href="<%=path%>/OrderSystem/css/initiate.css">
 		<link rel="stylesheet" href="<%=path%>/OrderSystem/css/InfManage.css">
 		<link rel="stylesheet" href="<%=path%>/OrderSystem/layui/css/layui.css">
@@ -29,11 +35,16 @@
 		}
 	%>
 		<ul class="layui-nav">
+		<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">
+			<img src="${basePort }${Userdetails.icon}" style="width:50px;height:50px;border-radius:2em;float:left;position:relative;top:10px;">
+		</a>
 		<h3>
-			用户<%=user_name%>，您已登录。
+			&nbsp&nbsp&nbsp&nbsp&nbsp用户&nbsp&nbsp
+			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=user_name%></a>
+			&nbsp&nbsp，您已登录。
 		</h3>
-		<li class="layui-nav-item layui-this"><a
-			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path %>/adminHome/getParts.do">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
@@ -45,7 +56,7 @@
 					<a href="<%=path%>/Dish/listDishsAll.do">更改菜品信息</a>
 				</dd>
 			</dl></li>
-		<li class="layui-nav-item"><a href="javascript:;">用户管理</a>
+		<li class="layui-nav-item  layui-this"><a href="javascript:;">用户管理</a>
 			<dl class="layui-nav-child">
 				<dd>
 					<a href="<%=path%>/OrderSystem/html/insertUser.jsp">添加用户</a>
@@ -79,9 +90,9 @@
 
 				<div class="layui-upload pic2BUploaded">
 					<button type="button" class="layui-btn" id="test1">上传图片</button>
-					<button type="button" class="layui-btn">确认修改</button>
+					<button id="file_confirm" type="button" class="layui-btn">确认修改</button>
 					<div class="layui-upload-list">
-						<img src="<%=userDetails.getIcon()%>" class="layui-upload-img" id="demo1"
+						<img src="${basePort }<%=userDetails.getIcon() %>" class="layui-upload-img" id="demo1"
 							style="width: 200px; height: 200px">
 					</div>
 					<div class="bar" style="width: 95px;">
@@ -132,7 +143,6 @@
 									<option value="0" selected="">请选择</option>
 									<option value="1">服务员</option>
 									<option value="2">后厨</option>
-									<option value="3">管理员</option>
 								</select>
 							</div>
 						</div>
@@ -158,73 +168,63 @@
 					layer.msg(elem.text());
 				});
 			});
-			layui.use(
-				['upload', 'element', 'layer'],
-				function() {
-					var $ = layui.jquery,
-						upload = layui.upload,
-						element = layui.element,
-						layer = layui.layer;
-
-					//图片上传
-					var uploadInst = upload
-						.render({
-							elem: '#test1',
-							url: 'https://httpbin.org/post' //上传接口
-								,
-							accept: 'file' //普通文件
-								,
-							exts: 'jpg|png|gif|tiff|jpeg' //设定文件后缀
-								,
-							before: function(obj) {
-								//预读本地文件示例，不支持ie8
-								obj
-									.preview(function(index,
-										file, result) {
-										$('#demo1').attr('src',
-											result); //图片链接（base64）
-									});
-
-								element.progress('demo', '0%'); //进度条复位
-								layer.msg('上传中', {
-									icon: 16,
-									time: 0
+			layui.use([ 'upload', 'element', 'layer' ],
+					function() {
+						var $ = layui.jquery, upload = layui.upload, element = layui.element, layer = layui.layer;
+						var uploadInst = upload.render({
+									elem : '#test1',
+									url : '${basePath }file/doupload.do' //上传接口
+									,
+									accept : 'file' //普通文件
+									,
+									exts : 'jpg|png|gif|tiff|jpeg' //设定文件后缀
+									,
+									field:'mulFile'
+									 ,
+									auto:false
+									,
+									bindAction: '#file_confirm'
+									,
+									data:{user_id:<%=userId%> }
+									,
+									choose: function(obj){
+										obj.preview(function(index,file, result) {
+													$('#demo1').attr('src',result); //图片链接（base64）
+												});
+										element.progress('demo', '0%'); //进度条复位
+									 },
+									
+									done : function(res) {
+										//如果上传失败
+										if (res.code > 0) {
+											return layer.msg('上传失败');
+										}
+										//上传成功的一些操作
+										//……
+										 $('#demoText').html(''); //置空上传失败的状态
+									},
+									error : function() {
+										//演示失败状态，并实现重传
+										var demoText = $('#demoText');
+										demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+										demoText.find('.demo-reload').on(
+												'click', function() {
+													uploadInst.upload();
+												});
+									}
+									//进度条
+									,
+									progress : function(n, elem, e) {
+										element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
+										if (n == 100) {
+											layer.msg('上传完毕', {
+												icon : 1
+											});
+										}
+									}
 								});
-							},
-							done: function(res) {
-								//如果上传失败
-								if (res.code > 0) {
-									return layer.msg('上传失败');
-								}
-								//上传成功的一些操作
-								//……
-								$('#demoText').jsp(''); //置空上传失败的状态
-							},
-							error: function() {
-									//演示失败状态，并实现重传
-									var demoText = $('#demoText');
-									demoText
-										.jsp(
-											'<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>'
-										);
-									demoText.find('.demo-reload').on(
-										'click',
-										function() {
-											uploadInst.upload();
-										});
-								}
-								//进度条
-								,
-							progress: function(n, elem, e) {
-								element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
-								if (n == 100) {
-									layer.msg('上传完毕', {
-										icon: 1
-									});
-								}
-							}
-						});
-				});
+					});
+
 			layui
 				.use(
 					['form', 'layedit', 'laydate'],

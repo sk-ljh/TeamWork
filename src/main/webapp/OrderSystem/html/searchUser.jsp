@@ -107,12 +107,13 @@
 					<%
 						List<User_details> userDetailsList = (List<User_details>) session.getAttribute("userDetailsList");
 						for (User_details userDetails : userDetailsList) {
+							/* if (userDetails.getRole() != 3) { */
 					%>
 					<tr class="user">
 						<td><%=userDetails.getUser_id()%></td>
 						<td><%=userDetails.getName()%></td>
 						<td><%=userDetails.getSex()%></td>
-						<%
+					<%
 						HashMap<Integer, String> hm = new HashMap<Integer, String>();
 								hm.put(1, "服务员");
 								hm.put(2, "后厨");
@@ -145,6 +146,7 @@
 						</td>
 					</tr>
 					<%
+					/* } */
 					}
 				%>
 				</tbody>
@@ -156,7 +158,7 @@
 		</div>
 		<!-- 1、框架 -->
 		<script src="<%=path%>/OrderSystem/layui/layui.js"></script>
-		<!-- 2、userList -->
+		<!-- 2、模糊查询 -->
 		<script>
 			layui.use('element', function() {
 				var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
@@ -243,13 +245,13 @@
 					limit: 5,
 					first: '首页',
 					last: '尾页',
-					curr: ${pageno},
+					curr: ${pageno}, 
 					prev: '<em>←</em>',
 					next: '<em>→</em>',
-					jump: function(obj, first) {
-						if (!first) {
-							window.location.href = "<%=path%>/user/getUserList.do?pageno=" + obj.curr;
-						}
+					jump: function (obj, first) {
+					    if (!first) {
+							window.location.href="<%=path%>/user/search.do?pageno="+obj.curr;
+					    }
 					}
 				});
 			});

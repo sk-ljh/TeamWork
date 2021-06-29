@@ -28,11 +28,16 @@
 			}
 	%>
 	<ul class="layui-nav">
+		<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">
+			<img src="${basePort }${Userdetails.icon}" style="width:50px;height:50px;border-radius:2em;float:left;position:relative;top:10px;">
+		</a>
 		<h3>
-			用户<%=user_name%>，您已登录。
+			&nbsp&nbsp&nbsp&nbsp&nbsp用户&nbsp&nbsp
+			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=user_name%></a>
+			&nbsp&nbsp，您已登录。
 		</h3>
-		<li class="layui-nav-item layui-this"><a
-			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
+		<li class="layui-nav-item"><a
+			href="<%=path %>/adminHome/getParts.do">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
@@ -56,7 +61,7 @@
 
 		<li class="layui-nav-item"><a
 			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
-		<li class="layui-nav-item"><a
+		<li class="layui-nav-item  layui-this"><a
 			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
 	</ul>

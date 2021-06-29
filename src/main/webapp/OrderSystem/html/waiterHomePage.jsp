@@ -10,7 +10,10 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
+	
+	String basePort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/file/";
 	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", basePort);
 	%>
     <link rel="stylesheet" type="text/css" href="<%=path %>/OrderSystem/skWaiterHomePage/assets/waifu.css"/>
  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -32,6 +35,35 @@
 </head>
 <body>
 <div id="cate">
+	<div >
+		<el-drawer style="text-align: center; font-size: 30px;" 
+		  title="已上菜品"
+		  :visible.sync="drawer2"
+		  direction="ttb"
+		 >
+		  <span class="top_drawer">
+			  <div class="dishlist_box">
+					<div class="dishlist_all">
+						<div class="dishlist_one" v-for="item in readylist">
+							<span >
+								菜品ID：{{item.dishs_id}}
+							</span>
+							<span >
+								菜品名：{{item.dishs_name}}
+							</span>
+							<span >
+								数目：{{item.dishs_number}}
+							</span>
+							<span >
+								订单号：{{item.order_id}}
+							</span>
+						</div>
+					</div>
+			  </div>
+			  
+		  </span>
+		</el-drawer>
+	</div>
 	<div class="menuHolder" style="z-index:999;">
 		<div class="menuWindow">
 			<ul class="p1">
@@ -49,9 +81,11 @@
 	</div>
 	<div class="myheadersk"> 
        <div class="skdaohang">	
-<ul class="layui-nav" lay-bar="disabled">
+<ul class="layui-nav" >
 	<li class="layui-nav-item">
-	  <a href="">菜品<span class="layui-badge sk"></span></a>
+	  <span @click="getready">
+	    <a href="##">上菜情况<span class="layui-badge sk"></span></a>
+	  </span>
 	</li>
   <li class="layui-nav-item">
     <a href="">查看订单<span class="layui-badge sk">9</span></a>
@@ -60,7 +94,7 @@
     <a href="">查看公告<span class="layui-badge-dot sk"></span></a>
   </li>
   <li class="layui-nav-item">
-    <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+    <a href=""><img src="${basePort }${Userdetails.icon}" class="layui-nav-img">我</a>
     <dl class="layui-nav-child">
       <dd><a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">修改信息</a></dd>
       <dd><a href="javascript:;">安全管理</a></dd>
@@ -188,7 +222,7 @@
 						</span>
 						</div>
 						<div class="dish_body_item_over">
-							<div class="index_intro">
+							<div class="index_intro" @click="getdetail(item2.dishs_id)">
 								详细介绍
 							</div>
 							<div class="eat_now" @click="addcar(item2)">
@@ -217,6 +251,12 @@
 	</div>
 </div>
 <div id="app">
+
+	
+	
+	
+	
+	
 	<div class="bot_btn">
 		<el-button class="botton_btn" @click="showcar"  style="min-width:120px;height:10vh;width: 10vw;font-family: skfont;font-weight: 800;font-size: 20px;" plain circle  size="medium">
 				 已点菜品
@@ -253,7 +293,27 @@
 <div class="line">
 </div>
    <div class="footer">
-		这是footer
+		<div class="footer-top">
+			<span id="">
+				美食链接|
+			</span>
+			<span id="">
+				美食教程|
+			</span>
+			<span id="">
+				美食图片
+			</span>
+			<span id="">
+				联系方式：110
+			</span>
+			<span id="">
+				总店地址：重庆花溪街道。
+			</span>
+		</div>
+		<div class="footer-bot">
+			免责声明：本网站所有图片及资源均来自网络，如有冲突，责任人：李波。
+			2020-2021
+		</div>
 	</div>
 <div class="waifu" id="waifu">
         <div class="waifu-tips" style="opacity: 1;"></div>
@@ -283,6 +343,7 @@
 				showThing:[],
 				allmoney:0,
 				yuangong:20,
+				drawer2:false,
 			},
 			methods:{
 				      buythething(){
@@ -338,7 +399,7 @@
 							localStorage.setItem("shoppingthings",newchange)
 							shoppingcar.allmoney=0
 							for (let i=0;i<this.showThing.length;i++){
-								 shoppingcar.allmoney+= shoppingcar.showThing[i].price* shoppingcar.showThing[i].number
+								 shoppingcar.allmoney+= shoppingcar.showThing[i].price* shoppingcar.showThing[i].number;
 					}
 				}
 				
@@ -356,6 +417,7 @@
 					            pageSize:3,//每页最大数
 					        },
 					dishlis:[],
+					readylist:[],
 					total:0,
 					putpage:'',
 					showThing:[],
@@ -363,15 +425,27 @@
 					table:{},
 					tablestatus:[],
 					drawer: false,
+					drawer2:false,
 					direction: 'rtl',
 					userid:2,
 				},
 				methods:{
+					getready:function(){
+						
+						axios.post("${basePath}getReadyDish.do",{"data":123}).then(function(data){
+								cate.readylist=data.data.data
+								cate.drawer2=true
+							});
+					},
 					getdate:function(){
 					
 					axios.get("${basePath}getCate.do").then(function(data){			
 							cate.catedata=data.data.cate
 						});
+					},
+					getdetail(id){
+						var url="<%=path %>/OrderSystem/html/Dishdetails.jsp?id="+id.toString()+"&"+"fuwu="+cate.userid
+						window.open(url,'getid')
 					},
 					
 					
@@ -385,16 +459,21 @@
 							});
 					},
 					diancan:function(site){
-						for(item of cate.tablestatus){
-							if(site==item.table_number){
-								if(item.table_status==1){
-									alert("该桌位已经有人，请更换！")
-									return
-								}
-							}
-						}
-					      localStorage.setItem("user",site)
-						  alert("选桌成功，请继续点餐！")
+						axios.post('${basePath}getStatus.do',{"site":site}).then(res=>{
+					
+										if(res.data==1){
+											alert("该桌已经有人！！请更换")
+											return
+										}				 
+										else{
+											localStorage.setItem("user",site)
+											alert("选桌成功，请继续点餐！")
+										}				
+								})
+								.catch((error)=>{
+										console.log(error)  //  错误处理 相当于error
+						})
+						
 					   },
 					 handleSizechage:function(newSize){
 					        cate.queryinfo.pageSize=newSize
@@ -413,9 +492,6 @@
 					 addcar:function(item4){
 						    
 						  if (localStorage.getItem("user")!=null){
-							 
-							  
-							  
 							    var needAdd={dishs_id:item4.dishs_id,dishs_name:item4.dishs_name,number:1,price:item4.price,cook_state:1,order_id:'',total:'',user_id:cate.userid,tableNumber:''}
 							      if (localStorage.getItem("shoppingthings")!=null){
 							           var getvalue=localStorage.getItem("shoppingthings")
@@ -466,18 +542,15 @@
 					  cate.table=data.data.data	
 					  console.log(data.data.data)
 					 cate.tablestatus=data.data.state
-					});
-				
+					});	
 			}
-			 
-		
 	</script>
-	
-
-  <script src="<%=path %>/OrderSystem/skWaiterHomePage/assets/live2d.js"></script>
+<script src="<%=path %>/OrderSystem/skWaiterHomePage/assets/live2d.js"></script>
     <script src="<%=path %>/OrderSystem/skWaiterHomePage/assets/waifu-tips.js"></script>
     <script type="text/javascript">initModel()</script>
 	<script src="<%=path %>/OrderSystem/skWaiterHomePage/layui/layui.js"></script>
+
+   
 	<script>
 	layui.use('carousel', function(){
 	  var carousel = layui.carousel;
@@ -491,11 +564,51 @@
 	  });
 	});
 	</script>
-	
+		
 	<style type="text/css">
-	#cate{
-	position:relative;
-	}
+		.dishlist_box{
+			width: 70%;
+			height: 100%;
+			
+			margin: 0 auto;
+		}
+		.dishlist_all{
+			padding-top: 15px;
+			box-sizing: content-box;
+			border-radius: 5%;
+			box-shadow: 0 2px 12px 0 ;
+			display: flex;
+			width: 100%;
+			background: url(<%=path %>/OrderSystem/skWaiterHomePage/images/bg.jpg) repeat fixed center;
+			margin: 0 auto;
+			flex-direction: column;
+			justify-content: space-around;
+			height: 85%;
+			overflow: auto;
+		}
+		.dishlist_one{
+			display: block;
+			width: 100%;
+			flex:1;
+			font-size: 18px;
+			font-family: skfont2;
+		}
+		.footer{
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			justify-content: center;
+			color: rgb(187,187,187);
+			font-size: 16px;
+			background-color: rgb(60,60,60);
+			height: 250px;
+			
+		}
+		
+		.footer>span{
+			margin-right: 15px;
+		}
+		
 		.allthings_show{
 			width: 100%;
 			height: 100%;
@@ -518,8 +631,9 @@
 			background-color:  #FFC300;
 		}
 		.bot_btn{
-			float: right;
-			margin-right: 50px;
+			position: fixed;
+			right: 50px;
+			bottom: 50px;
 			
 		}
 		#app{
@@ -532,16 +646,8 @@
 			background-color:red;
 		}
 		
-		.dish_body{
-			
-			
-			
-		}
-		.footer{
-			width: 100%;
-			height: 300px;
-			background-color: #00F7DE;
-		}
+		
+		
 		.my_fenye{
 		    width: 400px;
 		    margin: 0 auto ;
@@ -835,9 +941,7 @@
 			color: #000000;
 			font-weight: 600;
 		}
-		.layui-nav-item{
-			
-		}
+		
 		
 		.layui-nav{
 			min-width: 900px;
@@ -845,13 +949,13 @@
 			justify-content: flex-end;
 			align-items: center;
 			width: 100%;
-			height: 104px;
-			background:rgba(0,0, 0, 0.4);
+			height: 100px;
+			background:	rgba(91,91,91,0.4);
 			position:fixed;
 			top:0;
 			right: 0;
 			overflow:visible;
-			z-index: 900;
+			z-index: 998;
 			
 		}
 		#myheader{

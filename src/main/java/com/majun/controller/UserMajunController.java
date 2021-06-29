@@ -72,4 +72,10 @@ public class UserMajunController {
 		}
 		return site;
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "login";
+	}
 }

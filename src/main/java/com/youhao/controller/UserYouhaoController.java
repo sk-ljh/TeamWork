@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,16 +13,21 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.libo.service.FileInfoService;
 import com.our.pojo.User;
 import com.our.pojo.User_details;
+import com.our.util.FileUtil;
 import com.youhao.service.UserYouhaoService;
 
 @Controller
 @RequestMapping("/user")
 public class UserYouhaoController {
-
+	@Autowired
+	private FileInfoService fileInfoService;
 	@Autowired
 	UserYouhaoService userService;
 
@@ -42,23 +48,22 @@ public class UserYouhaoController {
 
 	/* 1、得到user详情列表 */
 	@RequestMapping("/getUserList")
-	public String getUserList(HttpSession session) {
-		List<User> rightUserList = userService.getUserList();
-
-		int userIdList[] = new int[rightUserList.size()];
-		for (int i = 0; i < rightUserList.size(); i++) {
-			userIdList[i] = rightUserList.get(i).getUser_id();
+	public String getUserList(@RequestParam(value="pageno",defaultValue="1")Integer pageno,HttpSession session) {
+		
+		List<User_details> userDetailsList = userService.getUserDetailslist3();
+		session.setAttribute("DishQueriedNumber", userDetailsList.size());// 保存记录数
+		session.setAttribute("pageno", pageno);// 保存当前页数到session里
+		if (userDetailsList.size() > 5) {
+			if ((Integer.valueOf(pageno) - 1) * 5 + 5 <= userDetailsList.size()) {
+				userDetailsList = userDetailsList.subList((Integer.valueOf(pageno) - 1) * 5,
+						(Integer.valueOf(pageno) - 1) * 5 + 5);
+			}
+			else {
+				userDetailsList = userDetailsList.subList((Integer.valueOf(pageno) - 1) * 5, userDetailsList.size());
+			}
 		}
-
-		ArrayList<User_details> userDetailsList = new ArrayList<User_details>();
-
-		for (User user : rightUserList) {
-			userDetailsList.add(userService.getUserDetails(user.getUser_id()));
-		}
-
 		session.setAttribute("userDetailsList", userDetailsList);
 		
-
 		return "userList";
 	}
 
@@ -80,7 +85,6 @@ public class UserYouhaoController {
 			hm1.put("user_id", user_id);
 			hm1.put("pwd", pwd);
 			int isAlter1 = userService.updateUserPwd(hm1);
-			
 			if(isAlter1>0) {
 				System.out.println("user表修改成功！");
 			}else {
@@ -93,15 +97,18 @@ public class UserYouhaoController {
 		/*修改user_details表*/
 		HashMap<String,Object> hm2 = new HashMap<String,Object>();
 		hm2.put("udid", udid);
-		hm2.put("icon", icon);
+//		hm2.put("icon", icon);
 		hm2.put("role", role);
-		int isAlter2 = userService.updateUserDetails(hm2);
-		if(isAlter2>0) {
-			System.out.println("user_details表修改成功！");
+		if(role!=0) {
+			int isAlter2 = userService.updateUserDetails(hm2);
+			if(isAlter2>0) {
+				System.out.println("user_details表修改成功！");
+			}else {
+				System.out.println("user_details表修改失败！");
+			}
 		}else {
-			System.out.println("user_details表修改失败！");
+			System.out.println("没有选择角色，不需要修改！");
 		}
-
 		try {
 			response.sendRedirect("/TeamWork/user/getUserList.do");
 		} catch (IOException e) {
@@ -112,7 +119,9 @@ public class UserYouhaoController {
 
 	/* 3、添加用户 */
 	@RequestMapping("/insertUser")
-	public String insertUser(HttpServletRequest request, HttpServletResponse response) {
+	public String insertUser(@RequestParam(required=false) MultipartFile mulFile,HttpServletRequest request, HttpServletResponse response) {
+		
+		
 		String userName = request.getParameter("username");
 		String pwd = request.getParameter("pwd");
 		int role = Integer.parseInt(request.getParameter("identity"));
@@ -126,12 +135,26 @@ public class UserYouhaoController {
 			return "insertUser";
 		} else {
 
-			int userId = userService.getMaxUserId() + 1;
+			int userid = userService.getMaxUserId() + 1;
+			
+			StringBuffer sb = new StringBuffer();//保存到硬盘中的地址 a.jpg ---------------> d://aaaa/01200120012_a.jpg
+//			FileUtil.createRandomFileName();
+//			mulFile.getOriginalFilename();
+			sb.append(FileUtil.createRandomFileName()).append("_").append(mulFile.getOriginalFilename());
+			System.out.println("sb = " + sb);
+			String storeFileUrl = sb.toString();// /upload/xxxxxxxxx_01.jpg 保存到硬盘中的地址
+			String realFileName = mulFile.getOriginalFilename();//真实文件名
+			System.out.println("realFileName="+realFileName);
+//			storeFileUrl = request.getServletContext().getRealPath(storeFileUrl);// /upload/xxxx_01.jpg --> d://xxx/upload/xxx_01.jpg
+			System.out.println("storeFileName = " + storeFileUrl);
+			
+			
+			
 
 			/* user表 */
 			HashMap<String, Object> hm1 = new HashMap<String, Object>();
 			hm1.put("user_delete", 0);
-			hm1.put("user_id", userId);
+			hm1.put("user_id", userid);
 			hm1.put("user_name", userName);
 			hm1.put("password", pwd);
 			userService.insertUser(hm1);
@@ -139,12 +162,16 @@ public class UserYouhaoController {
 			/* user_details表 */
 			/* user_details_id,user_id,name,icon,role */
 			HashMap<String, Object> hm2 = new HashMap<String, Object>();
-			hm2.put("user_details_id", userId);
-			hm2.put("user_id", userId);
+			hm2.put("user_id", userid);
 			hm2.put("name", userName);
-			hm2.put("icon", "cdvdvsdv");
+			hm2.put("icon", storeFileUrl);
 			hm2.put("role", role);
 			userService.insertUserDetails(hm2);
+			
+			Map<String,Object> hashmap=new HashMap<String,Object>();
+			hashmap.put("user_id", userid);
+			hashmap.put("icon",storeFileUrl);
+			fileInfoService.uploadFileInfo(mulFile, hashmap);//保存文件
 			try {
 				response.sendRedirect("/TeamWork/user/getUserList.do");
 			} catch (IOException e) {
@@ -187,6 +214,35 @@ public class UserYouhaoController {
 
 		session.setAttribute("userDetails", userDetails);
 		return "userDetail";
+	}
+	
+	@RequestMapping("/search")
+	public String search(@RequestParam(value="pageno",defaultValue="1")Integer pageno,HttpServletRequest request, HttpSession session) {
+
+		String key = request.getParameter("key");
+		if(key != null) {
+			session.setAttribute("key", key);
+		}else {
+			key = (String) session.getAttribute("key");
+			System.out.println(key);
+		}
+		List<User_details> userDetailsList = userService.getUserDetailslist2(key);
+		
+		session.setAttribute("DishQueriedNumber", userDetailsList.size());		// 保存记录数
+		session.setAttribute("pageno", pageno);									// 保存当前页数到session里
+		if (userDetailsList.size() > 5) {
+			if ((Integer.valueOf(pageno) - 1) * 5 + 5 <= userDetailsList.size()) {
+				userDetailsList = userDetailsList.subList((Integer.valueOf(pageno) - 1) * 5,
+						(Integer.valueOf(pageno) - 1) * 5 + 5);
+			}
+			else {
+				userDetailsList = userDetailsList.subList((Integer.valueOf(pageno) - 1) * 5, userDetailsList.size());
+			}
+		}
+
+		session.setAttribute("userDetailsList", userDetailsList);
+
+		return "searchUser";
 	}
 
 }

@@ -1,10 +1,12 @@
 package com.sunke.dao;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.our.pojo.*;
+import com.sunke.entity.Dish_DishDetail;
 import com.sunke.entity.TableStatus;
 
 public interface DishSunkeDao {
@@ -19,4 +21,9 @@ public interface DishSunkeDao {
 			public void insertDishList(@Param("body") Order_list body);
 			public String getOrderId(@Param("placeName") String placeName);
 			public int getMaxId();
+			public String getFinalCall();
+			public void updateTableStatus(@Param("number") int number);
+			public int getStatus(@Param("number") int number);
+			public Dish_DishDetail getAllMes(@Param("id") int id);
+			public List<Order_list> reReadyDish();
 }

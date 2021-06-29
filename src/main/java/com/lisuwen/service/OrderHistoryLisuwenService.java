@@ -9,4 +9,8 @@ public interface OrderHistoryLisuwenService {
 	List<Order_history> listOrderHistory();
 
 	int updateOrderHistory(Map map);
+	
+	int updateCookState(int id);
+	
+	int updateTableNum(int id);
 }

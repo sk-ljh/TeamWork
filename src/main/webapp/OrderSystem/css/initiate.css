@@ -7,6 +7,17 @@ body{
 fieldset{
     text-align: center;
 }
+.layui-nav img{
+	width:50px;
+	height:50px;
+	border-radius:2em;
+	float:left;
+	position:relative;
+	top:10px;
+}
+.layui-nav h3{
+	font-size:15px;
+}
 h2{
     color:white;
     text-align: center;
@@ -22,6 +33,12 @@ h3{
     position: relative;
     top:20px;
 }
+h3 a{
+	color:white;
+}
+h3 a:hover{
+	color:rgb(230, 230, 230);
+}
 .loginMainBody{
     height:600px;
     width:40%;
@@ -31,7 +48,7 @@ h3{
     transform: translateX(-50%);
     background-color: rgb(253, 244, 213);
     border-radius: 2em;
-}
+} 
 .alterUserInfMainbody,.adminHomepagemainBody,.alterDishInfMainbody,.dishDetailMainBody,.operateFormMainBody,
 .dishAdminListMainBody,.releaseNoticeMainBody,.userDetailMainBody,.waiterHomepageMainBody,.orderFormListMainBody,
 .orderDetailMainBody,.cartMainBody,.chefHomepageMainBody,.userListMainBody,.alterSelfInfMainBody{

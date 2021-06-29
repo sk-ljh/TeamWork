@@ -7,8 +7,14 @@
 <meta charset="utf-8">
 <title>个人信息修改</title>
 <%
-String path = request.getContextPath();
-%>
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	String basePort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/file/";
+	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", basePort);
+	%>
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/initiate.css">
 <link rel="stylesheet" href="<%=path%>/OrderSystem/css/InfManage.css">
 <link rel="stylesheet" href="<%=path%>/OrderSystem/layui/css/layui.css">
@@ -34,9 +40,9 @@ String path = request.getContextPath();
 
 			<div class="layui-upload pic2BUploaded">
 				<button type="button" class="layui-btn" id="test1">上传图片</button>
-				<button type="button" class="layui-btn">确认修改</button>
+				<button id="file_confirm" type="button" class="layui-btn">确认修改</button>
 				<div class="layui-upload-list">
-					<img src="<%=path%>/OrderSystem/img/head1.jpg"
+					<img src="${basePort }${Userdetails.icon}"
 						class="layui-upload-img" id="demo1"
 						style="width: 200px; height: 200px">
 				</div>
@@ -121,40 +127,39 @@ String path = request.getContextPath();
 		</a>
 	</div>
 	<script src="<%=path%>/OrderSystem/js/layui.js"></script>
+	 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	<script>
 		var newPwd = document.querySelector("#newPwd");
 		var pwd = document.querySelector("#pwd");
-		layui
-				.use(
-						[ 'upload', 'element', 'layer' ],
+		
+	
+		layui.use([ 'upload', 'element', 'layer' ],
 						function() {
-
 							var $ = layui.jquery, upload = layui.upload, element = layui.element, layer = layui.layer;
-
-							var uploadInst = upload
-									.render({
+							var uploadInst = upload.render({
 										elem : '#test1',
-										url : 'https://httpbin.org/post' //上传接口
+										url : '${basePath }file/doupload.do' //上传接口
 										,
 										accept : 'file' //普通文件
 										,
 										exts : 'jpg|png|gif|tiff|jpeg' //设定文件后缀
 										,
-										before : function(obj) {
-											//预读本地文件示例，不支持ie8
-											obj
-													.preview(function(index,
-															file, result) {
-														$('#demo1').attr('src',
-																result); //图片链接（base64）
+										field:'mulFile'
+										 ,
+										auto:false
+										,
+										bindAction: '#file_confirm'
+										,
+										data:{user_id:${loginUser.user_id} }
+										,
+										choose: function(obj){
+											obj.preview(function(index,file, result) {
+														$('#demo1').attr('src',result); //图片链接（base64）
 													});
-
 											element.progress('demo', '0%'); //进度条复位
-											layer.msg('上传中', {
-												icon : 16,
-												time : 0
-											});
-										},
+											
+										 },
+										
 										done : function(res) {
 											//如果上传失败
 											if (res.code > 0) {
@@ -162,13 +167,12 @@ String path = request.getContextPath();
 											}
 											//上传成功的一些操作
 											//……
-											$('#demoText').jsp(''); //置空上传失败的状态
+											 $('#demoText').html(''); //置空上传失败的状态
 										},
 										error : function() {
 											//演示失败状态，并实现重传
 											var demoText = $('#demoText');
-											demoText
-													.jsp('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+											demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
 											demoText.find('.demo-reload').on(
 													'click', function() {
 														uploadInst.upload();
@@ -187,10 +191,7 @@ String path = request.getContextPath();
 									});
 						});
 
-		layui
-				.use(
-						[ 'form', 'layedit', 'laydate', 'upload', 'element',
-								'layer' ],
+		layui.use([ 'form', 'layedit', 'laydate', 'upload', 'element','layer' ],
 						function() {
 							var form = layui.form, layer = layui.layer, layedit = layui.layedit, laydate = layui.laydate;
 							var editIndex = layedit.build('LAY_demo_editor');
