@@ -44,4 +44,10 @@ public class OrderHistoryWenlongServiceImpl implements OrderHistoryWenlongServic
 		return orderHistoryWenlongDao.getOrderHistory(order_id);
 	}
 
+	@Override
+	public Order_history getOrderHistoryAdmin(int order_id) {
+		// TODO Auto-generated method stub
+		return orderHistoryWenlongDao.getOrderHistoryAdmin(order_id);
+	}
+
 }

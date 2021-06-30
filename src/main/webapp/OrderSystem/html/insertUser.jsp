@@ -149,7 +149,6 @@
 					accept: 'file', //普通文件
 					url:'${basePath }file/doupload2.do',
 					auto: false,
-					bindAction: '#file_confirm',
 					exts: 'jpg|png|gif|tiff|jpeg' //只允许上传压缩文件
 						,
 					field: 'mulFile',
@@ -157,7 +156,7 @@
 						obj.preview(function(index, file, result) {
 							$('#demo1').attr('src', result); //图片链接（base64）
 						});
-						element.progress('demo', '0%'); //进度条复位
+						
 
 					}
 

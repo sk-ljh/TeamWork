@@ -101,10 +101,17 @@
 						<td><%=order.getBegin_time() %></td>
 						<td><%=order.getEnd_time()==null?"——":order.getEnd_time()%></td>
 						<td><a href="<%=path %>/getOrderDetail.do?order_id=<%=order.getOrder_id()%>">查看</a></td>
-						<td><a href="<%=path %>/changePaymentState.do?order_id=<%=order.getOrder_id()%>"><button title="点击提交订单" type="button" class="layui-btn"
-								style="width: 65%; text-align: center; background: linear-gradient(to left, #ff7c25 10%, #ff5101 100%);" id="btn">结算提交</button>
+						<%if(order.getPayment_state()==0){ %>
+						<td><a href="<%=path %>/changePaymentState.do?order_id=<%=order.getOrder_id()%>"><button title="点击提交订单" type="button" class="cooking layui-btn"
+								 id="btn">结算提交</button>
 							</a>
 						</td>
+						<%}else if(order.getPayment_state()==3){ %>
+						<td><a href=""><button title="订单已提交,正在处理中!" type="button" class="toBcooked layui-btn"
+								 id="btn">正在提交</button>
+							</a>
+						</td>
+						<% } %>
 					</tr>
 				<% } %>
 				</tbody>
@@ -190,6 +197,20 @@
 			alert("提交成功！");
 			return false; //阻止表单默认提交
 		}
+		
+		  var btns = document.querySelectorAll("#btn");
+		  for (let i = 0; i < btns.length; i++) {
+			  btns[i].onclick = function () {
+				  if (btns[i].classList.contains('cooking')) {
+					  layer.msg('提交成功!等待管理员处理...', {icon: 1});
+					  
+					  btns[i].classList.remove("cooking");
+				      btns[i].classList.add("toBcooked");
+					  btns[i].innerHTML = "正在提交";
+				      btns[i].title="订单已提交,正在处理中...";
+				  }
+			  }
+		  }
 	</script>
 
 </body>

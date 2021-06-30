@@ -9,6 +9,9 @@ public interface OrderHistoryWenlongDao {
 	//查询历史订单
 	List<Order_history> listOrderHistory();
 	
+	//查询历史订单
+	Order_history getOrderHistoryAdmin(int order_id);
+	
 	//单笔订单查询
 	Order_history getOrderHistory(int order_id);
 	

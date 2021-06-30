@@ -75,14 +75,19 @@
 				<div class="layui-form-item"
 					style="position: relative; top: -54px; left: 40%">
 					<label class="layui-form-label">性别</label>
-					<%if(((User_details) session.getAttribute("Userdetails")).getSex().equals("男")) 
+					<%if(((User_details) session.getAttribute("Userdetails")).getSex()==null) 
 					{%>
 					<div class="layui-input-inline">
 						<input type="radio" name="sex" value="男" title="男" checked="">
 						<input type="radio" name="sex" value="女" title="女">
 					</div>
-					<%} %>
-					<%if(((User_details) session.getAttribute("Userdetails")).getSex().equals("女")) 
+					<%}else if(((User_details) session.getAttribute("Userdetails")).getSex().equals("男")) 
+					{%>
+					<div class="layui-input-inline">
+						<input type="radio" name="sex" value="男" title="男" checked="">
+						<input type="radio" name="sex" value="女" title="女">
+					</div>
+					<%}else if(((User_details) session.getAttribute("Userdetails")).getSex().equals("女")) 
 					{%>
 					<div class="layui-input-inline">
 						<input type="radio" name="sex" value="男" title="男">
@@ -114,11 +119,18 @@
 					<div class="layui-form-item" style="position: relative; top: 20px">
 						<div class="layui-inline">
 							<label class="layui-form-label">联系电话</label>
+							<% if(((User_details) session.getAttribute("Userdetails")).getPhone()==null) {%>
+							<div class="layui-input-inline">
+								<input type="tel" name="phone" autocomplete="off" lay-verify="checkPhone"
+									placeholder="" class="layui-input" />
+							</div>
+							<%} else {%>
 							<div class="layui-input-inline">
 								<input type="tel" name="phone" autocomplete="off" lay-verify="checkPhone"
 									placeholder=<%=((User_details) session.getAttribute("Userdetails")).getPhone()%>
 									class="layui-input" />
 							</div>
+							<%} %>
 						</div>
 					</div>
 					<div class="layui-form-item form-button-item">

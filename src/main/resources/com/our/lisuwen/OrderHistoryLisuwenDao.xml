@@ -9,8 +9,8 @@
 	<!-- 查询未结账订单 -->
 	<select id="listOrderHistory"
 		resultType="com.our.pojo.Order_history">
-		select * from order_history order by payment_state
-		ASC,begin_time DESC
+		select * from order_history where payment_state > 0 order by payment_state
+		DESC,begin_time DESC
 	</select>
 
 	<!-- 根据关键字查询订单 -->

@@ -9,17 +9,22 @@
 
 	<!-- 历史订单查询 -->
 	<select id="listOrderHistory" resultType="com.our.pojo.Order_history">
-		select * from order_history where order_delete=0 and payment_state=0
+		select * from order_history where order_delete=0 and (payment_state=0 or payment_state=3)
+	</select>
+	
+	<!-- 历史订单查询 -->
+	<select id="getOrderHistoryAdmin" resultType="com.our.pojo.Order_history" parameterType="int">
+		select * from order_history where order_id=#{order_id} and order_delete=0
 	</select>
 	
 	<!-- 单笔订单查询 -->
 	<select id="getOrderHistory" resultType="com.our.pojo.Order_history" parameterType="int">
-		select * from order_history where order_id=#{order_id} and order_delete=0 and payment_state=0
+		select * from order_history where order_id=#{order_id} and order_delete=0 and (payment_state=0 or payment_state=3)
 	</select>
 	
 	<!-- 查询桌号 -->
 	<update id="updatePaymentState" parameterType="int">
-		update order_history set payment_state=2 where order_id=#{order_id}
+		update order_history set payment_state=3 where order_id=#{order_id}
 	</update>
 	
 	<!-- 修改付款状态 -->

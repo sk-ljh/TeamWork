@@ -77,7 +77,7 @@ public class DishSunkeServiceImpl implements DishSunkeService{
 		 
 		
 		int maxId=dishSunkeDao.getMaxId()+1;
-		Order_history orderHis=new Order_history(firstBody.getTableNumber(), firstBody.getPrice(), beginTime, "", 0,
+		Order_history orderHis=new Order_history(firstBody.getTableNumber(), firstBody.getTotal(), beginTime, "", 0,
 				 maxId, firstBody.getUser_id(), 0);
 		
 		dishSunkeDao.insertHistory(orderHis);

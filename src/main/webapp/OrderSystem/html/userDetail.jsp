@@ -93,11 +93,33 @@
 			%>
 			
 			<li class="identity">身份：<%=hm.get(userDetails.getRole()) %></li>
-			<li class="gender">性别：<%=userDetails.getSex() %></li>
-			<li class="phone">联系电话：<%=userDetails.getPhone() %></li>
-			<li class="work_date">工作日：<%=userDetails.getWork_date() %></li>
+			<%
+				String temp = null;
+				if(userDetails.getSex()==null){
+					temp = "——";
+				}else{
+					temp = userDetails.getSex();
+				}
+			%>
+			<li class="gender">性别：<%=temp %></li>
+			<%
+				if(userDetails.getPhone()==null){
+					temp = "——";
+				}else{
+					temp = userDetails.getPhone();
+				}
+			%>
+			<li class="phone">联系电话：<%=temp %></li>
+			<%
+				if(userDetails.getWork_date()==null){
+					temp = "——";
+				}else{
+					temp = userDetails.getWork_date();
+				}
+			%>
+			<li class="work_date">工作日：<%=temp %></li>
 		</ul>
-		<a href="<%=path%>/OrderSystem/html/alterUserInf.jsp?userId=<%=userDetails.getUser_id()%>"><button type="button" class="layui-btn">修改信息</button></a>
+		<a href="<%=path%>/user/toAlter.do?userId=<%=userDetails.getUser_id()%>"><button type="button" class="layui-btn">修改信息</button></a>
 	</div>
 	<script src="<%=path%>/OrderSystem/js/layui.js"></script>
 </body>

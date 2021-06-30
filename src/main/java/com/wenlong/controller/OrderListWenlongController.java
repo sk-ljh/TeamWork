@@ -99,7 +99,7 @@ public class OrderListWenlongController {
 	@RequestMapping("/changePaymentState")
 	public String change(HttpSession session,HttpServletRequest request, @RequestParam("order_id")String order_id) {
 		int id = Integer.parseInt(order_id);
-		//orderHistoryWenlongService.updatePaymentState(id);
+		orderHistoryWenlongService.updatePaymentState(id);
 		session.setAttribute("is_update", true);
 		return "orderFormList";
 	}
@@ -110,6 +110,19 @@ public class OrderListWenlongController {
 		List<Order_list> listOrderList = orderListWenlongService.listOrderListByOrderId(id);
 		Order_history order_history = orderHistoryWenlongService.getOrderHistory(id);
 		String user_name=userLiboService.getUserDetails(order_history.getUser_id()).getName();
+		request.setAttribute("user_name", user_name);
+		request.setAttribute("table_number", order_history.getTable_number());
+		request.setAttribute("order_id", order_id);
+		session.setAttribute("listOrder_list", listOrderList);
+		return "orderDetail";
+	}
+	
+	@RequestMapping("/getOrderDetailAdmin")
+	public String getOrderDetailAdmin(HttpSession session,HttpServletRequest request, @RequestParam("order_id")String order_id) {
+		int id = Integer.parseInt(order_id);
+		List<Order_list> listOrderList = orderListWenlongService.listOrderListByOrderId(id);
+		Order_history order_history = orderHistoryWenlongService.getOrderHistoryAdmin(id);
+		String user_name=userLiboService.getUserDetails (order_history.getUser_id()).getName();
 		request.setAttribute("user_name", user_name);
 		request.setAttribute("table_number", order_history.getTable_number());
 		request.setAttribute("order_id", order_id);

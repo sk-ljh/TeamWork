@@ -157,20 +157,24 @@ public class UserYouhaoController {
 		} else {
 
 			int userid = userService.getMaxUserId() + 1;
-			
-			StringBuffer sb = new StringBuffer();//保存到硬盘中的地址 a.jpg ---------------> d://aaaa/01200120012_a.jpg
-//			FileUtil.createRandomFileName();
-//			mulFile.getOriginalFilename();
-			sb.append(FileUtil.createRandomFileName()).append("_").append(mulFile.getOriginalFilename());
-			System.out.println("sb = " + sb);
-			String storeFileUrl = sb.toString();// /upload/xxxxxxxxx_01.jpg 保存到硬盘中的地址
-			String realFileName = mulFile.getOriginalFilename();//真实文件名
-			System.out.println("realFileName="+realFileName);
-//			storeFileUrl = request.getServletContext().getRealPath(storeFileUrl);// /upload/xxxx_01.jpg --> d://xxx/upload/xxx_01.jpg
-			System.out.println("storeFileName = " + storeFileUrl);
-			
-			
-			
+			String storeFileUrl="";
+			if(mulFile.getOriginalFilename()!=null && mulFile.getOriginalFilename()!="")
+			{
+				StringBuffer sb = new StringBuffer();//保存到硬盘中的地址 a.jpg ---------------> d://aaaa/01200120012_a.jpg
+	//			FileUtil.createRandomFileName();
+	//			mulFile.getOriginalFilename();
+				sb.append(FileUtil.createRandomFileName()).append("_").append(mulFile.getOriginalFilename());
+				System.out.println("sb = " + sb);
+				storeFileUrl = sb.toString();// /upload/xxxxxxxxx_01.jpg 保存到硬盘中的地址
+				String realFileName = mulFile.getOriginalFilename();//真实文件名
+				System.out.println("realFileName="+realFileName);
+	//			storeFileUrl = request.getServletContext().getRealPath(storeFileUrl);// /upload/xxxx_01.jpg --> d://xxx/upload/xxx_01.jpg
+				System.out.println("storeFileName = " + storeFileUrl);
+			}
+			else
+			{
+				storeFileUrl="20210629094857148_8.jpg";
+			}
 
 			/* user表 */
 			HashMap<String, Object> hm1 = new HashMap<String, Object>();
@@ -189,10 +193,13 @@ public class UserYouhaoController {
 			hm2.put("role", role);
 			userService.insertUserDetails(hm2);
 			
-			Map<String,Object> hashmap=new HashMap<String,Object>();
-			hashmap.put("user_id", userid);
-			hashmap.put("icon",storeFileUrl);
-			fileInfoService.uploadFileInfo(mulFile, hashmap);//保存文件
+			if(mulFile.getOriginalFilename()!=null && mulFile.getOriginalFilename()!="")
+			{
+				Map<String,Object> hashmap=new HashMap<String,Object>();
+				hashmap.put("user_id", userid);
+				hashmap.put("icon",storeFileUrl);
+				fileInfoService.uploadFileInfo(mulFile, hashmap);//保存文件
+			}
 			try {
 				response.sendRedirect("/TeamWork/user/getUserList.do");
 			} catch (IOException e) {

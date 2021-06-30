@@ -114,7 +114,7 @@
 						<td><%=orderHistory.getTable_number()%></td>
 						<td><%=orderHistory.getTotal_price()%></td>
 						<td>
-							<%if(orderHistory.getPayment_state()==0){%>
+							<%if(orderHistory.getPayment_state()==3){%>
 								未结单
 							<%} %>
 							<%if(orderHistory.getPayment_state()==1){%>
@@ -127,7 +127,7 @@
 						<td><%=orderHistory.getBegin_time()%></td>
 						<td><%=orderHistory.getEnd_time()==null?"——":orderHistory.getEnd_time()%></td>
 						<td>
-							<%if(orderHistory.getPayment_state() == 0) 
+							<%if(orderHistory.getPayment_state() == 3) 
 								{
 							%>
 								<a
@@ -142,7 +142,7 @@
 								} 
 							%>
 							<a
-								href="<%=path%>/getOrderDetail.do?order_id=<%=orderHistory.getOrder_id()%>">
+								href="<%=path%>/getOrderDetailAdmin.do?order_id=<%=orderHistory.getOrder_id()%>">
 								<button class="layui-btn confirm" type="button">详情</button>
 								</a>
 						</td>

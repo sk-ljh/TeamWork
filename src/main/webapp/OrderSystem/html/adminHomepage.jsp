@@ -153,12 +153,14 @@
 								 </thead>
 								 <tbody>
 								  	<c:forEach var="order" items="${orderHistories_Pa}">
-									   <tr>
-									     <td>${order.order_id}</td>
-									     <td>${order.table_number}</td>
-									     <td>${order.begin_time}</td>
-									     <td>￥${order.total_price}</td>
-									   </tr>
+									  	<c:if test="${order.payment_state==3}">
+										   <tr>
+										     <td>${order.order_id}</td>
+										     <td>${order.table_number}</td>
+										     <td>${order.begin_time}</td>
+										     <td>￥${order.total_price}</td>
+										   </tr>
+									   </c:if>
 									</c:forEach>
 								 </tbody>
 						</table> 
