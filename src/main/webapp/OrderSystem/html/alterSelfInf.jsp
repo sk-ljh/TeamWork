@@ -75,10 +75,20 @@
 				<div class="layui-form-item"
 					style="position: relative; top: -54px; left: 40%">
 					<label class="layui-form-label">性别</label>
+					<%if(((User_details) session.getAttribute("Userdetails")).getSex().equals("男")) 
+					{%>
 					<div class="layui-input-inline">
 						<input type="radio" name="sex" value="男" title="男" checked="">
 						<input type="radio" name="sex" value="女" title="女">
 					</div>
+					<%} %>
+					<%if(((User_details) session.getAttribute("Userdetails")).getSex().equals("女")) 
+					{%>
+					<div class="layui-input-inline">
+						<input type="radio" name="sex" value="男" title="男">
+						<input type="radio" name="sex" value="女" title="女" checked="">
+					</div>
+					<%} %>
 				</div>
 				<div class="layui-form-item" style="position: relative; top: -50px">
 					<label class="layui-form-label">旧密码</label>
@@ -105,27 +115,23 @@
 						<div class="layui-inline">
 							<label class="layui-form-label">联系电话</label>
 							<div class="layui-input-inline">
-								<input type="tel" name="phone" autocomplete="off"
+								<input type="tel" name="phone" autocomplete="off" lay-verify="checkPhone"
 									placeholder=<%=((User_details) session.getAttribute("Userdetails")).getPhone()%>
 									class="layui-input" />
 							</div>
 						</div>
 					</div>
 					<div class="layui-form-item form-button-item">
-						<button
-							style="height: 50px !important; width: 200px !important; line-height: 50px !important; position: relative; top: 45px; left: 30%"
-							class="layui-btn" lay-submit="" lay-filter="demo2">修改</button>
+						<button class="layui-btn" lay-submit="" lay-filter="demo2">修改</button>
+						<button type="button" class="layui-btn" onclick="face_reg()">人脸注册</button>
+						<button class="layui-btn" lay-filter="demo2"><a href="<%=path%>/alterSelfInfJump.do">
+						     返回主页</a></button>                                                
+	
 					</div>
 			</form>
 		</div>
 	</div>
-	<div class="layui-form-item form-button-item">
-		<a href="<%=path%>/alterSelfInfJump.do">
-			<button
-				style="height: 50px !important; width: 200px !important; line-height: 50px !important; position: relative; top: -110px; left: 50%; background: linear-gradient(to right, rgb(253, 79, 79) 10%, rgb(255, 115, 0) 100%);"
-				class="layui-btn" lay-filter="demo2">返回主页</button>
-		</a>
-	</div>
+	
 	<script src="<%=path%>/OrderSystem/js/layui.js"></script>
 	 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	<script>
@@ -211,10 +217,17 @@
 								pwdRep : function(value) {
 									if (value != newPwd.value)
 										return '两次输入的新密码不一致！'
-								}
+								},
+								checkPhone: [
+							    	/^(\s*|1\d{10})$/
+							      ,'请输入正确的电话号码'
+							    ]
 							});
 
 						});
+		function face_reg(){
+			window.location.href="${basePath }OrderSystem/html/face_reg.jsp";
+		}
 	</script>
 
 </body>

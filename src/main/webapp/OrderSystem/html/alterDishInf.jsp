@@ -45,7 +45,7 @@
 			&nbsp&nbsp，您已登录。
 		</h3>
 		<li class="layui-nav-item"><a
-			href="<%=path %>/adminHome/getParts.do">首页</a></li>
+			href="<%=path %>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item layui-this"><a href="javascript:;">菜品管理</a>
@@ -71,7 +71,7 @@
 			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
-		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
+		<li class="layui-nav-item"><a href="<%=path%>/logout.do">注销</a></li>
 	</ul>
 	<div class="alterDishInfMainbody">
 		<div class="alterPic">

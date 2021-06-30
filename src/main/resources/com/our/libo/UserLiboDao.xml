@@ -17,4 +17,8 @@
  	<select	id="getUserFromName" parameterType="String" resultType="com.our.pojo.User">	
  		select * from User where user_name=#{user_name} and user_delete=0
  	</select>
+ 	
+ 	<update id="updateFace" parameterType="map">
+ 		update user set face_path=#{face_path} where user_id=#{user_id}
+ 	</update>
 </mapper>

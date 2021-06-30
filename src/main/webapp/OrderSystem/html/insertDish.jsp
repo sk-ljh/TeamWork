@@ -46,7 +46,7 @@
 			&nbsp&nbsp，您已登录。
 		</h3>
 		<li class="layui-nav-item"><a
-			href="<%=path %>/adminHome/getParts.do">首页</a></li>
+			href="<%=path %>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item  layui-this"><a href="javascript:;">菜品管理</a>
@@ -72,7 +72,7 @@
 			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
-		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
+		<li class="layui-nav-item"><a href="<%=path%>/logout.do">注销</a></li>
 	</ul>
 	<div class="alterDishInfMainbody">
 		<div class="alterInf">
@@ -124,7 +124,14 @@
 							<option value="开胃炸菜">开胃炸菜</option>
 							<option value="软烂炖菜">软烂炖菜</option>
 							<option value="浓香蒸菜">浓香蒸菜</option>
-							<option value="其它">其它</option>
+							<option value="经典小吃">经典小吃</option>
+							<option value="经典粤菜">经典粤菜</option>
+							<option value="浓香面食">浓香面食</option>
+							<option value="美味甜点">美味甜点</option>
+							<option value="经典闽菜">经典闽菜</option>
+							<option value="经典凉拌">经典凉拌</option>
+							<option value="美味饮品">美味饮品</option>
+							<option value="招牌饮品">招牌饮品</option>
 						</select>
 					</div>
 				</div>
@@ -195,6 +202,7 @@
 	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
 	<script>
+	  
     layui.use('element', function () {
       var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 	      //监听导航点击
@@ -301,7 +309,6 @@
 
       //监听提交
       form.on('submit(demo2)', function (data) {
-      console.log("121221");
       		$.ajax({
 					url : "${basePath}dishDetail/insertDish.do",
 					type : "POST",

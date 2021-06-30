@@ -19,6 +19,9 @@ public interface DishsYangyuruiDao {
 	//根据菜类查询菜品
 	List<Dishs> listDishsByCategory(String category);
 	
+	//查询非招牌菜类的菜
+	List<Dishs> listOtherDishs();
+	
 	//按id查询菜品
 	List<Dishs> getDishByDishId(int dishId);
 	

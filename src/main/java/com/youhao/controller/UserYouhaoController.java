@@ -62,12 +62,31 @@ public class UserYouhaoController {
 				userDetailsList = userDetailsList.subList((Integer.valueOf(pageno) - 1) * 5, userDetailsList.size());
 			}
 		}
+		
 		session.setAttribute("userDetailsList", userDetailsList);
+		
+		List<User> userList = userService.getUserList();
+		session.setAttribute("userList", userList);
 		
 		return "userList";
 	}
-
-	/* 2、修改用户详情 */
+	/*2_1跳转到修改页面之前的数据储备*/
+	@RequestMapping("/toAlter")
+	public String toAlter(HttpServletRequest request,HttpSession session) {
+		int user_id = Integer.parseInt(request.getParameter("userId"));
+		session.setAttribute("userId", user_id);
+		
+		String userName = userService.getUsernameById(user_id);
+		System.out.println("用户名为："+userName);
+		session.setAttribute("userName", userName);
+		
+		User_details userDetails = userService.getUserDetails(user_id);
+		session.setAttribute("userDetails", userDetails);
+		
+		return "alterUserInf";
+	}
+	
+	/* 2_2、修改用户详情 */
 	@RequestMapping("/alterUser")
 	public void alterUser(HttpServletRequest request, HttpServletResponse response) {
 
@@ -78,6 +97,8 @@ public class UserYouhaoController {
 		
 		int role = Integer.parseInt(request.getParameter("identity"));
 		String pwd = request.getParameter("newPwd");
+		
+		/*首先需要判断用户名密码是否正确，这里似乎没有进行判断*/
 		
 		if(pwd != null && pwd != "") {
 			/*修改user表*/
@@ -215,7 +236,26 @@ public class UserYouhaoController {
 		session.setAttribute("userDetails", userDetails);
 		return "userDetail";
 	}
-	
+	/*6、查看某用户是否存在*/
+	@ResponseBody
+	@RequestMapping("/haveUser")
+	public Object haveUser(HttpServletRequest request) {
+		String userName = request.getParameter("key");
+		User user = userService.getUserByName(userName);
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		if(user != null) {
+			System.out.println("存在");
+			hm.put("isHave", true);
+			hm.put("content", "已存在该用户！");
+		}else {
+			System.out.println("不存在");
+			hm.put("isHave", false);
+			hm.put("content", "该用户名无重复！");
+		}
+		return hm;
+	}
+	/*7、模糊查询*/
 	@RequestMapping("/search")
 	public String search(@RequestParam(value="pageno",defaultValue="1")Integer pageno,HttpServletRequest request, HttpSession session) {
 
@@ -239,10 +279,31 @@ public class UserYouhaoController {
 				userDetailsList = userDetailsList.subList((Integer.valueOf(pageno) - 1) * 5, userDetailsList.size());
 			}
 		}
-
+		
 		session.setAttribute("userDetailsList", userDetailsList);
 
 		return "searchUser";
 	}
-
+	
+	/*13、验证密码的正确与否*/
+	@ResponseBody
+	@RequestMapping("/isTrue")
+	public Object isTrue(HttpServletRequest request) {
+		String pwd = request.getParameter("key");
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		String realPwd = userService.getPwdById(userId);
+		System.out.println(realPwd);
+		
+		HashMap<String, Object> hm = new HashMap<>();
+		if(realPwd.equals(pwd)) {
+			System.out.println("密码正确");
+			hm.put("isTrue", true);
+			hm.put("content", "密码正确！");
+		}else {
+			System.out.println("密码错误");
+			hm.put("isTrue", false);
+			hm.put("content", "密码错误！");
+		}
+		return hm;
+	}
 }

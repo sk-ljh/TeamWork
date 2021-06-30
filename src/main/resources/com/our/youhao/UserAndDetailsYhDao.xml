@@ -63,7 +63,7 @@
 		values(#{user_details_id},#{user_id},#{name},#{icon},#{role})
 	</insert>
 
-	<!-- 10、通过user_name查找用户的删除状态 -->
+	<!-- 10、通过user_name查找用户是否存在 -->
 	<select id="getUserByName" parameterType="String"
 		resultType="com.our.pojo.User">
 		select * from user where user_name=#{userName}
@@ -82,10 +82,15 @@
 				where u.user_delete = 0 and ud.role != 3
 	</select>
 	
+	<!-- 13、通过userid获得密码 -->
+	<select id="getPwdById" parameterType="int" resultType="String">
+		select password from user where user_id = #{userId}
+	</select>
 	
+	<!-- 14、通过user_id查找user_name -->
 	
-	
-	
-	
+	<select id="getUsernameById" parameterType="int" resultType="String">
+		select user_name from user where user_id = #{userId}
+	</select>
 	
 </mapper>

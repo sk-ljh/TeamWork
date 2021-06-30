@@ -70,4 +70,9 @@ public class DishsYangyuruiServiceImpl implements DishsYangyuruiService{
 		// TODO 自动生成的方法存根
 		return dishDao.updateDishs(map);
 	}
+	//查询非招牌菜类的菜
+	@Override
+	public List<Dishs> listOtherDishs() {
+		return dishDao.listOtherDishs();
+	}
 }

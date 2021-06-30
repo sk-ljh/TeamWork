@@ -45,8 +45,8 @@
 			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=user_name%></a>
 			&nbsp&nbsp，您已登录。
 		</h3>
-		<li class="layui-nav-item"><a
-			href="<%=path %>/adminHome/getParts.do">首页</a></li>
+		<li class="layui-nav-item layui-this"><a
+			href="<%=path%>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
@@ -68,11 +68,20 @@
 				</dd>
 			</dl></li>
 
-		<li class="layui-nav-item  layui-this"><a
+		<li class="layui-nav-item"><a
 			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
-		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
+		<li class="layui-nav-item"><a href="<%=path%>/logout.do">注销</a></li>
+		<form class="search layui-form" action="<%=path %>/listOrderByKey.do?currentDish_Page=1"
+			style="position: relative; left: 62%;width:80%">
+			<input lay-verify="required" lay-reqtext="请输入关键字！" type="text"
+				name="orderKey"
+				style="border-radius: 1.5em; height: 32px; width: 35%;"
+				autocomplete="off" placeholder="输入关键字查询订单" class="layui-input" />
+			<button class="layui-btn" type="submit" lay-submit=""
+				style="height: 28px; line-height: 28px; position: absolute; width:6%;left: 28.8%; top: 6.5%;">搜索</button>
+		</form>
 	</ul>
 	<div class="operateFormMainBody">
 		<fieldset class="layui-elem-field layui-field-title"
@@ -96,7 +105,8 @@
 				<tbody>
 					<%
 					List<Order_history> listOrderHistory = (List<Order_history>) session.getAttribute("listOrderHistory");
-					for (Order_history orderHistory : listOrderHistory) {
+					if(listOrderHistory!=null)
+						for (Order_history orderHistory : listOrderHistory) {
 					%>
 					<tr class="orderForm">
 						<td><%=orderHistory.getOrder_id()%></td>
@@ -115,7 +125,7 @@
 							<%} %>
 						</td>
 						<td><%=orderHistory.getBegin_time()%></td>
-						<td><%=orderHistory.getEnd_time()%></td>
+						<td><%=orderHistory.getEnd_time()==null?"——":orderHistory.getEnd_time()%></td>
 						<td>
 							<%if(orderHistory.getPayment_state() == 0) 
 								{
@@ -131,6 +141,10 @@
 							<%
 								} 
 							%>
+							<a
+								href="<%=path%>/getOrderDetail.do?order_id=<%=orderHistory.getOrder_id()%>">
+								<button class="layui-btn confirm" type="button">详情</button>
+								</a>
 						</td>
 					</tr>
 					<%
@@ -160,7 +174,13 @@ layui.use(['laypage', 'layer'], function () {
         next: '<em>→</em>',
         jump: function (obj, first) {
             if (!first) {
+            	var orderKey="<%=session.getAttribute("orderKey")%>"; 
+            	if(orderKey!="null"){
+					window.location.href="<%=path %>/listOrderByKey.do?orderKey=${orderKey}&currentDish_Page="+obj.curr;
+				}
+            	else{
 					window.location.href="<%=path %>/listOrderHistory.do?currentDish_Page="+obj.curr;
+            	}
             }
     	}
     });

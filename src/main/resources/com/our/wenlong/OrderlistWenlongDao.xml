@@ -12,6 +12,11 @@
 		select * from order_list where cook_state!=3 order by cook_state desc, order_list_id asc
 	</select>
 	
+	<!-- 部分订单查询 -->
+	<select id="listOrderListByOrderId" resultType="com.our.pojo.Order_list" parameterType="int">
+		select * from order_list where order_id = #{order_id} 
+	</select>
+	
 	<!-- 单笔订单查询 -->
 	<select id="getOrderList" resultType="com.our.pojo.Order_list" parameterType="int">
 		select * from order_list where order_list_id = #{order_list_id}

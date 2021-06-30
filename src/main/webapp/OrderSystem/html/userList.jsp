@@ -45,7 +45,7 @@
 			&nbsp&nbsp，您已登录。
 		</h3>
 		<li class="layui-nav-item"><a
-			href="<%=path %>/adminHome/getParts.do">首页</a></li>
+			href="<%=path %>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
@@ -71,7 +71,7 @@
 			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
-		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
+		<li class="layui-nav-item"><a href="<%=path%>/logout.do">注销</a></li>
 		<form class="search layui-form form-control" action="<%=path%>/user/search.do"
 				style="position: relative; left: 70%;width:80%;z-index:999;">
 				<input lay-verify="required" lay-reqtext="请输入关键字！" type="text" name="key"
@@ -95,7 +95,7 @@
 				<thead>
 					<tr class="title">
 						<th>用户编号</th>
-						<th>姓名</th>
+						<th>用户名</th>
 						<th>性别</th>
 						<th>用户角色</th>
 						<th>联系电话</th>
@@ -105,13 +105,31 @@
 				</thead>
 				<tbody>
 					<%
+						List<User> userList = (List<User>)session.getAttribute("userList");
 						List<User_details> userDetailsList = (List<User_details>) session.getAttribute("userDetailsList");
 						for (User_details userDetails : userDetailsList) {
 					%>
 					<tr class="user">
 						<td><%=userDetails.getUser_id()%></td>
-						<td><%=userDetails.getName()%></td>
-						<td><%=userDetails.getSex()%></td>
+						<%
+						String userName = null;
+							for(User u:userList){
+								if(u.getUser_id()==userDetails.getUser_id()){
+									userName = u.getUser_name();
+									break;
+								}
+							}
+						%>
+						<td><%=userName%></td>
+						<%
+							String sex = null;
+							if(userDetails.getSex()==null){
+								sex = "——";
+							}else{
+								sex = userDetails.getSex();
+							}
+						%>						
+						<td><%=sex%></td>
 						<%
 						HashMap<Integer, String> hm = new HashMap<Integer, String>();
 								hm.put(1, "服务员");
@@ -119,14 +137,22 @@
 								hm.put(3, "管理员");
 					%>
 						<td><%=hm.get(userDetails.getRole())%></td>
-						<td><%=userDetails.getPhone()%></td>
+						<%
+							String phone = null;
+							if(userDetails.getPhone()==null){
+								phone = "——";
+							}else{
+								phone = userDetails.getPhone();
+							}
+						%>
+						<td><%=phone%></td>
 						<td>
 							<div>
 								<!-- <a
 									href="<%=path%>/OrderSystem/html/alterUserInf.jsp?userId=<%=userDetails.getUser_id()%>"> -->
 								<button data-method="alter" type="button" class="layui-btn alterUser"
 									style="height: 40px !important"
-									data-path="<%=path%>/OrderSystem/html/alterUserInf.jsp"
+									data-path="<%=path%>/user/toAlter.do"
 									data-id="<%=userDetails.getUser_id()%>">
 									修改
 								</button>
@@ -145,8 +171,8 @@
 						</td>
 					</tr>
 					<%
-					}
-				%>
+						}
+					%>
 				</tbody>
 			</table>
 			<c:if test="${DishQueriedNumber>0}">

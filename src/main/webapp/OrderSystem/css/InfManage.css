@@ -35,14 +35,11 @@
     background-color: rgb(248, 248, 248);
 }
 .alterInf button{
-    position: relative;
-    left:50%;
+    
     width:200px;
     height:50px;
     line-height: 50px;
-    transform: translateX(-50%);
-    top:10px;
-    padding-bottom: 20px;
+    
 }
 .layui-upload-drag{
     height:300px;
@@ -52,4 +49,10 @@
 }
 .form-button-item{
     height:80px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:flex-end;
+}
+.form-button-item a{
+	display:block;
 }

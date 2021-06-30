@@ -48,6 +48,7 @@ public class UserLiboController {
 				session.setAttribute("loginUser", loginUser);
 				//存储用户详细信息表
 				session.setAttribute("Userdetails", details);
+				hashmap.put("id",loginUser.getUser_name());
 				if(details.getRole()==1)
 					hashmap.put("role", 1);
 				else if(details.getRole()==2)

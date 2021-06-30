@@ -42,4 +42,10 @@ public interface UserYouhaoService {
 	
 	/*12、得到没有被删除的且不是管理员的用户列表*/
 	public List<User_details> getUserDetailslist3();
+	
+	/*13、通过userid获得密码*/
+	public String getPwdById(int userId);
+	
+	/*14、通过user_id查找user_name*/
+	public String getUsernameById(int userId);
 }

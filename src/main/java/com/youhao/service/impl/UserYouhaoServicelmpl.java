@@ -82,15 +82,23 @@ public class UserYouhaoServicelmpl implements UserYouhaoService {
 	public List<User_details> getUserDetailslist2(String key){
 		return userADDao.getUserDetailslist2(key);
 	}
-	
+
 	/*12、得到没有被删除的且不是管理员的用户列表*/
 	@Override
 	public List<User_details> getUserDetailslist3(){
 		return userADDao.getUserDetailslist3();
 		
 	}
+
+	/*13、通过userid获得密码*/
+	@Override
+	public String getPwdById(int userId) {
+		return userADDao.getPwdById(userId);
+	}
 	
-	
-	
-	
+	/*14、通过user_id查找user_name*/
+	@Override
+	public String getUsernameById(int userId) {
+		return userADDao.getUsernameById(userId);
+	}
 }

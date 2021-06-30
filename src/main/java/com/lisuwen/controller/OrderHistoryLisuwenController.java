@@ -24,7 +24,6 @@ import com.our.pojo.Order_history;
 @Controller
 @RequestMapping("/")
 public class OrderHistoryLisuwenController {
-	private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	@Autowired
 	private OrderHistoryLisuwenService orderHistoryLisuwenService;
 
@@ -41,6 +40,25 @@ public class OrderHistoryLisuwenController {
 			else
 				list = list.subList((Integer.valueOf(currentDish_Page) - 1) * 4, list.size());
 		session.setAttribute("listOrderHistory", list);
+		session.removeAttribute("orderKey");
+		return "operateOrderForm";
+	}
+
+	@RequestMapping("/listOrderByKey")
+	public String listOrderByKey(HttpSession session, @RequestParam("orderKey") String key,
+			@RequestParam(value = "currentDish_Page", defaultValue = "1") String currentDish_Page) {
+		System.out.println(key);
+		List<Order_history> list = orderHistoryLisuwenService.listOrderByKey(key);
+		session.setAttribute("DishQueriedNumber", list.size());// 保存记录数
+		session.setAttribute("currentDish_Page", currentDish_Page);// 保存当前页数到session里
+		if (list.size() > 4)
+			if ((Integer.valueOf(currentDish_Page) - 1) * 4 + 4 <= list.size())
+				list = list.subList((Integer.valueOf(currentDish_Page) - 1) * 4,
+						(Integer.valueOf(currentDish_Page) - 1) * 4 + 4);
+			else
+				list = list.subList((Integer.valueOf(currentDish_Page) - 1) * 4, list.size());
+		session.setAttribute("listOrderHistory", list);
+		session.setAttribute("orderKey", key);
 		return "operateOrderForm";
 	}
 

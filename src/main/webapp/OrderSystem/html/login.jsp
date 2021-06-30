@@ -74,12 +74,21 @@
 					</div>
 				</div>
 				<div class="layui-form-item form-button-item">
+					<button type="button" class="layui-btn" onclick="face_login()">刷脸登录</button>
 					<button class="layui-btn" lay-submit="" lay-filter="demo1">登录</button>
 				</div>
+				
 			</div>
 		</form>
 	</div>
 	<style typle="text/css">
+	.layui-form-item.form-button-item{
+		display:flex;
+		justify-content:space-between;
+	}
+		.layui-btn{
+		   width:50%;
+		}
 		body{
 		    margin:0;
 		    padding: 0;
@@ -154,12 +163,17 @@
 			             	console.log(data);
 			             	if(data.role!=null)
 			             	{
-			             		if(data.role===1)
+			             		if(data.role===1){
+			             			var id=data.id
+			             			localStorage.setItem("yuangong", id)
 			             			window.location.href="${basePath }OrderSystem/html/waiterHomePage.jsp";
+			             			
+			             		}
+			             			
 			             		else if(data.role===2)
 			             			window.location.href="${basePath }OrderSystem/html/chefHomepage.jsp";
 			             		else if(data.role==3)
-			             			window.location.href="${basePath }OrderSystem/html/adminHomepage.jsp";
+			             			window.location.href="<%=path %>/adminHome/getParts.do";
 			             	}
 			             	else
 			             	{
@@ -224,6 +238,9 @@
 		// 		draw(show_num);
 		// 	}
 		// }
+		function face_login(){
+			window.location.href="${basePath }OrderSystem/html/face_login.jsp";
+		}
 
 		function draw(show_num) {
 			var canvas_width = document.getElementById('canvas').clientWidth;

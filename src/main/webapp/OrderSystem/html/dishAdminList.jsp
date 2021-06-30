@@ -50,7 +50,7 @@
 			&nbsp&nbsp，您已登录。
 		</h3>
 		<li class="layui-nav-item"><a
-			href="<%=path %>/adminHome/getParts.do">首页</a></li>
+			href="<%=path %>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a>
 		</li>
 		<li class="layui-nav-item  layui-this"><a href="javascript:;">菜品管理</a>
@@ -73,7 +73,7 @@
 			</dl></li>
 		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/operateOrderForm.jsp">订单管理</a></li>
 		<li class="layui-nav-item"><a href="<%=path %>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
-		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
+		<li class="layui-nav-item"><a href="<%=path%>/logout.do">注销</a></li>
 		<form class="search layui-form" action="<%=path %>/Dish/listDishsByKey.do?currentDish_Page=1"
 			style="position: relative; left: 62%;width:80%">
 			<input lay-verify="required" lay-reqtext="请输入关键字！" type="text"

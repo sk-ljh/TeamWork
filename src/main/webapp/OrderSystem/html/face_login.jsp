@@ -11,7 +11,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>管理员登录</title>
+<title>人脸识别</title>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
@@ -20,8 +20,8 @@
 
 
 
-<link rel="stylesheet" type="text/css" href="${basePath }js/metronic/plugins/face/css/style.css" />
-<script type="text/javascript" src="${basePath }js/metronic/plugins/face/js/jquery-1.4.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${basePath }OrderSystem/js/metronic/plugins/face/css/style.css" />
+<script type="text/javascript" src="${basePath }OrderSystem/js/metronic/plugins/face/js/jquery-1.4.4.min.js"></script>
 <style>
 body {
 	height: 100%;
@@ -35,10 +35,10 @@ canvas {
 }
 </style>
 
-
-<script src="${basePath }js/metronic/plugins/face/js/jquery.js"></script>
-<script src="${basePath }js/metronic/plugins/face/js/verificationNumbers.js"></script>
-<script src="${basePath }js/metronic/plugins/face/js/Particleground.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="${basePath }OrderSystem/js/metronic/plugins/face/js/jquery.js"></script>
+<script src="${basePath }OrderSystem/js/metronic/plugins/face/js/verificationNumbers.js"></script>
+<script src="${basePath }OrderSystem/js/metronic/plugins/face/js/Particleground.js"></script>
 <script>
 $(document).ready(function() {
   //粒子背景特效
@@ -122,7 +122,7 @@ h1 {
 			</dd>
 
 		</dl>
-		<script type="text/javascript" src="${basePath }js/alert.js"></script>
+		<script type="text/javascript" src="${basePath }OrderSystem/js/alert.js"></script>
 		<script type="text/javascript">
   		//var
   		var video = document.getElementById("video"); //获取video标签
@@ -168,11 +168,23 @@ h1 {
   					data:{"base":base},
   					dataType: "json",
   					success:function(json){
-  						if(json.message == 'index'){
-  							window.location.href="${basePath}user/index.do";
-  						}else if(json.message == 'login'){
+  						if(json.message == 'login'){
   							window.location.href="${basePath}login.do";
-  						}						
+  						}
+  						else{
+  							if(json.message=="1")
+  							{
+  								window.location.href="${basePath }OrderSystem/html/waiterHomePage.jsp";
+  							}
+  							else if(json.message=="2")
+  							{
+  								window.location.href="${basePath }OrderSystem/html/chefHomepage.jsp";
+  							}
+  							else if(json.message=="3")
+  							{
+  								window.location.href="<%=path %>/adminHome/getParts.do";
+  							}
+  						}
 					}
 				});
 
@@ -180,7 +192,6 @@ h1 {
 			function getBase64() {
 				var imgSrc = document.getElementById("canvas").toDataURL(
 						"image/png");
-				
 				return imgSrc.split("base64,")[1];
 
 			};

@@ -1,11 +1,11 @@
-.operateFormMainBody,.dishAdminListMainBody,.orderFormListMainBody{
+.operateFormMainBody,.dishAdminListMainBody,.orderFormListMainBody,.noticeMainBody{
     width:75%;
 }
-.operateFormMainBody .title,.dishAdminListMainBody .title,.orderFormListMainBody .title,.cartMainBody .title,.chefHomepageMainBody .title,.userListMainBody .title{
+.operateFormMainBody .title,.dishAdminListMainBody .title,.orderFormListMainBody .title,.cartMainBody .title,.chefHomepageMainBody .title,.userListMainBody .title,.noticeMainBody .title{
     background-color: #ff9148 !important;
 }
 .operateFormMainBody .orderForm:hover,.dishAdminListMainBody .dishForm:hover,.orderFormListMainBody .orderForm:hover,
-.cartMainBody .cartRecord:hover,.chefHomepageMainBody .cook:hover,.userListMainBody .user:hover{
+.cartMainBody .cartRecord:hover,.chefHomepageMainBody .cook:hover,.userListMainBody .user:hover,.noticeMainBody .noticeForm:hover{
     background-color: #ffe89d !important;
 }
 .dishAdminListMainBody .dishForm:hover img,.operateFormMainBody .orderForm:hover img,.orderFormListMainBody .orderForm:hover img,

@@ -15,6 +15,12 @@
 	session.setAttribute("basePath", basePath);
 	session.setAttribute("basePort", basePort);
 	%>
+	
+	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
+ 	<script src="https://cdn.goeasy.io/goeasy-2.0.13.min.js"></script>
+	
+	
+	
     <link rel="stylesheet" type="text/css" href="<%=path %>/OrderSystem/skWaiterHomePage/assets/waifu.css"/>
  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -34,6 +40,7 @@
 		
 </head>
 <body>
+
 <div id="cate">
 	<div >
 		<el-drawer style="text-align: center; font-size: 30px;" 
@@ -88,17 +95,17 @@
 	  </span>
 	</li>
   <li class="layui-nav-item">
-    <a href="">查看订单<span class="layui-badge sk">9</span></a>
+    <a href="<%=path%>/OrderSystem/html/orderFormList.jsp">查看订单<span class="layui-badge sk">9</span></a>
   </li>
   <li class="layui-nav-item">
-    <a href="">查看公告<span class="layui-badge-dot sk"></span></a>
+    <a href="<%=path %>/notice/listNotices.do">查看公告<span class="layui-badge-dot sk"></span></a>
   </li>
   <li class="layui-nav-item">
-    <a href=""><img src="${basePort }${Userdetails.icon}" class="layui-nav-img">我</a>
+    <a href=""><img src="${basePort }${Userdetails.icon}" class="layui-nav-img">{{yuangong}}</a>
     <dl class="layui-nav-child">
       <dd><a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">修改信息</a></dd>
       <dd><a href="javascript:;">安全管理</a></dd>
-      <dd><a href="javascript:;">退出</a></dd>
+      <dd><a href="<%=path%>/logout.do" @click="logout">退出</a></dd>
     </dl>
   </li>
 </ul>
@@ -275,7 +282,7 @@
 				  <div class="one_show" v-for="item in showThing" :key="item">
 					  <div class="one_name">{{item.dishs_name}}</div>
 					  <div class="one_price">单价:<span style="color:red;margin-right: 20px;">¥{{item.price}}</span>份数:<span style="color:red">{{item.number}}份</span></div>
-					  <div class="one_add" @click="changecar"><el-input-number style="margin-right: 10px;" size="small" v-model="item.number" :min=0 :max=100></el-input-number><el-button size="small" style="margin-left:10px" @click="deletecar(item)" type="primary" icon="el-icon-delete"></el-button></div>
+					  <div class="one_add" @click="changecar"><el-input-number style="margin-right: 10px;" size="small" v-model="item.number" :min=1 :max=100></el-input-number><el-button size="small" style="margin-left:10px" @click="deletecar(item)" type="primary" icon="el-icon-delete"></el-button></div>
 					  
 				  </div>
 				  <div class="buy">
@@ -353,7 +360,7 @@
 				             axios.post('${basePath}Buy.do',shoppingcar.showThing).then(res=>{
 				                 console.log("发送了购买请求")
 								 shoppingcar.clearcar()
-								 console.log(res.data)
+								 alert("点餐成功!您的订单号是："+res.data)
 								})
 								.catch((error)=>{
 				  						console.log(error)  //  错误处理 相当于error
@@ -428,8 +435,15 @@
 					drawer2:false,
 					direction: 'rtl',
 					userid:2,
+					yuangong:'',
 				},
 				methods:{
+					logout(){
+						localStorage.clear()
+					},
+					setempid(item){
+						cate.yuangong=item
+					},
 					getready:function(){
 						
 						axios.post("${basePath}getReadyDish.do",{"data":123}).then(function(data){
@@ -534,16 +548,26 @@
 			})
 			
 			<!--6.23    还外加了锚点-->
-			window.onload=function(){
-				localStorage.clear()
-				cate.getdate()
-				 
-				axios.post("${basePath}getTableNumber.do").then(function(data){
-					  cate.table=data.data.data	
-					  console.log(data.data.data)
-					 cate.tablestatus=data.data.state
-					});	
+		window.onload=function(){
+			if(localStorage.getItem("yuangong")!=null){
+				var id=localStorage.getItem("yuangong")
+				console.log(id)
+				cate.setempid(id)
+				
+				
 			}
+			else{
+				window.location.href="<%=path%>/login.do";
+			}
+			
+			cate.getdate()
+			 
+			axios.post("${basePath}getTableNumber.do").then(function(data){
+				  cate.table=data.data.data	
+				  console.log(data.data.data)
+				 cate.tablestatus=data.data.state
+				});	
+		}	
 	</script>
 <script src="<%=path %>/OrderSystem/skWaiterHomePage/assets/live2d.js"></script>
     <script src="<%=path %>/OrderSystem/skWaiterHomePage/assets/waifu-tips.js"></script>

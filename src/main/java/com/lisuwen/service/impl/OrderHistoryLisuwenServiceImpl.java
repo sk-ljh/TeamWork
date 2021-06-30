@@ -39,4 +39,10 @@ public class OrderHistoryLisuwenServiceImpl implements OrderHistoryLisuwenServic
 		return orderHistoryLisuwenDao.updateCookState(id);
 	}
 
+	@Override
+	public List<Order_history> listOrderByKey(String key) {
+		// TODO 自动生成的方法存根
+		return orderHistoryLisuwenDao.listOrderByKey(key);
+	}
+
 }

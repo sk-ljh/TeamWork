@@ -24,9 +24,15 @@
 	</select>
 	<!-- 根据菜类查询菜品 -->
 	<select id="listDishsByCategory" parameterType="String" resultType="com.our.pojo.Dishs">
-		select * from dishs where dishs_cate=#{category}
+			select * from dishs where dishs_cate=#{category}
 	</select>
-	
+	<!-- 查询非招牌菜类的菜 -->
+	<select id="listOtherDishs" resultType="com.our.pojo.Dishs">
+			select * from dishs where dishs_cate!='美味闷锅' and dishs_cate!='热乎炒菜' 
+			and dishs_cate!='湘菜系谱' and dishs_cate!='经典水煮' and dishs_cate!='飘香煮菜' 
+			and dishs_cate!='可口煎菜' and dishs_cate!='开胃炸菜' and dishs_cate!='软烂炖菜' 
+			and dishs_cate!='浓香蒸菜' 
+	</select>
 	<!-- 增加新菜品 -->
 	<insert id="insertDishs" parameterType="com.our.pojo.Dishs">
 		insert into dishs 

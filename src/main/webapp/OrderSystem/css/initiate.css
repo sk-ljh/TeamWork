@@ -48,10 +48,10 @@ h3 a:hover{
     transform: translateX(-50%);
     background-color: rgb(253, 244, 213);
     border-radius: 2em;
-} 
+}
 .alterUserInfMainbody,.adminHomepagemainBody,.alterDishInfMainbody,.dishDetailMainBody,.operateFormMainBody,
 .dishAdminListMainBody,.releaseNoticeMainBody,.userDetailMainBody,.waiterHomepageMainBody,.orderFormListMainBody,
-.orderDetailMainBody,.cartMainBody,.chefHomepageMainBody,.userListMainBody,.alterSelfInfMainBody{
+.orderDetailMainBody,.cartMainBody,.chefHomepageMainBody,.userListMainBody,.alterSelfInfMainBody,.noticeMainBody{
     position: relative;
     top:120px;
     width:60%;
@@ -59,8 +59,11 @@ h3 a:hover{
     transform: translateX(-50%);
 }
 
-.orderDetailMainBody td,.cartMainBody td{
+.orderDetailMainBody td,.cartMainBody td,.noticeMainBody td{
     font-size:0.9em !important;
+}
+.noticeMainBody th{
+	font-size:1.2em !important;
 }
 .formWrapper{
     width:45%;
@@ -77,12 +80,11 @@ h3 a:hover{
     margin-top:30px;
 }
 .loginForm button{
-    position: relative;
-    width:50%;
-    height:60px;
-    line-height: 60px;
-    left:20%;
-    top:20px;
+   
+    width:40%;
+    height:40px;
+    line-height: 40px;
+    
 }
 button{
     background: linear-gradient(to left, #fcc40e 10%,#f76503 100%);

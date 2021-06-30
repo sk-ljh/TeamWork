@@ -1,12 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8" import="com.our.pojo.*"%>
+	pageEncoding="utf-8" import="com.our.pojo.*" import="java.util.List" import="java.util.Map"%>
 <html lang="en">
 
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<% String path = request.getContextPath();%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	String basePort=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()+"/file/";
+	session.setAttribute("basePath", basePath);
+	session.setAttribute("basePort", basePort);
+	%>
 <link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
 <link rel="stylesheet" href="<%=path %>/OrderSystem/css/tableFormation.css">
 <link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
@@ -15,29 +23,45 @@
 	href="<%=path %>/OrderSystem/layui/css/modules/laydate/default/laydate.css">
 <link rel="stylesheet"
 	href="<%=path %>/OrderSystem/layui/css/modules/layer/default/layer.css">
-<title>orderFormList</title>
+<title>查看订单</title>
 </head>
 
 <body>
 	<%
-		User user;
-			String user_name="null";
+			User_details user_details;
+			String name="null";
 			if(session.getAttribute("loginUser")!=null)
 			{
-		 user=(User)session.getAttribute("loginUser");
-		 user_name=user.getUser_name();
+		 	user_details=(User_details)session.getAttribute("Userdetails");
+		 	User temp=(User)session.getAttribute("loginUser");
+		 	name=temp.getUser_name();
 			}
+			boolean is_update=true;
+			if(session.getAttribute("is_update")!=null){
+				is_update=(boolean)session.getAttribute("is_update");
+				session.removeAttribute("is_update");
+			}
+			if(is_update==true)
+				response.sendRedirect(path + "/orderHistory.do");
 	%>
 	<ul class="layui-nav">
-		<h3>用户<%=user_name %>，您已登录。</h3>
-		<li class="layui-nav-item"><a href="waiterHomepage.jsp">首页</a></li>
-		<li class="layui-nav-item"><a href="alterSelfInf.jsp">个人信息修改</a>
+		<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">
+			<img src="${basePort }${Userdetails.icon}" style="width:50px;height:50px;border-radius:2em;float:left;position:relative;top:10px;">
+		</a>
+		<h3>
+			&nbsp&nbsp&nbsp&nbsp&nbsp用户&nbsp&nbsp
+			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=name%></a>
+			&nbsp&nbsp，您已登录。
+		</h3>
+		<li class="layui-nav-item"><a href="<%=path%>/alterSelfInfJump.do">首页</a></li>
+		<li class="layui-nav-item"><a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a>
 		</li>
-		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
-		<li class="layui-nav-item layui-this"><a href="orderFormList.jsp">查看订单</a></li>
-		<li id="layerDemo" style="margin-bottom: 0; text-align: center;">
-			<button data-method="notice" class="layui-btn">查看公告</button>
+		
+		<li class="layui-nav-item layui-this"><a href="<%=path%>/OrderSystem/html/orderFormList.jsp">查看订单</a></li>
+		<li class="layui-nav-item">
+			<a href="<%=path %>/notice/listNotices.do">查看公告</a>
 		</li>
+		<li class="layui-nav-item"><a href="<%=path%>/logout.do">注销</a></li>
 	</ul>
 	<div class="orderFormListMainBody">
 		<form name="myForm" class="layui-form" action=""
@@ -53,7 +77,6 @@
 						<th>订单ID</th>
 						<th>桌号</th>
 						<th>服务员</th>
-						<th>菜品</th>
 						<th>总价（元）</th>
 						<th>开餐时间</th>
 						<th>结餐时间</th>
@@ -62,28 +85,73 @@
 					</tr>
 				</thead>
 				<tbody>
+				<%
+				@SuppressWarnings("unchecked")
+				List<Order_history> order_history = (List<Order_history>)session.getAttribute("order_history");
+				@SuppressWarnings("unchecked")
+				Map<Integer, String> user_idToName = (Map<Integer, String>)session.getAttribute("user_idToName");
+				if(order_history!=null&&user_idToName!=null)
+					for(Order_history order:order_history){
+				%>
 					<tr class="orderForm">
-						<td>041</td>
-						<td>06</td>
-						<td>张三</td>
-						<td>鱼香肉丝 ×1,水煮肉片×2</td>
-						<td>40</td>
-						<td>2021-4-10 12:00</td>
-						<td>2021-4-10 13:30</td>
-						<td><a href="orderDetail.jsp">查看</a></td>
-						<td><button type="button" class="layui-btn"
-								style="width: 65%; text-align: center; background: linear-gradient(to left, #ff7c25 10%, #ff5101 100%);">结算提交</button>
+						<td><%=order.getOrder_id() %></td>
+						<td><%=order.getTable_number() %></td>
+						<td><%=user_idToName.get(order.getUser_id()) %></td>
+						<td><%=order.getTotal_price() %></td>
+						<td><%=order.getBegin_time() %></td>
+						<td><%=order.getEnd_time()==null?"——":order.getEnd_time()%></td>
+						<td><a href="<%=path %>/getOrderDetail.do?order_id=<%=order.getOrder_id()%>">查看</a></td>
+						<td><a href="<%=path %>/changePaymentState.do?order_id=<%=order.getOrder_id()%>"><button title="点击提交订单" type="button" class="layui-btn"
+								style="width: 65%; text-align: center; background: linear-gradient(to left, #ff7c25 10%, #ff5101 100%);" id="btn">结算提交</button>
+							</a>
 						</td>
 					</tr>
+				<% } %>
 				</tbody>
 			</table>
 		</form>
 	</div>
 	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
+<!-- 	<script src="https://cdn.goeasy.io/goeasy-2.0.13.min.js"></script> -->
 	<script>
+// 	var goEasy = new GoEasy({
+// 		host:"hangzhou.goeasy.io",
+// 		appkey:"BC-93439a325fce47e78a7d90cfc2f4ffc0",
+// 		modules:['pubsub']
+// 	})
+// 	goEasy.connect({
+// 		onSuccess:function(){	
+		
+// 		},
+// 		onFailed:function(error){
+			
+// 		},
+// 		onProgress:function(attempts){
+			
+// 		}
+// 	});
+// 	var pubsub = goEasy.pubsub;
+// 	pubsub.subscribe({
+// 		channel:"yyr_goEasy",
+// 		onMessage:function(message){
+// 			alert(message.content);
+// 		}
+// 	});
 		// 公告
 		layui.use('layer', function () { 
 			var $ = layui.jquery, layer = layui.layer; 
+			
+			var btns = document.querySelectorAll("#btn");
+			for (let i = 0; i < btns.length; i++) {
+				btns[i].onclick = function () {
+						var tr = btns[i].parentNode.parentNode.parentNode;
+						//找到表格
+						var tbody = tr.parentNode;
+						//删除行
+						tbody.removeChild(tr);
+						layer.msg('成功结束该条订单', {icon: 1});
+				}
+			}
 
 			//触发事件
 			var active = {

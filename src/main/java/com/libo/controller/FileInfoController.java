@@ -75,4 +75,10 @@ public class FileInfoController {
 		return hashmap;
 	}
 	
+	@RequestMapping("/doupload2")
+	public Object doUpload2(@RequestParam(required=false) MultipartFile mulFile,HttpSession session,HttpServletRequest request)
+	{
+		return null;
+	}
+	
 }

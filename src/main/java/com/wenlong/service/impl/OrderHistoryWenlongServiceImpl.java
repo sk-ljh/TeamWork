@@ -27,9 +27,21 @@ public class OrderHistoryWenlongServiceImpl implements OrderHistoryWenlongServic
 	}
 
 	@Override
-	public int getTableNumber(int order_id) {
+	public Integer getTableNumber(int order_id) {
 		// TODO Auto-generated method stub
 		return orderHistoryWenlongDao.getTableNumber(order_id);
+	}
+
+	@Override
+	public void updatePaymentState(int order_id) {
+		// TODO Auto-generated method stub
+		orderHistoryWenlongDao.updatePaymentState(order_id);
+	}
+
+	@Override
+	public Order_history getOrderHistory(int order_id) {
+		// TODO Auto-generated method stub
+		return orderHistoryWenlongDao.getOrderHistory(order_id);
 	}
 
 }

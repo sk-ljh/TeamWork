@@ -12,7 +12,24 @@
        <listener>
        		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
        </listener>
-   
+       <!-- 登陆权限过滤器 -->
+	    <filter>
+		    <filter-name>loginAuthorityFilter</filter-name>
+		    <filter-class>com.yangyurui.filter.loginAuthorityFilter</filter-class>
+	  	</filter>
+	  <filter-mapping>
+	    <filter-name>loginAuthorityFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	  </filter-mapping>
+	  <!-- 管理员主页过滤器 -->
+	  <filter>
+	    <filter-name>adminHomeFilter</filter-name>
+	    <filter-class>com.yangyurui.filter.adminHomeFilter</filter-class>
+	  </filter>
+	  <filter-mapping>
+	    <filter-name>adminHomeFilter</filter-name>
+	    <url-pattern>/OrderSystem/html/adminHomepage.jsp</url-pattern>
+	  </filter-mapping>
        
        <!-- 处理中文乱码的filter过滤器 -->
        <filter>

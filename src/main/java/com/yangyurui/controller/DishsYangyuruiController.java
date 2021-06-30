@@ -51,7 +51,12 @@ public class DishsYangyuruiController {
 	
 	@RequestMapping("/listDishsByCategory")
 	public String listDishsByCategory(HttpSession session,@RequestParam("category")String category,@RequestParam(value="currentDish_Page",defaultValue="1")String currentDish_Page) {
-		List<Dishs> dishs=dishService.listDishsByCategory(category);
+		List<Dishs> dishs;
+		if(category.equals("其它")) {
+			System.out.println("菜类为其它！");
+			dishs=dishService.listOtherDishs();
+		}
+		else dishs=dishService.listDishsByCategory(category);
 		session.setAttribute("DishQueriedNumber", dishs.size());//保存记录数
 		session.setAttribute("currentDish_Page", currentDish_Page);//保存当前页数到session里
 		if(dishs.size()>4)

@@ -13,6 +13,17 @@
 		ASC,begin_time DESC
 	</select>
 
+	<!-- 根据关键字查询订单 -->
+	<select id="listOrderByKey" parameterType="String"
+		resultType="com.our.pojo.Order_history">
+		select
+		table_number,total_price,begin_time,end_time,payment_state,order_id,user_id,order_delete
+		from order_history
+		where order_id like #{key} or user_id like #{key} or table_number like
+		#{key} or total_price like #{key} or begin_time like "%"#{key}"%"
+		or end_time like "%"#{key}"%" or payment_state like #{key}
+	</select>
+
 	<!-- 修改未结账订单 -->
 	<update id="updateOrderHistory" parameterType="map">
 		update
@@ -23,12 +34,15 @@
 	</update>
 	<!-- 修改桌号 -->
 	<update id="updateTableNum" parameterType="int">
-		UPDATE table_s ,order_history SET table_s.table_status=0 where
-		order_history.table_number = table_s.table_number and order_id=#{order_id}
+		UPDATE table_s
+		,order_history SET table_s.table_status=0 where
+		order_history.table_number = table_s.table_number and
+		order_id=#{order_id}
 	</update>
-	
+
 	<!-- 查看烹饪状态 -->
 	<update id="updateCookState" parameterType="int">
-		update order_list set cook_state=3 where order_id=#{order_id} and cook_state!=3
+		update order_list set
+		cook_state=3 where order_id=#{order_id} and cook_state!=3
 	</update>
 </mapper>

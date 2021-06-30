@@ -6,7 +6,11 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<% String path = request.getContextPath();%>
+<%  
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+	session.setAttribute("basePath", basePath);
+%>
 <link rel="stylesheet" href="<%=path %>/OrderSystem/css/initiate.css">
 <link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/layui.css">
 <link rel="stylesheet" href="<%=path %>/OrderSystem/layui/css/modules/code.css">
@@ -36,8 +40,8 @@
 			<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp"><%=user_name%></a>
 			&nbsp&nbsp，您已登录。
 		</h3>
-		<li class="layui-nav-item"><a
-			href="<%=path %>/adminHome/getParts.do">首页</a></li>
+		<li class="layui-nav-item layui-this"><a
+			href="<%=path %>/OrderSystem/html/adminHomepage.jsp">首页</a></li>
 		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">个人信息修改</a></li>
 		<li class="layui-nav-item"><a href="javascript:;">菜品管理</a>
@@ -61,9 +65,9 @@
 
 		<li class="layui-nav-item"><a
 			href="<%=path%>/listOrderHistory.do">订单管理</a></li>
-		<li class="layui-nav-item  layui-this"><a
+		<li class="layui-nav-item"><a
 			href="<%=path%>/OrderSystem/html/releaseNotice.jsp">发布公告</a></li>
-		<li class="layui-nav-item"><a href="javascript:;">注销</a></li>
+		<li class="layui-nav-item"><a href="<%=path%>/logout.do">注销</a></li>
 	</ul>
 	<div class="releaseNoticeMainBody" style="height: 400px">
 		<fieldset class="layui-elem-field layui-field-title"
@@ -74,7 +78,7 @@
 			<div style="display: inline-block; width: 600px; height: 100%">
 				<div class="layui-bg-gray"
 					style="padding: 30px; width: 500px; height: 100%">
-					<form class="layui-form" action="">
+					<form class="layui-form" action="" method="">
 						<div class="layui-form-item layui-form-text">
 							<label class="layui-form-label">内容</label>
 							<div class="layui-input-block">
@@ -84,13 +88,23 @@
 							</div>
 						</div>
 						<div class="layui-form-item">
+							<label class="layui-form-label">发送给</label>
+							<div class="layui-input-inline">
+								<select name="target" lay-filter="isRecommend">
+									<option value="entire" selected="">服务员&nbsp/&nbsp后厨</option>
+									<option value="waiter">服务员</option>
+									<option value="chef">后厨</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item">
 							<div class="layui-input-block">
 								<button
 									style="position: relative; top: 15px; left: -15%; background: linear-gradient(to left, #186dec 10%, #8a31f0 100%); color: white"
 									type="reset" class="layui-btn">重置</button>
 								<button style="position: relative; top: 15px; left: -5%"
 									type="submit" class="layui-btn" lay-submit=""
-									lay-filter="demo1">立即提交</button>
+									lay-filter="release">立即提交</button>
 							</div>
 						</div>
 					</form>
@@ -100,13 +114,33 @@
 	</div>
 </body>
 	<script src="<%=path %>/OrderSystem/js/layui.js"></script>
+ 	<script src="https://cdn.goeasy.io/goeasy-2.0.13.min.js"></script>
 <script>
   layui.use(['form', 'layedit', 'laydate'], function () {
     var form = layui.form
       , layer = layui.layer
       , layedit = layui.layedit
       , laydate = layui.laydate;
+	var goEasy = new GoEasy({
+		host:"hangzhou.goeasy.io",
+	    appkey: "BC-93439a325fce47e78a7d90cfc2f4ffc0",
+	    modules:['pubsub']
+	});
+	var goEasy2 = new GoEasy({
+		host:"hangzhou.goeasy.io",
+	    appkey: "BC-05fb82608a1f4474b934175a7b67e9a6",
+	    modules:['pubsub']
+	});
+	goEasy.connect({
 
+	});
+	goEasy2.connect({
+	
+	});
+	var pubsub = goEasy.pubsub;
+    var pubsub2 = goEasy2.pubsub;
+    
+    var $ = layui.jquery
     //创建一个编辑器
     var editIndex = layedit.build('LAY_demo_editor');
 
@@ -127,10 +161,37 @@
     });
 
     //监听提交
-    form.on('submit(demo1)', function (data) {
-      layer.alert(JSON.stringify(data.field), {
-        title: '提交的公告'
-      })
+    form.on('submit(release)', function (data) {
+	  $.ajax({
+			url : "${basePath}notice/insertNotice.do",
+			type : "POST",
+			data : data.field,
+			dataType : "json",
+			success : function(result) {
+				if (result.res == "success") {
+				  layer.msg('已成功发布公告！', {
+						icon: 1,
+						time:1000,
+						offset:['50px','900px'],
+						end:function(){
+					      if(result.target=="chef"||result.target=="entire"){
+							  pubsub.publish({
+							      channel: "OrderSys_Chef",
+							      message: result.content
+							  });
+						  }
+						  if(result.target=="waiter"||result.target=="entire"){
+							  pubsub2.publish({
+							      channel: "OrderSys_Waiter",
+							      message: result.content
+							  });
+						  }
+						  window.location.href="<%=path %>/OrderSystem/html/releaseNotice.jsp";
+						}
+				  });
+			   }
+		   }		
+	  });	
       return false;
     });
   });

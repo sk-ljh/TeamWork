@@ -84,7 +84,7 @@ public class DishSunkeServiceImpl implements DishSunkeService{
 		for(int i=0;i<buyBody.size();i++) {
 			OrderHistory_List Body=buyBody.get(i);
 			System.out.println(Body);
-			Order_list one=new Order_list(Body.getDishs_id(), Body.getDishs_name(), Body.getNumber(), Body.getPrice(), 0, maxId,
+			Order_list one=new Order_list(Body.getDishs_id(), Body.getDishs_name(), Body.getNumber(), Body.getPrice(),1 , maxId,
 					0);
 			dishSunkeDao.insertDishList(one);
 		}

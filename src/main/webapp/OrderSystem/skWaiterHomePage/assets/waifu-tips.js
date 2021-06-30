@@ -397,11 +397,46 @@ var waifuJson = {
         }
     ]
 };
-waifuJson["mouseover"].unshift({
-			            "selector": ".waifu #live2d",
-			            "text": ["我是sk的小老婆"]
-			        })
-console.log(waifuJson["mouseover"])	
+
+
+console.log(454545454545)
+
+
+var goEasy = new GoEasy({
+      	  host:"hangzhou.goeasy.io",
+       	  appkey: "BC-05fb82608a1f4474b934175a7b67e9a6",
+       	  modules:['pubsub']
+	  });
+	  goEasy.connect({
+
+	  });
+	  var pubsub = goEasy.pubsub;
+	  
+	  layui.use(['layer'], function () {
+	  
+	 	//接受实时公告
+		pubsub.subscribe({
+			channel: "OrderSys_Waiter",
+			onMessage: function (message) {
+				console.log(message.content)
+				var re=waifuJson["mouseover"].shift()
+				waifuJson["mouseover"].unshift({
+		            "selector": ".waifu #live2d",
+		            "text": [message.content],
+		        })
+		        console.log(waifuJson["mouseover"])
+		        initModel()
+			}
+	    });
+	 })
+			        
+			        
+			        
+
+
+
+
+
 function initModel(){
     waifuWelcome();
 

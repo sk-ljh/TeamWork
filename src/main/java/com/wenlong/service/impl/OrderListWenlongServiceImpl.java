@@ -46,4 +46,10 @@ public class OrderListWenlongServiceImpl implements OrderListWenlongService{
 		return orderListWenlongDao.getOrderList(order_list_id);
 	}
 
+	@Override
+	public List<Order_list> listOrderListByOrderId(int order_id) {
+		// TODO Auto-generated method stub
+		return orderListWenlongDao.listOrderListByOrderId(order_id);
+	}
+
 }

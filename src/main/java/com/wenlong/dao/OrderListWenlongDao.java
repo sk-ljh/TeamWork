@@ -9,6 +9,9 @@ public interface OrderListWenlongDao {
 	//查询订单详情
 	List<Order_list> listOrderList();
 	
+	//查询部分订单详情
+	List<Order_list> listOrderListByOrderId(int order_id);
+	
 	//查询单笔订单详情
 	Order_list getOrderList(int order_list_id);
 	

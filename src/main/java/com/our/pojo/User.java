@@ -6,16 +6,23 @@ public class User {
 	public int user_id;
 	public String user_name;
 	public String password;
-	
+	public String face_path;
+	public String getFace_path() {
+		return face_path;
+	}
+	public void setFace_path(String face_path) {
+		this.face_path = face_path;
+	}
 	public User() {
 		super();
 	}
-	public User(int user_delete, int user_id, String user_name, String password) {
+	public User(int user_delete, int user_id, String user_name, String password, String face_path) {
 		super();
 		this.user_delete = user_delete;
 		this.user_id = user_id;
 		this.user_name = user_name;
 		this.password = password;
+		this.face_path = face_path;
 	}
 	public int getUser_delete() {
 		return user_delete;
@@ -44,7 +51,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [user_delete=" + user_delete + ", user_id=" + user_id + ", user_name=" + user_name + ", password="
-				+ password + "]";
+				+ password + ", face_path=" + face_path + "]";
 	}
 	
 	
