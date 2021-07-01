@@ -334,11 +334,8 @@ var waifuJson = {
         {
             "selector": ".waifu-tool .fui-photo",
             "text": ["你要给我拍照呀，一二三~茄子~~"]
-        },
-        // {
-        //     "selector": ".waifu #live2d",
-        //     "text": ["干嘛呢你，快把手拿开", "鼠…鼠标放错地方了！"]
-        // }
+        }
+        
     ],
     "click": [
         {
@@ -397,7 +394,10 @@ var waifuJson = {
         }
     ]
 };
-
+waifuJson["mouseover"].unshift({
+    "selector": ".waifu #live2d",
+    "text": ["还没有最新公告呢。。。"]
+})
 
 console.log(454545454545)
 
@@ -418,11 +418,10 @@ var goEasy = new GoEasy({
 		pubsub.subscribe({
 			channel: "OrderSys_Waiter",
 			onMessage: function (message) {
-				console.log(message.content)
 				var re=waifuJson["mouseover"].shift()
 				waifuJson["mouseover"].unshift({
 		            "selector": ".waifu #live2d",
-		            "text": [message.content],
+		            "text": ["最新公告："+message.content],
 		        })
 		        console.log(waifuJson["mouseover"])
 		        initModel()
@@ -448,7 +447,7 @@ function initModel(){
         /* 首次访问加载 指定模型 的 指定材质 */
 
         var modelId = 2;            // 模型 ID
-        var modelTexturesId = 49;    // 材质 ID
+        var modelTexturesId = 28;    // 材质 ID
 
     } loadModel(modelId, modelTexturesId);
 

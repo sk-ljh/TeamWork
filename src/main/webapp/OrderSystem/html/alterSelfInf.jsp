@@ -102,6 +102,7 @@
 							lay-verify="required" autocomplete="off" placeholder="必须*"
 							class="layui-input" />
 					</div>
+					<div class="layui-form-item" id="list-box" style="text-align: center;"></div>
 				</div>
 				<div class="layui-form-item" style="position: relative; top: -45px">
 					<label class="layui-form-label">新密码</label>
@@ -136,8 +137,7 @@
 					<div class="layui-form-item form-button-item">
 						<button class="layui-btn" lay-submit="" lay-filter="demo2">修改</button>
 						<button type="button" class="layui-btn" onclick="face_reg()">人脸注册</button>
-						<button class="layui-btn" lay-filter="demo2"><a href="<%=path%>/alterSelfInfJump.do">
-						     返回主页</a></button>                                                
+						<button type="button" class="layui-btn" onclick="jump_homepage()">返回主页</button>                                                
 	
 					</div>
 			</form>
@@ -211,11 +211,75 @@
 
 		layui.use([ 'form', 'layedit', 'laydate', 'upload', 'element','layer' ],
 						function() {
+							var $ = layui.jquery;
 							var form = layui.form, layer = layui.layer, layedit = layui.layedit, laydate = layui.laydate;
 							var editIndex = layedit.build('LAY_demo_editor');
+							
+							var newPwd = document.querySelector("#newPwd");
+							var pwd = document.querySelector("#pwd");
+							var userId = ${loginUser.user_id};
+							//密码是否正确
+							var isTrue = null;
+							//创建一个编辑器
+							var editIndex = layedit.build('LAY_demo_editor');
+							
+							// 用户名查重部分
+							// 获取用户名内容框
+							var userName = document.getElementById('pwd');
+							// 获取提示文字的存放容器
+							var listBox = document.getElementById('list-box');
+							// 存储定时器的变量
+							var timer = null;
+							// 当用户在文本框中输入的时候触发
+							userName.oninput = function() {
+								// 清除上一次开启的定时器
+								clearTimeout(timer);
+								// 获取用户输入的内容
+								var key = this.value;
+								// 如果用户没有在搜索框中输入内容(trim的作用是去空格)
+								if (key.trim().length == 0) {
+									// 将提示下拉框隐藏掉
+									listBox.style.display = 'none';
+									// 阻止程序向下执行
+									return;
+								}
+								// 开启定时器 让请求延迟发送
+								timer = setTimeout(function() {
+									// 向服务器端发送请求
+									// 向服务器端索取和用户输入关键字相关的内容
+									$.ajax({
+										type: 'get',
+										url: '<%=path%>/user/isTrue.do',
+										data: {
+											key: key,
+											userId: userId
+										},
+										success: function(result) {
+											var html = null;
+											if (!result.isTrue) {
+												isTrue = false;
+												var html = result.content;
+												listBox.style.color="#FF0000"; 
+											} else {
+												isTrue = true;
+												var html = result.content;
+												listBox.style.color="#0000FF"; 
+											}
+											// 将得到的字符串显示在页面中
+											listBox.innerHTML = html;
+											// 显示ul容器
+											listBox.style.display = 'block';
+										}
+									})
+								}, 800)
+							}; 
 
 							//自定义验证规则
 							form.verify({
+								required  : function(){
+									if(!isTrue)
+										return '旧密码错误！'
+								},
 								newPwd : function(value) {
 									if (value.length > 0
 											&& pwd.value.length == 0)
@@ -239,6 +303,9 @@
 						});
 		function face_reg(){
 			window.location.href="${basePath }OrderSystem/html/face_reg.jsp";
+		}
+		function jump_homepage(){
+			window.location.href="<%=path%>/alterSelfInfJump.do";
 		}
 	</script>
 

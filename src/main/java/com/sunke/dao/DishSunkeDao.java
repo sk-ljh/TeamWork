@@ -26,4 +26,5 @@ public interface DishSunkeDao {
 			public int getStatus(@Param("number") int number);
 			public Dish_DishDetail getAllMes(@Param("id") int id);
 			public List<Order_list> reReadyDish();
+			public List<Dishs> getBestDish();
 }

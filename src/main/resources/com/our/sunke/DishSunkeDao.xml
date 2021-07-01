@@ -51,5 +51,8 @@ and dishs.dishs_id=#{id}
     <select id="reReadyDish" resultType="com.our.pojo.Order_list">
          SELECT * FROM order_list where cook_state=3
     </select>
+    <select  id="getBestDish" resultType="com.our.pojo.Dishs">
+    SELECT  *  FROM dishs where  recommend=1 and dishs_delete=0 limit 10,4
+    </select>
     
 </mapper>

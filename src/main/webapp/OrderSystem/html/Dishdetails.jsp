@@ -183,7 +183,12 @@
 			font-family:skfont3;
 			src: url(<%=path %>/OrderSystem/skWaiterHomePage/font/sk2.ttf);
 		}
-		
+		.intros_box .intros{
+		   display: -webkit-box;    
+		-webkit-box-orient: vertical;    
+		-webkit-line-clamp: 3;    
+		overflow: hidden;
+	}
 		.main{
 			width: 45vw;
 			height: 60vh;

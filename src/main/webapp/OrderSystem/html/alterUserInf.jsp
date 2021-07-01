@@ -118,7 +118,7 @@
 						<div class="layui-form-item">
 							<label class="layui-form-label">原密码</label>
 							<div class="layui-input-inline">
-								<input id="pwd" lay-verify="passwordLength" type="password" name="pwd"
+								<input id="pwd" lay-verify="passwordLength|pwd" type="password" name="pwd"
 									placeholder="修改密码时需填" autocomplete="off" class="layui-input">
 							</div>
 							<div id="list-box" style="text-align: center;"></div>
@@ -232,6 +232,8 @@
 				var editIndex = layedit.build('LAY_demo_editor');
 				
 				// 用户名查重部分
+				//密码是否正确
+				var isTrue = null;
 				// 获取用户名内容框
 				var userName = document.getElementById('pwd');
 				// 获取提示文字的存放容器
@@ -265,9 +267,11 @@
 							success: function(result) {
 								var html = null;
 								if (!result.isTrue) {
+									isTrue = false;
 									var html = result.content;
 									listBox.style.color="#FF0000"; 
 								} else {
+									isTrue = true;
 									var html = result.content;
 									listBox.style.color="#0000FF"; 
 								}
@@ -296,7 +300,8 @@
 							return '两次输入的新密码不一致！'
 					},
 					pwd: function(){
-						
+						if(!isTrue)
+							return '旧密码错误！'
 					},
 				});
 

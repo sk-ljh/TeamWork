@@ -57,6 +57,9 @@ public class DishSunkeServiceImpl implements DishSunkeService{
 		      System.out.println(state);
 		           data.put("data", reObj);
 		           data.put("state", state);
+		           
+		     List<Dishs> getBestFood=dishSunkeDao.getBestDish();
+		     data.put("bestfood",getBestFood);   
 		      return data;
 	}
 	@Override

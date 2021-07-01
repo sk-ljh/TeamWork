@@ -29,7 +29,7 @@
 	
 	<!-- 修改付款状态 -->
 	<select id="getTableNumber" resultType="integer" parameterType="int">
-		select table_number from order_history where order_delete=0 and payment_state=0 and order_id=#{order_id}
+		select table_number from order_history where order_delete=0 and (payment_state=0 or payment_state=3) and order_id=#{order_id}
 	</select>
 	
 	<!-- 添加历史订单 -->

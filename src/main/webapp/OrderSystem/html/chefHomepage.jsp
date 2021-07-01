@@ -39,7 +39,7 @@
 			}
 			if(is_update==true)
 				response.sendRedirect(path + "/chefHomepage.do");
-			response.setHeader("refresh", "10;url="+ path + "/chefHomepage.do");
+			response.setHeader("refresh", "20;url="+ path + "/chefHomepage.do");
 	%>
 	<ul class="layui-nav">
 		<a href="<%=path%>/OrderSystem/html/alterSelfInf.jsp">

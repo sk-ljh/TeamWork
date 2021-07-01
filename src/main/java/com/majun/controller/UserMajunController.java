@@ -64,6 +64,7 @@ public class UserMajunController {
 			site = "waiterHomePage";
 			break;
 		case 2:
+			System.out.println("wgwg:"+"chefHomepage");
 			site = "chefHomepage";
 			break;
 		case 3:
